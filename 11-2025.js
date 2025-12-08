@@ -494,6 +494,29 @@ function isValidMessage(msg, val) {
   }
 }
 
+/* 25-11-2025: FizzBuzz
+Given an integer (n), return an array of integers from 1 to n (inclusive), replacing numbers that are multiple of:
+
+3 with "Fizz".
+5 with "Buzz".
+3 and 5 with "FizzBuzz".*/
+
+function fizzBuzz(n) {
+  let arr=[];
+  for(let i=0;i<n;i++){
+    if((i+1)%3!=0&&(i+1)%5!=0){
+      arr.push(i+1);
+    }
+    else if((i+1)%3==0&&(i+1)%5!=0){arr.push("Fizz");
+    }
+    else if((i+1)%3!=0&&(i+1)%5==0){
+      arr.push("Buzz");
+    }
+    else arr.push("FizzBuzz");
+  }
+  return arr;
+}
+  
 /* 26-11-2025: BuzzFizz
 Given an array, determine if it is a correct FizzBuzz sequence from 1 to the last item in the array. A sequence is correct if:
 
