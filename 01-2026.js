@@ -301,3 +301,51 @@ For example, given ["A", "B"] return ["B", "A"]. */
 function arraySwap(arr) {
   return arr.reverse();
 }
+
+/* 16-01-2026: Integer Hypotenuse
+Given two positive integers representing the lengths for the two legs (the two short sides) of a right triangle, determine whether the hypotenuse is an integer.
+*/
+
+function isIntegerHypotenuse(a, b) {
+  let c=Math.sqrt(a*a+b*b);
+  return c==parseInt(c);
+}
+
+/* 17-01-2026: Knight Moves
+Given the position of a knight on a chessboard, return the number of valid squares the knight can move to.
+A standard chessboard is 8x8, with columns labeled A through H (left to right) and rows labeled 1 through 8 (bottom to top). It looks like this:
+A8B8C8D8E8F8G8H8
+A7B7C7D7E7F7G7H7
+A6B6C6D6E6F6G6H6
+A5B5C5D5E5F5G5H5
+A4B4C4D4E4F4G4H4
+A3B3C3D3E3F3G3H3
+A2B2C2D2E2F2G2H2
+A1B1C1D1E1F1G1H1
+A knight moves in an "L" shape: two squares in one direction (horizontal or vertical), and one square in the perpendicular direction.
+This means a knight can move to up to eight possible positions, but fewer when near the edges of the board. For example, if a knight was at A1, it could only move to B3 or C2.*/
+
+let moves = ([i, j]) => [[i - 2, j - 1],[i - 1, j - 2],[i - 2, j + 1],[i - 1, j + 2],[i + 2, j - 1],[i + 1, j - 2],[i + 2, j + 1],[i + 1, j + 2]];
+
+ function knightMoves(pos) {
+  let row=8-Number(pos[1]);                     
+  let col=pos.charCodeAt(0)-65;
+  return moves([row,col]).filter((item)=>item[0]>=0&&item[0]<=7&&item[1]>=0&&item[1]<=7).length;
+}
+
+/* 18-01-2026: Free Shipping
+Given an array of strings representing items in your shopping cart, and a number for the minimum order amount to qualify for free shipping, determine if the items in your shopping cart qualify for free shipping.
+The given array will contain items from the list below:
+Item       Price
+"shirt"     34.25
+"jeans"    48.50
+"shoes"   75.00
+"hat"        19.95
+"socks"    15.00
+"jacket"  109.95 */
+
+function getsFreeShipping(cart, minimum) {
+  let p={"shirt":34.25,"jeans":48.50,"shoes":75.00,"hat":19.95,"socks":15.00,"jacket":109.95};
+  return cart.map((item)=>p[item]).reduce((a,b)=>a+b,0)>minimum;
+}
+
