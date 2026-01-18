@@ -320,3 +320,60 @@ def array_swap(arr):
     for i in range(len(arr)):
         s.append(arr[len(arr)-i-1])
     return s
+
+""" 16-01-2026: Integer Hypotenuse
+Given two positive integers representing the lengths for the two legs (the two short sides) of a right triangle, determine whether the hypotenuse is an integer.
+"""
+
+import math
+def is_integer_hypotenuse(a, b):
+    c=math.sqrt(a*a+b*b)
+    return c==int(c)
+
+""" 17-01-2026: Knight Moves
+Given the position of a knight on a chessboard, return the number of valid squares the knight can move to.
+A standard chessboard is 8x8, with columns labeled A through H (left to right) and rows labeled 1 through 8 (bottom to top). It looks like this:
+A8B8C8D8E8F8G8H8
+A7B7C7D7E7F7G7H7
+A6B6C6D6E6F6G6H6
+A5B5C5D5E5F5G5H5
+A4B4C4D4E4F4G4H4
+A3B3C3D3E3F3G3H3
+A2B2C2D2E2F2G2H2
+A1B1C1D1E1F1G1H1
+A knight moves in an "L" shape: two squares in one direction (horizontal or vertical), and one square in the perpendicular direction.
+This means a knight can move to up to eight possible positions, but fewer when near the edges of the board. For example, if a knight was at A1, it could only move to B3 or C2. """
+
+def moves(i, j):
+    return [[i - 2, j - 1],[i - 1, j - 2],[i - 2, j + 1],[i - 1, j + 2],[i + 2, j - 1],[i + 1, j - 2],[i + 2, j + 1],[i + 1, j + 2]]
+
+def knight_moves(pos):
+  c={"A":0,"B":1,"C":2,"D":3,"E":4,"F":5,"G":6,"H":7}
+    row=8-int(pos[1])
+    col=c[pos[0]]
+    m=moves(row,col)
+    res=[] 
+    for el in m:
+        if el[0]>=0 and el[0]<=7 and el[1]>=0 and el[1]<=7:
+            res.append(el)
+    return len(res)
+
+""" 18-01-2026: Free Shipping
+Given an array of strings representing items in your shopping cart, and a number for the minimum order amount to qualify for free shipping, determine if the items in your shopping cart qualify for free shipping.
+The given array will contain items from the list below:
+Item       Price
+"shirt"     34.25
+"jeans"    48.50
+"shoes"   75.00
+"hat"        19.95
+"socks"    15.00
+"jacket"  109.95  """
+
+def gets_free_shipping(cart, minimum):
+    p={"shirt":34.25,"jeans":48.50,"shoes":75.00,"hat":19.95,"socks":15.00,"jacket":109.95}
+    sn=0
+    for el in cart:
+        sn+=p[el]
+    return sn>=minimum
+
+    
