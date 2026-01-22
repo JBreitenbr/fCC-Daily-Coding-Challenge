@@ -349,3 +349,85 @@ function getsFreeShipping(cart, minimum) {
   return cart.map((item)=>p[item]).reduce((a,b)=>a+b,0)>minimum;
 }
 
+/* 19-01-2026 Energy Consumption
+Given the number of Calories burned during a workout, and the number of watt-hours used by your electronic devices during that workout, determine which one used more energy.
+To compare them, convert both values to joules using the following conversions:
+• 1 Calorie equals 4184 joules.
+• 1 watt-hour equals 3600 joules.
+Return:
+• "Workout" if the workout used more energy.
+• "Devices" if the device used more energy.
+• "Equal" if both used the same amount of energy. */
+
+function compareEnergy(caloriesBurned, wattHoursUsed) {
+
+  return caloriesBurned*4184>wattHoursUsed*3600?"Workout":caloriesBurned*4184<wattHoursUsed*3600?"Devices":"Equal";
+}
+
+/* 20-01-2026 Consonant Case
+Given a string representing a variable name, convert it to consonant case using the following rules:
+• All consonants should be converted to uppercase.
+• All vowels (a, e, i, o, u in any case) should be converted to lowercase.
+• All hyphens (-) should be converted to underscores (_). */
+
+function toConsonantCase(str) {
+  let v="AEIOU".split("");
+  let c="bcdfghjklmnpqrstvwxyz".split("");
+  let stri=str.replaceAll("-","_");
+  let res="";
+  for(let i=0;i<stri.length;i++){
+    if(v.includes(stri[i])){
+      res+=stri[i].toLowerCase();
+    } else if(c.includes(stri[i])){
+      res+=stri[i].toUpperCase();
+    }
+    else res+=stri[i];
+  }
+  return res;
+}
+
+/*  21-01-2026: Markdown Inline Code Parser
+Given a string of Markdown that includes one or more inline code blocks, return the equivalent HTML string.
+Inline code blocks in Markdown use a single backtick (`) at the start and end of the code block text.
+Return the given string with all code blocks converted to HTML code tags.
+For example, given the string "Use `let` to declare the variable.", return "Use <code>let</code> to declare the variable.".
+Note: The console may not display HTML tags in strings when logging messages. Check the browser console to see logs with tags included. */
+
+function parseInlineCode(md) {
+  let sp=md.split("`").map((item)=>item==item.trimStart()&&item==item.trimEnd()&&![".","!","?",","].includes(item)?"<code>"+item+"</code>":item);
+  console.log(sp);
+  let res="";
+  for(let i=0;i<sp.length;i++){
+    res+=sp[i];
+  }
+  return res;
+}
+
+/* 22-01-2026: Class Average
+Given an array of exam scores (numbers), return the average score in form of a letter grade according to the following chart:
+Average Score  Letter Grade
+97-100               "A+"
+93-96                 "A"
+90-92                 "A−"
+87-89                 "B+"
+83-86                 "B"
+80-82.                "B-"
+77-79                 "C+"
+73–76                "C"
+70-72                 "C-"
+67-69                 "D+"
+63-66                  "D"
+60–62                "D-"
+below 60            "F"
+Calculate the average by adding all scores in the array and dividing by the total number of scores. */
+
+function getAverageGrade(scores) {
+  let sc=Math.floor(scores.reduce((a,b)=>a+b,0)/scores.length);
+  let gr=[...Array(11).fill("A"),...Array(10).fill("B"),...Array(10).fill("C"),...Array(10).fill("D")].map((item,index)=>[1,2,3].includes(index%10)?(item+"+"):[8,9,0].includes(index%10)?(item+"-"):item);
+  gr[0]="A+";
+  let rg=Array.from(Array(41).keys()).map((item)=>100-item);
+  let res = {};
+    rg.forEach((key, index) => {res[key] = gr[index];});
+  return sc<60?"F":res[sc.toString()];
+}
+
