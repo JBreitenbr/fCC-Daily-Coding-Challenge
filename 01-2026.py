@@ -376,4 +376,90 @@ def gets_free_shipping(cart, minimum):
         sn+=p[el]
     return sn>=minimum
 
-    
+""" 19-01-2026 Energy Consumption
+Given the number of Calories burned during a workout, and the number of watt-hours used by your electronic devices during that workout, determine which one used more energy.
+To compare them, convert both values to joules using the following conversions:
+• 1 Calorie equals 4184 joules.
+• 1 watt-hour equals 3600 joules.
+Return:
+• "Workout" if the workout used more energy.
+• "Devices" if the device used more energy.
+• "Equal" if both used the same amount of energy. """
+
+def compare_energy(calories_burned, watt_hours_used):
+    if calories_burned*4184>watt_hours_used*3600:
+        return "Workout"
+    elif calories_burned*4184<watt_hours_used*3600:
+        return "Devices"
+    else:
+        return "Equal"
+
+/* 20-01-2026 Consonant Case
+Given a string representing a variable name, convert it to consonant case using the following rules:
+• All consonants should be converted to uppercase.
+• All vowels (a, e, i, o, u in any case) should be converted to lowercase.
+• All hyphens (-) should be converted to underscores (_). */
+
+
+def to_consonant_case(stri):
+    s=stri.replace("-","_")
+    res=""
+    for i in range(len(s)):
+        if s[i] in list("AEIOU"): res+=s[i].lower()
+        elif s[i] in list("bcdfghjklmnpqrstvwxyz"):
+            res+=s[i].upper()
+        else: 
+            res+=s[i]
+    return res
+
+"""  21-01-2026: Markdown Inline Code Parser
+Given a string of Markdown that includes one or more inline code blocks, return the equivalent HTML string.
+Inline code blocks in Markdown use a single backtick (`) at the start and end of the code block text.
+Return the given string with all code blocks converted to HTML code tags.
+For example, given the string "Use `let` to declare the variable.", return "Use <code>let</code> to declare the variable.".
+Note: The console may not display HTML tags in strings when logging messages. Check the browser console to see logs with tags included. """
+
+def parse_inline_code(md):
+    sp=md.split("`")
+    res=""
+    for el in sp:
+        if el.strip()==el and not el in [".",",","?","!"]:
+            res+="<code>"+el+"</code>"
+        else:
+            res+=el
+    return res
+
+""" 22-01-2026: Class Average
+Given an array of exam scores (numbers), return the average score in form of a letter grade according to the following chart:
+Average Score  Letter Grade
+97-100               "A+"
+93-96                 "A"
+90-92                 "A−"
+87-89                 "B+"
+83-86                 "B"
+80-82.                "B-"
+77-79                 "C+"
+73–76                "C"
+70-72                 "C-"
+67-69                 "D+"
+63-66                  "D"
+60–62                "D-"
+below 60            "F"
+Calculate the average by adding all scores in the array and dividing by the total number of scores. """
+
+import math
+def get_average_grade(scores):
+    gr=["A"]*11+["B"]*10+["C"]*10+["D"]*10
+    for i in range(len(gr)):
+        if i%10 in [1,2,3]:
+            gr[i]+="+"
+        elif i%10 in [8,9,0]:
+            gr[i]+="-"
+    gr[0]="A+"
+    rg=list(range(100,59,-1))
+    res=dict(zip(rg,gr))
+    sc=math.floor(sum(scores)/len(scores))
+    if sc<60:
+        return "F"
+    return res[sc]
+
