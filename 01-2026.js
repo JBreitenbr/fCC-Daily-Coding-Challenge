@@ -431,3 +431,34 @@ function getAverageGrade(scores) {
   return sc<60?"F":res[sc.toString()];
 }
 
+/* 23-01-2026: Hex Validator
+Given a string, determine whether it is a valid CSS hex color. A valid CSS hex color must:
+• Start with a #, and
+• be followed by either 3 or 6 hexadecimal characters.
+Hexadecimal characters are numbers 0 through 9 and letters a through f (case-insensitive). */
+
+function isValidHex(str) {
+  let c="abcdefABCDEF0123456789".split("");
+  let reg=/[#a-fA-F0-9]/gi;
+  let m=str.match(reg);
+  let cond=(m.length==4||m.length==7) && (str.length==4||str.length==7);
+  if(!cond) return false;
+  return true;
+}
+
+/* 24-01-2026 Bingo! Letter
+Given a number, return the bingo letter associated with it (capitalized). Bingo numbers are grouped as follows:
+LetterNumber Range 
+"B"                       1-15
+"I"                       16-30
+"N"                      31-45
+"G"                      46-60
+"O"                      61-75         */
+
+function getBingoLetter(n) {
+  if(1<=n && n<=15) return "B";
+  else if(16<=n && n<=30) return "I";
+  else if(31<=n && n<=45) return "N";
+  else if(46<=n && n<=60) return "G";
+  else return "O";
+}
