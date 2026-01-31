@@ -463,3 +463,38 @@ def get_average_grade(scores):
         return "F"
     return res[sc]
 
+""" 23-01-2026: Hex Validator
+Given a string, determine whether it is a valid CSS hex color. A valid CSS hex color must:
+• Start with a #, and
+• be followed by either 3 or 6 hexadecimal characters.
+Hexadecimal characters are numbers 0 through 9 and letters a through f (case-insensitive). """
+
+import re
+def is_valid_hex(s):
+    rx=re.findall("[#a-fA-F0-9]",s)
+    if s[0]!="#" or (len(s)!=4 and len(s)!=7) or (len(rx)!=4 and len(rx)!=7):
+        return False
+    return True
+
+""" 24-01-2026 Bingo! Letter
+Given a number, return the bingo letter associated with it (capitalized). Bingo numbers are grouped as follows:
+LetterNumber Range 
+"B"                       1-15
+"I"                       16-30
+"N"                      31-45
+"G"                      46-60
+"O"                      61-75         """
+
+def get_bingo_letter(n):
+    if n in range(1,16):
+        return "B"
+    elif n in range(16,31):
+        return "I"
+    elif n in range(31,46):
+        return "N"
+    elif n in range(46,61):
+        return "G"
+    else:
+        return "O"
+
+        
