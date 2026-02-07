@@ -462,3 +462,132 @@ function getBingoLetter(n) {
   else if(46<=n && n<=60) return "G";
   else return "O";
 }
+
+/* 25-01-2026: Scaled Image
+Given a string representing the width and height of an image, and a number to scale the image, return the scaled width and height.
+• The input string is in the format "WxH". For example, "800x600".
+• The scale is a number to multiply the width and height by.
+Return the scaled dimensions in the same "WxH" format. */
+
+function scaleImage(size, scale) {
+  return size.split("x").map((item)=>(Number(item)*scale).toString()).join("x");
+}
+
+/* 26-01-2026 FizzBuzz Mini
+Given an integer, return a string based on the following rules:
+• If the number is divisible by 3, return "Fizz".
+• If the number is divisible by 5, return "Buzz".
+• If the number is divisible by both 3 and 5, return "FizzBuzz".
+• Otherwise, return the given number as a string. */
+
+function fizzBuzzMini(n) {
+  return n%3==0&&n%5!=0?"Fizz":n%3!=0&&n%5==0?"Buzz":n%3==0&&n%5==0?"FizzBuzz":n.toString();
+}
+
+/* 27-01-2026: Odd or Even Day
+Given a timestamp (number of milliseconds since the Unix epoch), return:
+• "odd" if the day of the month for that timestamp is odd.
+• "even" if the day of the month for that timestamp is even.
+For example, given 1769472000000, a timestamp for January 27th, 2026, return "odd" because the day number (27) is an odd number.
+*/
+
+function oddOrEvenDay(timestamp) {
+let dt=new Date(timestamp).getUTCDate();
+  return dt%2==0?"even":"odd";
+}
+
+/* 28-01-2026: Flatten the Array
+Given an array that contains nested arrays, return a new array with all values flattened into a single, one-dimensional array. Retain the original order of the items in the arrays.
+*/
+
+function flatten(arr) {
+ return arr.flat(Infinity);
+}
+
+/* 29-01-2026: Letters-Numbers
+Given a string containing only letters and numbers, return a new string where a hyphen (-) is inserted every time the string switches from a letter to a number, or a number to a letter.
+*/
+
+function separateLettersAndNumbers(str) {
+  let n="0123456789".split("");
+  let l0="abcdefghijklmnopqrstuvwxyz";
+  let l=(l0+l0.toUpperCase()).split("");
+  let res=str[0];
+  for(let i=1;i<str.length;i++){
+    if(l.includes(str[i-1])&&n.includes(str[i])||n.includes(str[i-1])&&l.includes(str[i])){
+    res=res+"-"+str[i];
+    } else res+=str[i];
+  }
+  return res;
+}
+
+/* 30-01-2026: Valid Pawn Moves
+Given the position of one of your pawns on a chessboard, return an array of all the valid squares it can move to in ascending order.
+A standard chessboard is 8x8, with columns labeled A through H (left to right) and rows labeled 1 through 8 (bottom to top). It looks like this:
+A8B8C8D8E8F8G8H8
+A7B7C7D7E7F7G7H7
+A6B6C6D6E6F6G6H6
+A5B5C5D5E5F5G5H5
+A4B4C4D4E4F4G4H4
+A3B3C3D3E3F3G3H3
+A2B2C2D2E2F2G2H2
+A1B1C1D1E1F1G1H1
+For this challenge:
+• You are the player on the bottom of the board.
+• Pawns can only move one square "up".
+• Unless the pawn is in the starting row (row 2), then it can move one or two squares up.
+For example, given "D4", return ["D5"], the only square your pawn can move to. Given "B2", return ["B3", "B4"], because it's on the starting row and needs to be in ascending order.
+*/
+
+function findPawnMoves(pos) {
+  let l=pos[0];
+  let n=Number(pos[1]);
+  if(n!=2){
+    return [l+(n+1).toString()];
+  } else return [l+(n+1).toString(),l+(n+2).toString()];
+}
+/* 31-01-2026: Zodiac Finder
+Given a date string in the format "YYYY-MM-DD", return the zodiac sign for that date using the following chart:
+Date Range                Zodiac Sign
+March 21 - April 19.  "Aries"
+April 20 - May 20.      "Taurus"
+May 21 - June 20.      "Gemini"
+June 21 - July 22.      "Cancer"
+July 23 - August 22.  "Leo"
+August 23 - Sept. 22  "Virgo"
+Sept. 23 - Oct. 22.      "Libra"
+Oct. 23 - Nov. 21.       "Scorpio"
+Nov. 22 - Dec. 21.     "Sagittarius"
+Dec. 22 - Jan. 19.      "Capricorn"
+Jan. 20 - Feb. 18.      "Aquarius"
+Febr. 19 - March 20.  "Pisces"
+• Zodiac signs are based only on the month and day, you can ignore the year.
+*/
+
+function getSign(dateStr) {
+  let month=Number(dateStr.slice(5,7))-1; 
+  let day=Number(dateStr.slice(8));
+ if((month == 0 && day <= 19) || (month == 11 && day >=22)) {return "Capricorn";} else if ((month == 0 && day >= 20) || (month == 1 && day <= 18)) {
+  return "Aquarius";
+  } else if((month == 1 && day >= 19) || (month == 2 && day <= 20)) {
+      return "Pisces"; } else if((month == 2 && day >= 21) || (month == 3 && day <= 19)) {
+    return "Aries";} else if((month == 3 && day >= 20) || (month == 4 && day <= 20)) {
+    return "Taurus";
+  } else if((month == 4 && day >= 21) || (month == 5 && day <= 20)) {
+    return "Gemini";
+  } else if((month == 5 && day >= 21) || (month == 6 && day <= 22)) {
+    return "Cancer";
+  } else if((month == 6 && day >= 23) || (month == 7 && day <= 22)) {
+    return "Leo";
+  } else if((month == 7 && day >= 23) || (month == 8 && day <= 22)) {
+    return "Virgo";
+} else if((month == 8 && day >= 23) || (month == 9 && day <= 22)) {
+    return "Libra";
+ } else if((month == 9 && day >= 23) || (month == 10 && day <= 21)) {
+    return "Scorpio";
+  } else if((month == 10 && day >= 22) || (month == 11 && day <= 21)) {
+    return "Sagittarius";
+  }
+}
+
+
