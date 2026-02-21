@@ -1,4 +1,5 @@
 /* 01-02-2026: Digital Detox
+
 Given an array of your login logs, determine whether you have met your digital detox goal.
 Each log is a string in the format "YYYY-MM-DD HH:mm:ss".
 You have met your digital detox goal if both of the following statements are true:
@@ -26,6 +27,7 @@ function digitalDetox(logs) {
 }
 
 /* 02-02-2026: Groundhog Day
+
 Today is Groundhog Day, in which a groundhog predicts the weather based on whether or not it sees its shadow.
 Given a value representing the groundhog's appearance, return the correct prediction:
 • If the given value is the boolean true (the groundhog saw its shadow), return "Looks like we'll have six more weeks of winter.".
@@ -41,6 +43,7 @@ function groundhogDayPrediction(app) {
 }
 
 /* 03-02-2026: String Mirror
+
 Given a string, return a new string that consists of the given string with a reversed copy of itself appended to the end of it. */
 
 
@@ -50,6 +53,7 @@ function mirror(str) {
 }
 
 /* 04-02-2026: Truncate the Text
+
 Given a string, return it as-is if it's 20 characters or shorter. If it's longer than 20 characters, truncate it to the first 17 characters and append "..." to the end of it (so it's 20 characters total) and return the result. */
 
 function truncateText(text) {
@@ -60,6 +64,7 @@ function truncateText(text) {
 }
 
 /* 05-02-2026: Pocket Change
+
 Given an array of integers representing the coins in your pocket, with each integer being the value of a coin in cents, return the total amount in the format "$D.CC".
 • 100 cents equals 1 dollar.
 • In the return value, include a leading zero for amounts less than one dollar and always exactly two digits for the cents. */
@@ -76,6 +81,7 @@ function countChange(change) {
 }
 
 /* 06-02-2026:2026 Winter Games Day 1: Opening Day
+
 Today marks the start of the 2026 Winter Games. The next 17 days will bring you coding challenges inspired by them.
 For the first one, you are given a two-letter country code and need to return the flag emoji for that country. */
 
@@ -108,6 +114,7 @@ return cDict[code];
 }
 
 /* 07-02-2026: 2026 Winter Games Day 2: Snowboarding
+
 Given a snowboarder's starting stance and a rotation in degrees, determine their landing stance.
 • A snowboarder's stance is either "Regular" or "Goofy".
 • Trick rotations are multiples of 90 degrees. Positive indicates clockwise rotation, and negative indicate counter-clockwise rotation.
@@ -121,6 +128,7 @@ function getLandingStance(startStance, rotation) {
 }
 
 /* 08-02-2026: 2026 Winter Games Day 3: Biathlon
+
 Given an array of integers, where each value represents the number of targets hit in a single round of a biathlon, return the total penalty distance the athlete must ski.
 • Each round consists of 5 targets.
 • Each missed target results in a 150 meter penalty loop. */
@@ -130,6 +138,7 @@ function calculatePenaltyDistance(rounds) {
 }
 
 /* 09-02-2026: 2026 Winter Games Day 4: Ski Jumping
+
 Given distance points, style points, a wind compensation value, and K-point bonus value, calculate your score for the ski jump and determine if you won a medal or not.
 • Your score is calculated by summing the above four values.
 The current total scores of the other jumpers are:
@@ -148,6 +157,7 @@ function skiJumpMedal(distancePoints, stylePoints, windComp, kPointBonus) {
 }
 
 /* 10-02-2026: 2026 Winter Games Day 5: Cross-Country Skiing
+
 Given an array of finish times for a cross-country ski race, convert them into times behind the winner.
 • Given times are strings in "H:MM:SS" format.
 • Given times will be in order from fastest to slowest.
@@ -177,6 +187,7 @@ function getRelativeResults(results) {
 }
 
 /* 11-02-2026: 2026 Winter Games Day 6: Figure Skating
+
 Given an array of judge scores and optional penalties, calculate the final score for a figure skating routine.
 The first argument is an array of 10 judge scores, each a number from 0 to 10. Remove the highest and lowest judge scores and sum the remaining 8 scores to get the base score.
 Any additional arguments passed to the function are penalties. Subtract all penalties from the base score to get the final score. */
@@ -193,6 +204,7 @@ function computeScore(judgeScores, ...penalties) {
 }
 
 /* 12-02-2026: 2026 Winter Games Day 7: Speed Skating
+
 Given two arrays representing the lap times (in seconds) for two speed skaters, return the lap number where the difference in lap times is the largest.
 The first element of each array corresponds to lap 1, the second to lap 2, and so on. */
 
@@ -211,6 +223,7 @@ function largestDifference(skater1, skater2) {
 }
 
 /* 13-02-2026:  2026 Winter Games Day 8: Luge
+
 Given an array of five numbers, each representing the time (in seconds) it took a luger to complete a segment of a track, determine which segment had the fastest speed and what that speed was.
 The track is divided into the following segments:
 • Segment 1: 320 meters
@@ -237,6 +250,7 @@ function getFastestSpeed(times) {
 }
 
 /* 14-02-2026: 2026 Winter Games Day 9: Skeleton
+
 Given a string representing the curves on a skeleton track, determine the difficulty of the track.
 • The given string will only consist of the letters:
 • "L" for a left turn
@@ -264,3 +278,165 @@ function getDifficulty(track) {
   return sn<=100?"Easy":sn<=200?"Medium":"Hard";
 }
 
+/* 15-02-2026: 2026 Winter Games Day 10: Alpine Skiing
+
+Given a ski hill's vertical drop, horizontal distance, and type, determine the difficulty rating of the hill.
+To determine the rating:
+• Calculate the steepness of the hill by taking the drop divided by the distance.
+• Then, calculate the adjusted steepness based on the hill type:
+• "Downhill" multiply steepness by 1.2
+• "Slalom": multiply steepness by 0.9
+• "Giant Slalom": multiply steepness by 1.0
+Return:
+• "Green" if the adjusted steepness is less than or equal to 0.1
+• "Blue" if the adjusted steepness is greater than 0.1 and less than or equal to 0.25
+• "Black" if the adjusted steepness is greater than 0.25 */
+
+function getHillRating(drop, distance, type) {
+  let st=drop/distance;
+  st=type=="Downhill"?st*1.2:type=="Slalom"?st*0.9:st;
+  return st<=0.1?"Green":st<=0.25?"Blue":"Black";
+}
+
+/* 16-02-2026: 2026 Winter Games Day 11: Ice Hockey
+
+Given an array of 6 ice hockey teams and their records after the round robin games, determine the match-ups for the semi-final round.
+• Each array item will have a team and their record in the format "TEAM: W-OTW-OTL-L". Where:
+• "W" is the number of wins in regulation, worth 3 points each
+• "OTW" is the number of overtime wins, worth 2 points each
+• "OTL" is the number of overtime losses, worth 1 point each
+• "L" is the number of losses, worth 0 points each
+For example, "FIN: 2-2-1-0" would have 11 points after adding up their record.
+Find the total number of points for each team and return "The semi-final games will be (1st) vs (4th) and (2nd) vs (3rd).". For example, "The semi-final games will be FIN vs SWE and CAN vs USA." */
+
+function getSemifinalMatchups(teams) {
+  let m=teams.map((item)=>item.split(": ")[1]).map((item)=>3*Number(item.split("-")[0])+2*Number(item.split("-")[1])+Number(item.split("-")[2]));
+  let s=[...m].sort((a,b)=>b-a);
+  let r=[m.indexOf(s[0]),m.indexOf(s[3]),m.indexOf(s[1]),m.indexOf(s[2])];
+  let c=[];
+  for(let i=0;i<4;i++){
+    c.push(teams[r[i]].split(":")[0]);
+  }
+  return `The semi-final games will be ${c[0]} vs ${c[1]} and ${c[2]} vs ${c[3]}.`;
+}
+
+/* 17-02-2026: 2026 Winter Games Day 12: Bobsled
+
+Given an array representing the weights of the athletes on a bobsled team and a number representing the weight of the bobsled, determine whether the team is eligible to race.
+• The length of the array determines the team size: 1, 2 or 4 person teams.
+• All given weight values are in kilograms (kg).
+The bobsled (sled by iteself) must have a minimum weight of:
+• 162 kg for a 1-person team
+• 170 kg for a 2-person team
+• 210 kg for a 4-person team
+The total weight of the bobsled (athletes plus sled) must not exceed:
+• 247 kg for a 1-person team
+• 390 kg for a 2-person team
+• 630 kg for a 4-person team
+Return "Eligible" if the team meets all the requirements, or "Not Eligible" if the team fails to meet one or more of the requirements. */
+
+function checkEligibility(athleteWeights, sledWeight) {
+  let l=athleteWeights.length;
+  let c1=l==1?sledWeight>=162:l==2?sledWeight>=170:sledWeight>=210;
+  let sn=athleteWeights.reduce((a,b)=>a+b,0)+sledWeight;
+  let c2=l==1?sn<=247:l==2?sn<=390:sn<=630;
+  if(!c1||!c2) { return "Not Eligible";}
+  return "Eligible";
+}
+
+/* 18-02-2026: 2026 Winter Games Day 13: Nordic Combined
+
+Given an array of jump scores for athletes, calculate their start delay times for the cross-country portion of the Nordic Combined.
+The athlete with the highest jump score starts first (0 second delay). All other athletes start later based on how far behind their jump score is compared to the best jump.
+To calculate the delay for each athlete, subtract the athlete's jump score from the best overall jump score and multiply the result by 1.5. Round the delay up to the nearest integer. */
+
+function calculateStartDelays(jumpScores) {
+  let maxi=[...jumpScores].sort((a,b)=>b-a)[0];
+  return
+jumpScores.map((item)=>Math.ceil((maxi-item)*1.5));
+}
+
+/* 19-02-2026: 2026 Winter Games Day 14: Ski Mountaineering
+
+Given the snow depth and slope of a mountain, determine if there's an avalanche risk.
+• The snow depth values are "Shallow", "Moderate", or "Deep".
+• Slope values are "Gentle", "Steep", or "Very Steep".
+Return "Safe" or "Risky" based on this table:
+                  "Shallow"  "Moderate"  "Deep"
+"Gentle"        "Safe"        "Safe"       "Safe"
+"Steep"          "Safe"       "Risky"     "Risky"
+"Very Steep" "Safe"       "Risky"     "Risky"
+*/
+
+function avalancheRisk(snowDepth, slope) {
+  if(slope=="Gentle" ||snowDepth=="Shallow"){
+    return "Safe";
+  }
+  else return "Risky";
+}
+
+/* 20-02-2026: 2026 Winter Games Day 15: Freestyle Skiing
+
+Given a trick name consisting of two words, determine if it is a valid freestyle skiing trick name.
+A trick is valid if the first word is in the list of valid first words, and the second word is in the list of valid second words.
+• The two words will be separated by a single space.
+Valid first words:
+"Misty","Ghost","Thunder","Solar","Sky","Phantom","Frozen","Polar"
+Valid second words:
+"Twister","Icequake","Avalanche","Vortex","Snowstorm","Frostbite","Blizzard","Shadow" */
+
+function isValidTrick(trickName) {
+  let arr1=["Misty","Ghost","Thunder","Solar","Sky","Phantom","Frozen","Polar"];
+  let arr2=["Twister","Icequake","Avalanche","Vortex","Snowstorm","Frostbite","Blizzard","Shadow"]
+  let sp=trickName.split(" ");
+  if(arr1.includes(sp[0]) && arr2.includes(sp[1])) return true;
+  return false;
+}
+
+/* 21-02-2026: 2026 Winter Games Day 16: Curling
+
+Given a 5x5 matrix representing the "house" at the end of a curling round, determine which team scores and how many points they score.
+The layout:
+• The center cell (index [2, 2]) is the "button".
+• The 8 cells directly surrounding the button represent ring 1.
+• And the 16 cells on the outer edge of the house represent ring 2.
+In the given matrix:
+• "." represents an empty space.
+• "R" represents a space with a red stone.
+• "Y" represents a space with a yellow stone.
+Scoring rules:
+• Only one team can score per round.
+• The team with the stone closest to the button scores.
+• The scoring team earns 1 point for each of their stones that is closer to the button than the opponent's closest stone.
+• The lower the ring number, the closer to the center the stone is.
+• If both teams' closest stone is the same distance from the center, no team scores.
+Return:
+• A string in the format "team: number_of_points". e.g: "R: 2".
+• or "No points awarded" if neither team scored any points.
+For example, given:
+[ [".", ".", "R", ".", "."],
+  [".", "R", ".", ".", "."], 
+  ["Y", ".", ".", ".", "."], 
+  [".", "R", ".", ".", "."], 
+  [".", ".", ".", ".", "."] ] 
+Return "R: 2". The two red stones in ring 1 are tied for the closest and are the only two stones closer than yellows closest. */
+
+function scoreCurling(house){
+  let r0=[];
+  let y0=[];
+  for(let i=0;i<5;i++){
+    for(let j=0;j<5;j++){
+      if(house[i][j]=="R"){
+        r0.push([i-2,j-2]);
+      }
+      if(house[i][j]=="Y"){
+        y0.push([i-2,j-2]);
+      }
+    }
+  }
+  let r=r0.map((item)=>[Math.abs(item[0]),Math.abs(item[1])]).map((item)=>Math.max(...item));
+  let y=y0.map((item)=>[Math.abs(item[0]),Math.abs(item[1])]).map((item)=>Math.max(...item));
+  let m_r=Math.min(...r);
+  let m_y=Math.min(...y);
+  return m_r<m_y?`R: ${r.filter((item)=>item<m_y).length}`:m_r>m_y?`Y: ${y.filter((item)=>item<m_r).length}`:"No points awarded";
+}
