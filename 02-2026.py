@@ -472,3 +472,194 @@ def score_curling(house):
         return f"Y: {sy}"
     return "No points awarded"
 
+""" 22-02-2026: 2026 Winter Games Day 17: Closing Day
+
+Given a 2D array of medal winners, return a medal count for each country as a CSV string.
+• In the given array, each sub-array represents a single event: [gold_winner, silver_winner, bronze_winner]
+• The returned CSV string should have the following format, with the first line being headers:
+Country,Gold,Silver,Bronze,Total country_name,gold_count,silver_count,bronze_count,total_medals 
+• Separate new lines with the new line character ("\n").
+• Do not include spaces around commas or at the end of lines.
+• Sort the returned CSV by gold medal count, highest first. If two countries have the same gold medal count, sort the tied ones alphabetically.
+For example, given:
+[ ["USA", "CAN", "NOR"], ["NOR", "USA", "CAN"], ["USA", "NOR", "SWE"] ] 
+Return:
+"Country,Gold,Silver,Bronze,Total\nUSA,2,1,0,3\nNOR,1,1,1,3\nCAN,0,1,1,2\nSWE,0,0,1,1"  """
+
+def count_medals(winners):
+    lst=[]
+    for i in range(len(winners)):
+        lst+=winners[i]
+    w=sorted(list(set(lst)))
+    mDict={}
+    for i in range(len(w)):
+        mDict[w[i]]=[0,0,0]
+    for i in range(len(winners)):
+        for j in range(3):
+            mDict[winners[i][j]][j]+=1
+    for k in mDict.keys():
+        r=sum(mDict[k])
+        mDict[k].append(r)   
+    lst2=[[] for i in range(len(w))]
+    for i in range(len(w)):
+        lst2[i].append(w[i])
+        for j in range(4):
+            lst2[i].append(str(mDict[w[i]][j]))
+    s=lst2.copy()
+    s=sorted(s, key=lambda x: x[1], reverse=True)
+    res="Country,Gold,Silver,Bronze,Total\n"
+    for i in range(len(s)):
+        res+=",".join(s[i])+"\n"
+    return res[0:-1]
+
+""" 23-02-2026: Blood Type Compatibility
+
+Given a donor blood type and a recipient blood type, determine whether the donor can give blood to the recipient.
+Each blood type consists of:
+• A letter: "A", "B", "AB", or "O"
+• And an Rh factor: "+" or "-"
+Blood types will be one of the valid letters followed by an Rh factor. For example, "AB+" and "O-" are valid blood types.
+Letter Rules:
+• "O" can donate to other letter type.
+• "A" can donate to "A" and "AB".
+• "B" can donate to "B" and "AB".
+• "AB" can donate only to "AB".
+Rh Rules:
+• Negative ("-") can donate to both "-" and "+".
+• Positive ("+") can donate only to "+".
+Both letter and Rh rule must pass for a donor to be able to donate to the recipient. """ 
+
+def can_donate(donor, recipient):
+    d1={"O":["O","A","B","AB"],"A":["A","AB"],"B":["B","AB"],"AB":["AB"]}
+    d2={"+":["+"],"-":["+","-"]}
+    rh1=donor[-1]
+    bg1=donor[:-1]
+    rh2=recipient[-1]
+    bg2=recipient[:-1]
+    c1=bg2 in d1[bg1]
+    c2=rh2 in d2[rh1]
+    return c1 and c2 
+
+""" 24-02-2026: Business Day Count
+
+Given a start date and an end date, return the number of business days between the two.
+• Given dates are in the format "YYYY-MM-DD".
+• Weekdays are business days (Monday through Friday).
+• Weekends are not business days (Saturday and Sunday).
+• Include both the start and end dates when counting. """
+
+from datetime import datetime
+def count_business_days(start, end):
+    d1 = datetime.strptime(start, "%Y-%m-%d")
+    d2 = datetime.strptime(end, "%Y-%m-%d")
+    diff=(d2-d1).days
+    sd=d1.weekday()
+    ed=sd+diff
+    days=[]
+    for i in range(sd,ed+1):
+        days.append(i%7)
+    wdays=[]
+    for i in range(len(days)):
+        if days[i] in [0,1,2,3,4]:
+            wdays.append(days[i])
+    return len(wdays)
+
+""" 25-02-2026: Sequential Difference
+
+Given an array of numbers, return a new array containing the value needed to get from each number to the next number.
+• For the last number, use 0 since there is no next number.
+For example, given [1, 2, 4, 7], return [1, 2, 3, 0].  """
+
+def find_differences(arr):
+    res=[]
+    for i in range(1,len(arr)):
+        res.append(arr[i]-arr[i-1])
+    res.append(0)
+    return res
+
+""" 26-02-2026: Letter and Number Count
+
+Given a string, return a message with the count of how many letters and numbers it contains.
+• Letters are A-Z and a-z.
+• Numbers are 0-9.
+• Ignore all other characters.
+Return "The string has X letters and Y numbers.", where "X" is the count of letters and "Y" is the count of numbers. If either count is 1, use the singular form for that item. E.g: "1 letter" instead of "1 letters" and "1 number" instead of "1 numbers". """
+
+import re
+def count_letters_and_numbers(s):
+    m1=len(re.findall("[A-Za-z]",s))
+    m2=len(re.findall("[0-9]",s))
+    s1=""
+    s2=""
+    if m1 != 1:
+        s1="s"
+    if m2 != 1:
+        s2="s"
+    return f"The string has {m1} letter{s1} and {m2} number{s2}."
+
+""" 27-02-2026: Matrix Shift
+
+Given a matrix (array of arrays) of numbers and an integer, shift all values in the matrix by the given amount.
+• A positive shift moves values to the right.
+• A negative shift moves values to the left.
+Values should wrap:
+• Treat the matrix as one continuous sequence of values.
+• When a value moves past the end of a row, it continues at the beginning of the next row.
+• When a value moves past the last position in the matrix, it wraps to the first position.
+• The same applies in reverse when shifting left.
+For example, given:
+[ [1, 2, 3], [4, 5, 6] ] 
+with a shift of 1, move all the numbers to the right one:
+[ [6, 1, 2], [3, 4, 5] ]  """
+
+def flatten(arr):
+    fl=[]
+    for el in arr:
+        if isinstance(el,list):
+            fl.extend(flatten(el))
+        else:
+            fl.append(el)
+    return fl
+
+def shift_matrix(matrix,shift):   
+    nr=len(matrix)
+    nc=len(matrix[0])
+    if abs(shift)>nr*nc:
+        d=shift//(nr*nc)
+        shift=shift-d*(nr*nc)
+    mat=flatten(matrix)
+    if shift>1:
+       sh=mat[-shift:]+mat[0:]
+    elif shift==1:
+       sh=[mat[-1]]+mat[0:-1]
+    elif shift==-1:
+       sh=mat[1:]+[mat[0]]
+    else:
+       sh=mat[-shift:]+mat[0:-shift]
+    res=[[] for i in range(nr)]
+    for i in range(nr):
+        for j in range(nc):
+            res[i].append(sh[j+i*nc])
+    return res
+
+""" 28-02-2026: Add Punctuation
+
+Given a string of sentences with missing periods, add a period (".") in the following places:
+• Before each space that comes immediately before an uppercase letter
+• And at the end of the string
+Return the resulting string. """
+
+import re
+def add_punctuation(s):
+    m=re.findall(" [A-Z]",s)
+    if len(m)==0:
+        return s+"."
+    ind=[]
+    for i in range(len(m)):
+        p=s.index(m[i]);
+        ind.append(p);
+    res=s[0:ind[0]]+".";
+    for i in range(len(ind)-1):
+        res+=s[ind[i]:ind[i+1]]+"."
+    res+=s[ind[-1]:]+"."
+    return res
