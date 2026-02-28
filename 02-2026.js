@@ -440,3 +440,189 @@ function scoreCurling(house){
   let m_y=Math.min(...y);
   return m_r<m_y?`R: ${r.filter((item)=>item<m_y).length}`:m_r>m_y?`Y: ${y.filter((item)=>item<m_r).length}`:"No points awarded";
 }
+
+/* 22-02-2026: 2026 Winter Games Day 17: Closing Day
+
+Given a 2D array of medal winners, return a medal count for each country as a CSV string.
+• In the given array, each sub-array represents a single event: [gold_winner, silver_winner, bronze_winner]
+• The returned CSV string should have the following format, with the first line being headers:
+Country,Gold,Silver,Bronze,Total country_name,gold_count,silver_count,bronze_count,total_medals 
+• Separate new lines with the new line character ("\n").
+• Do not include spaces around commas or at the end of lines.
+• Sort the returned CSV by gold medal count, highest first. If two countries have the same gold medal count, sort the tied ones alphabetically.
+For example, given:
+[ ["USA", "CAN", "NOR"], ["NOR", "USA", "CAN"], ["USA", "NOR", "SWE"] ] 
+Return:
+"Country,Gold,Silver,Bronze,Total\nUSA,2,1,0,3\nNOR,1,1,1,3\nCAN,0,1,1,2\nSWE,0,0,1,1"  */
+
+function countMedals(winners) {
+  let fl=Array.from(new Set(winners.flat())).sort().map((item)=>[item,0,0,0]);
+  for(let i=0;i<winners.length;i++){
+    for(let j=0;j<fl.length;j++){
+      for(let k=0;k<3;k++){
+      if(winners[i][k]==fl[j][0]){
+         fl[j][k+1]+=1;
+      }
+      fl[j][4]=fl[j].slice(1,4).reduce((a,b)=>a+b,0);
+        }
+     }
+  }
+  let res="Country,Gold,Silver,Bronze,Total\n";
+  res+=fl.sort((a,b)=>b[1]-a[1]).map((item)=>item.toString()+"\n").join("");
+  return res.slice(0,res.length-1);
+}
+
+/* 23-02-2026: Blood Type Compatibility
+
+Given a donor blood type and a recipient blood type, determine whether the donor can give blood to the recipient.
+Each blood type consists of:
+• A letter: "A", "B", "AB", or "O"
+• And an Rh factor: "+" or "-"
+Blood types will be one of the valid letters followed by an Rh factor. For example, "AB+" and "O-" are valid blood types.
+Letter Rules:
+• "O" can donate to other letter type.
+• "A" can donate to "A" and "AB".
+• "B" can donate to "B" and "AB".
+• "AB" can donate only to "AB".
+Rh Rules:
+• Negative ("-") can donate to both "-" and "+".
+• Positive ("+") can donate only to "+".
+Both letter and Rh rule must pass for a donor to be able to donate to the recipient. */
+
+function canDonate(donor, recipient) {
+  let d1={"O":["O","A","B","AB"],"A":["A","AB"],"B":["B","AB"],"AB":["AB"]};
+  let d2={"+":["+"],"-":["+","-"]};
+  let d=donor.split("").reverse();
+  let rh1=d[0];
+  let bg1=d.slice(1).reverse().join("");
+  let r=recipient.split("").reverse();
+  let rh2=r[0];
+  let bg2=r.slice(1).reverse().join("");
+  let c1=d1[bg1].includes(bg2);
+  let c2=d2[rh1].includes(rh2);
+  return c1  && c2;
+}
+
+/* 24-02-2026: Business Day Count
+Given a start date and an end date, return the number of business days between the two.
+• Given dates are in the format "YYYY-MM-DD".
+• Weekdays are business days (Monday through Friday).
+• Weekends are not business days (Saturday and Sunday).
+• Include both the start and end dates when counting. */
+
+function countBusinessDays(start, end) {
+  let dt1 = new Date(start);
+  let dt2 = new Date(end);
+  const diffTime = Math.abs(dt2 - dt1);
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); 
+  let sdt=dt1.getDay();
+  let edt=sdt+diffDays; 
+  let days=[];
+  for(let i=sdt;i<edt+1;i++){
+    days.push(i%7);
+  }
+  let wdays=days.filter((item)=>[1,2,3,4,5].includes(item));
+  return wdays.length;
+}
+
+/* 25-02-2026: Sequential Difference
+Given an array of numbers, return a new array containing the value needed to get from each number to the next number.
+• For the last number, use 0 since there is no next number.
+For example, given [1, 2, 4, 7], return [1, 2, 3, 0].  */
+
+function findDifferences(arr) {
+  let res=[];
+  for(let i=1;i<arr.length;i++){
+    res.push(arr[i]-arr[i-1]);
+  }
+  res.push(0);
+  return res;
+}
+
+/* 26-02-2026: Letter and Number Count
+
+Given a string, return a message with the count of how many letters and numbers it contains.
+• Letters are A-Z and a-z.
+• Numbers are 0-9.
+• Ignore all other characters.
+Return "The string has X letters and Y numbers.", where "X" is the count of letters and "Y" is the count of numbers. If either count is 1, use the singular form for that item. E.g: "1 letter" instead of "1 letters" and "1 number" instead of "1 numbers". */
+
+function countLettersAndNumbers(str) {
+  let r1=/[A-Za-z]/gi;
+  let r2=/[0-9]/gi;
+  let m1=r1.test(str)?str.match(r1).length:0;
+  let m2=r2.test(str)?str.match(r2).length:0;
+  let s1=m1!=1?"s":"";
+  let s2=m2!=1?"s":"";
+  let res= `The string has ${m1} letter${s1} and ${m2} number${s2}.`;
+  return res;
+}
+
+/* 27-02-2026: Matrix Shift
+
+Given a matrix (array of arrays) of numbers and an integer, shift all values in the matrix by the given amount.
+• A positive shift moves values to the right.
+• A negative shift moves values to the left.
+Values should wrap:
+• Treat the matrix as one continuous sequence of values.
+• When a value moves past the end of a row, it continues at the beginning of the next row.
+• When a value moves past the last position in the matrix, it wraps to the first position.
+• The same applies in reverse when shifting left.
+For example, given:
+[ [1, 2, 3], [4, 5, 6] ] 
+with a shift of 1, move all the numbers to the right one:
+[ [6, 1, 2], [3, 4, 5] ] */
+
+function shiftMatrix(matrix, shift) {
+  let nr=matrix.length;
+  let nc=matrix[0].length;
+  if(Math.abs(shift)>nr*nc){
+    let d=Math.floor(shift/(nr*nc));
+    shift=shift-d*(nr*nc)
+  }
+  let mat=matrix.flat();
+  let sh;
+  if(shift>1){
+    sh=[mat.slice(-shift),mat.slice(0,-shift)].flat()
+    }
+  else if(shift==1){
+    sh=[mat[mat.length-1],mat.slice(0,mat.length-1)].flat();
+  }
+  else if(shift==-1){
+    sh=[mat.slice(1),mat[0]].flat(); 
+  }
+  else {
+    sh=[mat.slice(-shift),mat.slice(0,-shift)].flat();
+  }
+  let res=Array(nr).fill(1).map(_ => Array(nc).fill(0))
+  for(let i=0;i<nr;i++){
+    for(let j=0;j<nc;j++){
+        res[i][j]=sh[j+i*nc];
+    }
+  }
+  return res;
+}
+
+/* 28-02-2026: Add Punctuation
+
+Given a string of sentences with missing periods, add a period (".") in the following places:
+• Before each space that comes immediately before an uppercase letter
+• And at the end of the string
+Return the resulting string. */
+
+function addPunctuation(s) {
+  let reg=/ [A-Z]/g;
+  let m=s.match(reg);
+  if(!m) return s+".";
+  let ind=[];
+  for(let i=0;i<m.length;i++){
+    let p=s.indexOf(m[i]);
+    ind.push(p);
+  }
+  let res=s.slice(0,ind[0])+".";
+  for(let i=0;i<ind.length-1;i++){
+    res+=s.slice(ind[i],ind[i+1])+".";
+  }
+  res+=s.slice(ind[ind.length-1])+".";
+  return res;
+}
