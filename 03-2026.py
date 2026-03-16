@@ -1,4 +1,3 @@
-
 """ 01-03-2026: Flattened 
 
 Given an array, determine if it is flat.
@@ -233,3 +232,122 @@ def is_valid_hsl(hsl):
     c3=p3>=0 and p3<=100 and "%" in s[2]
     return c1 and c2 and c3
     
+""" 09-03-2026: Array Sum
+
+Given an array of numbers, return the sum of all the numbers. """
+
+def sum_array(numbers):
+    sn=0
+    for num in numbers:
+        sn+=num
+    return sn
+
+""" 10-03-2026: Array Insertion
+
+Given an array, a value to insert into the array, and an index to insert the value at, return a new array with the value inserted at the specified index. """
+
+def insert_into_array(arr, value, index):
+    arr1=arr[:index]
+    arr2=arr[index:]
+    return arr1 + [value] +arr2
+
+""" 11-03-2026: Word Length Converter
+
+Given a string of words, return a new string where each word is replaced by its length.
+• Words in the given string will be separated by a single space
+• Keep the spaces in the returned string.
+For example, given "hello world", return "5 5".  """
+
+def convert_words(s):
+    lst=s.split(" ")
+    res=""
+    for el in lst:
+        res+=str(len(el))+" "
+    return res[:-1]
+
+""" 12-03-2026: Domino Chain Validator 
+
+Given a 2D array representing a sequence of dominoes, determine whether it forms a valid chain.
+• Each element in the array represents a domino and will be an array of two numbers from 1 to 6, (inclusive).
+• For the chain to be valid, the second number of each domino must match the first number of the next domino.
+• The first number of the first domino and the last number of the last domino don't need to match anything. """
+
+def is_valid_domino_chain(dominoes):
+    for i in range(1,len(dominoes)):
+        if not dominoes[i][0]==dominoes[i-1][1]:
+            return False
+    return True
+
+""" 13-03-2026: Parking Fee Calculator
+Given two strings representing the time you parked your car and the time you picked it up, calculate the parking fee.
+• The given strings will be in the format "HH:MM" using a 24-hour clock. So "14:00" is 2pm for example.
+• The first string will be the time you parked your car, and the second will be the time you picked it up.
+• If the pickup time is earlier than the entry time, it means the parking spanned past midnight into the next day.
+Fee rules:
+• Each hour parked costs $3.
+• Partial hours are rounded up to the next full hour.
+• If the parking spans overnight (past midnight), an additional $10 overnight fee is applied.
+• There is a minimum fee of $5 (only used if the total would be less than $5).
+Return the total cost in the format "$cost", "$5" for example. """
+
+import math
+def calculate_parking_fee(park_time, pickup_time):
+    parkt=int(park_time[0:2])*60+int(park_time[3:5])
+    pickt=int(pickup_time[0:2])*60+int(pickup_time[3:5])
+    total=0;
+    if parkt>pickt:
+        diff=math.ceil((24*60-(parkt-pickt))/60);
+        total+=10;
+    else:
+         diff=math.ceil((pickt-parkt)/60);
+    if diff>1:
+       total+=3*diff
+    else:
+        total=5
+    return "$"+str(total)
+
+""" 14-03-2026: Pi Day
+
+Happy pi (π) day!
+Given an integer (n), where n is between 1 and 1000 (inclusive), return the nth decimal of π.
+• Make sure to return a number not a string.
+π with its first five decimals is 3.14159. So given 5 for example, return 9, the fifth decimal.
+You may have to find the first 1000 decimals of π somewhere. """
+
+p="31415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989"
+                           
+def get_pi_decimal(n):
+    return int(p[n])
+
+""" 15-03-2026: Captured Chess Pieces
+
+Given an array of strings representing chess pieces you still have on the board, calculate the value of the pieces your opponent has captured.
+In chess, you start with 16 pieces:
+Piece    Abbreviation   Quantity   Value
+Pawn             "P"                 8             1
+Rook              "R"                 2             5
+Knight           "N"                 2             3
+Bishop          "B"                  2             3
+Queen           "Q"                 1             9
+King               "K"                 1             0
+• The given array will only contain the abbreviations above.
+• Any of the 16 pieces not included in the given array have been captured.
+• Return the total value of all captured pieces, unless...
+• If the King has been captured, return "Checkmate". """
+
+def get_captured_value(pieces):
+    v={"P":1,"R":5,"N":3,"B":3,"Q":9,"K":0}
+    sn=39
+    if "K" not in pieces:
+        return "Checkmate"
+    else:
+        for el in pieces:
+            sn-=v[el]
+    return sn
+
+""" 16-03-2026: Evenly Divisible
+
+Given two integers, determine if you can evenly divide the first one by the second one. """
+
+def is_evenly_divisible(a, b):
+    return a%b==0
