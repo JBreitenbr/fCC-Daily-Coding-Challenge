@@ -351,3 +351,199 @@ Given two integers, determine if you can evenly divide the first one by the seco
 
 def is_evenly_divisible(a, b):
     return a%b==0
+""" 17-03-2026: Anniversary Milestones
+
+Given an integer representing the number of years a couple has been married, return their most recent anniversary milestone according to this chart:
+Years Married          Milestone
+        1               "Paper"
+        5               "Wood"
+       10               "Tin"
+       25              "Silver"
+       40               "Ruby"
+       50               "Gold"
+       60              "Diamond"
+       70              "Platinum"
+• If they haven't reached the first milestone, return "Newlyweds". """
+
+def get_milestone(years):
+    if years<1:
+        return "Newlyweds"
+    elif years<5:
+        return "Paper"
+    elif years<10:
+        return "Wood"
+    elif years<25:
+        return "Tin"
+    elif years<40:
+        return "Silver"
+    elif years<50:
+        return "Ruby"
+    elif years<60:
+        return "Gold"
+    elif years<70:
+        return "Diamond"
+    return "Platinum"
+
+""" 18-03-2026: Largest Number
+
+Given a string of numbers separated by various punctuation, return the largest number.
+• The given string will only contain numbers and separators.
+• Separators can be commas (","), exclamation points ("!"), question marks ("?"), colons (":"), or semi-colons (";").  """
+
+import re
+def largest_number(s):
+    m=re.findall("[?!:;,]",s)
+    res=""
+    for i in range(len(s)):
+        if s[i] in m:
+            res+=" "
+        else:
+            res+=s[i]
+    sp=res.split(" ")
+    maxi=float(sp[0])
+    for el in sp:
+        if float(el)>maxi:
+            maxi=float(el)
+    return maxi
+
+""" 19-03-2026: Inverted Matrix
+
+Given a matrix (an array of arrays) filled with two distinct values, return a new matrix where all occurrences of one value are swapped with the other.
+For example, given:
+[ ["a", "b"], ["a", "a"] ] 
+Return:
+[ ["b", "a"], ["b", "b"] ] """
+
+def invert_matrix(matrix):
+    els=[]
+    for i in range(len(matrix)):
+        for el in matrix[i]:
+            if not el in els:
+                els.append(el)
+    d={}
+    for i in range(2):
+        d[els[i]]=els[1-i]
+    print(d)
+    mat=matrix.copy()
+    for i in range(len(mat)):
+        for j in range(len(mat[i])):
+            mat[i][j]=d[mat[i][j]]
+    return mat
+
+""" 20-03-2026: Equinox Shadows
+
+Today is the equinox, when the sun is directly above the equator and perfectly overhead at noon. Given a time, determine the shadow cast by a 4-foot vertical pole.
+• The time will be a string in "HH:MM" 24-hour format (for example, "15:00" is 3pm).
+• You will only be given a time in 30 minute increments.
+Rules:
+• The sun rises at 6am directly "east", and sets at 6pm directly "west".
+• A shadow always points opposite the sun.
+• The shadow's length (in feet) is the number of hours away from noon, cubed.
+• There is no shadow before sunrise (before 6am), after sunset (6pm or later), or at noon.
+Return:
+• If a shadow exists, return "(length)ft (direction)". For example, "8ft west".
+• Otherwise, return "No shadow".  """
+
+def get_shadow(time):
+    nmin=12*60
+    tmin=int(time[0:2])*60+int(time[3:5])
+    if tmin<6*60 or tmin>=18*60 or time=="12:00" or time=="0:00":
+        return "No shadow"
+    diff=(tmin-nmin)/60
+    ft=pow(abs(diff),3)
+    if int(abs(diff))==abs(diff):
+        ft=round(ft)
+    if diff>0:
+        return f"{ft}ft east"
+    if diff<0:
+        return f"{ft}ft west"
+
+""" 21-03-2026: QR Decoder
+
+Given a 6x6 matrix (array of arrays), representing a QR code, return the string of binary data in the code.
+• The QR code may be given in any rotation of 90 degree increments.
+• A correctly oriented code has a 2x2 group of 1's (orientation markers) in the bottom-left, top-left, and top-right corners.
+• The three 2x2 orientation markers are not part of the binary data.
+• The binary data is read left-to-right, top-to-bottom (like a book) when the QR code is correctly oriented.
+• A code will always have exactly one valid orientation.
+For example, given:
+[ "110011", "110011", "000000", "000000", "110000", "110001" ] 
+or given the same code with a different orientation:
+[ "110011", "110011", "000000", "000000", "000011", "100011" ] 
+Return "000000000000000000000001", all the binary data excluding the three 2x2 orientation markers. """
+
+def rot(matrix):
+    return [list(reversed(col)) for col in zip(*matrix)]
+
+def br(mat):
+    return (mat[-2][-2]+mat[-2][-1]+mat[-1][-2]+mat[-1][-1])!="1111"
+
+def decode_qr(qr_code):
+    l=len(qr_code)
+    mat=[]
+    for i in range(len(qr_code)):
+        mat.append(list(qr_code[i]))
+    r=mat
+    for i in range(4):
+        r=rot(r)
+        if br(r):
+            break
+    res="".join(r[0][2:-2])+"".join(r[1][2:-2])
+    for i in range(2,l-2):
+        res+="".join(r[i])
+    res+="".join(r[-2][2:])+"".join(r[-1][2:])
+    return res
+
+""" 22-03-2026: Coffee Roast Detector
+
+Given a string representing the beans used to make a cup of coffee, determine the roast of the cup.
+• The given string will contain the following characters, each representing a type of bean:
+• An apostrophe (') is a light roast bean worth 1 point each.
+• A dash (-) is a medium roast bean worth 2 points each.
+• A period (.) is a dark roast bean worth 3 points each.
+• The roast level is determined by the average of all the beans.
+Return:
+• "Light" if the average is less than 1.75.
+• "Medium" if the average is 1.75 to 2.5.
+• "Dark" if the average is greater than 2.5.
+"""
+
+import re
+def detect_roast(beans):
+    val={"'":1,"-":2,".":3}
+    r=re.findall("['-.]",beans)
+    sn=0
+    cnt=0
+    for el in r:
+        sn+=val[el]
+        cnt+=1
+    if sn/cnt < 1.75:
+        return "Light"
+    elif sn/cnt <=2.5:
+        return "Medium"
+    else:
+        return "Dark"
+
+""" 23-03-2026: No Consecutive Repeats */
+
+Given a string, determine if it has no repeating characters.
+• A string has no repeats if it does not have the same character two or more times in a row.  """
+
+def has_no_repeats(s):
+    a0="abcdefghijklmnopqrstuvwxyz"   
+    a=a0+a0.upper()
+    for i in range(1,len(s)):
+        if s[i] in a and s[i]==s[i-1]:
+            return False
+    return True
+
+""" 24-03-2026: Passing Exam Count
+
+Given an array of student exam scores and the score needed to pass it, return the number of students that passed the exam. """
+
+def passing_count(scores, passing_score):
+    sn=0
+    for el in scores:
+        if el>=passing_score:
+            sn+=1
+    return sn
