@@ -363,3 +363,170 @@ Given two integers, determine if you can evenly divide the first one by the seco
 function isEvenlyDivisible(a, b) {
   return a%b==0;
 }
+/* 17-03-2026: Anniversary Milestones
+
+Given an integer representing the number of years a couple has been married, return their most recent anniversary milestone according to this chart:
+Years Married         Milestone
+        1               "Paper"
+        5               "Wood"
+       10               "Tin"
+       25               "Silver"
+       40                "Ruby"
+       50                "Gold"
+       60              "Diamond"
+       70              "Platinum"
+• If they haven't reached the first milestone, return "Newlyweds". */
+
+function getMilestone(yrs) {
+  return yrs<1?"Newlyweds":yrs<5?"Paper":yrs<10?"Wood":yrs<25?"Tin":yrs<40?"Silver":yrs<50?"Ruby":yrs<60?"Gold":yrs<70?"Diamond":"Platinum";
+}
+
+/* 18-03-2026: Largest Number
+
+Given a string of numbers separated by various punctuation, return the largest number.
+• The given string will only contain numbers and separators.
+• Separators can be commas (","), exclamation points ("!"), question marks ("?"), colons (":"), or semi-colons (";").  */
+
+function largestNumber(str) {
+  let reg=/[!?:,;]/gi;
+  let m=str.match(reg);
+  let res="";
+  for(let i=0;i<str.length;i++){
+    if(m.includes(str[i])){
+      res+=" ";
+    } else res+=str[i];
+  }
+  let sp=res.split(" ").map((item)=>Number(item)).sort((a,b)=>b-a);
+  return sp[0];
+}
+
+/* 19-03-2026: Inverted Matrix
+
+Given a matrix (an array of arrays) filled with two distinct values, return a new matrix where all occurrences of one value are swapped with the other.
+For example, given:
+[ ["a", "b"], ["a", "a"] ] 
+Return:
+[ ["b", "a"], ["b", "b"] ] */
+
+function invertMatrix(matrix) {
+  let s=Array.from(new Set(matrix.flat()));
+  let d={};
+  for(let i=0;i<2;i++){
+    d[s[i]]=s[1-i];
+  }
+  let res=Array(matrix.length).fill(1).map(_ => Array(matrix[0].length).fill(0));
+  for(let i=0;i<matrix.length;i++){
+    for(let j=0;j<matrix[i].length;j++){
+      res[i][j]=d[matrix[i][j]];
+    }
+  }
+  return res;
+}
+
+/* 20-03-2026: Equinox Shadows
+
+Today is the equinox, when the sun is directly above the equator and perfectly overhead at noon. Given a time, determine the shadow cast by a 4-foot vertical pole.
+• The time will be a string in "HH:MM" 24-hour format (for example, "15:00" is 3pm).
+• You will only be given a time in 30 minute increments.
+Rules:
+• The sun rises at 6am directly "east", and sets at 6pm directly "west".
+• A shadow always points opposite the sun.
+• The shadow's length (in feet) is the number of hours away from noon, cubed.
+• There is no shadow before sunrise (before 6am), after sunset (6pm or later), or at noon.
+Return:
+• If a shadow exists, return "(length)ft (direction)". For example, "8ft west".
+• Otherwise, return "No shadow". */
+
+function getShadow(time) {
+  let nmin=12*60;
+  let tmin=Number(time.slice(0,2))*60+Number(time.slice(3,5));
+  if(tmin>=60*18 || tmin <60*6 || time=="12:00" || tmin=="0:00") return "No shadow";
+  let diff=(nmin-tmin)/60;
+  let ft=Math.pow(Math.abs(diff),3);
+  return diff<0?`${ft}ft east`:`${ft}ft west`;
+}
+
+/* 21-03-2026: QR Decoder
+
+Given a 6x6 matrix (array of arrays), representing a QR code, return the string of binary data in the code.
+• The QR code may be given in any rotation of 90 degree increments.
+• A correctly oriented code has a 2x2 group of 1's (orientation markers) in the bottom-left, top-left, and top-right corners.
+• The three 2x2 orientation markers are not part of the binary data.
+• The binary data is read left-to-right, top-to-bottom (like a book) when the QR code is correctly oriented.
+• A code will always have exactly one valid orientation.
+For example, given:
+[ "110011", "110011", "000000", "000000", "110000", "110001" ] 
+or given the same code with a different orientation:
+[ "110011", "110011", "000000", "000000", "000011", "100011" ] 
+Return "000000000000000000000001", all the binary data excluding the three 2x2 orientation markers. */
+
+function rotate(matrix){
+    return matrix.map((row, i) =>row.map((val, j) => matrix[matrix.length - 1 - j][i]));
+    };
+
+function br(mat){
+  let l=mat.length;
+  let br=mat[l-1][l-1]+mat[l-1][l-2]+mat[l-2][l-1]+mat[l-2][l-2];
+  return br!="1111";
+}
+
+function decodeQr(qrCode) {
+  let mat=[];
+  let l=qrCode.length;
+  for(let i=0;i<l;i++){
+    mat.push(qrCode[i].split(""));
+  }
+  let r=mat;
+  for(let i=0;i<5;i++){
+    r=rotate(r);
+    if(br(r)) break;
+  }
+  let res=r[0].slice(2,l-2).join("")+r[1].slice(2,l-2).join("");
+  for(let i=2;i<l-2;i++){
+    res+=r[i].join("");
+  }
+  res+=r[l-2].slice(2).join("")+r[l-1].slice(2).join("");
+  return res;
+}
+
+/* 22-03-2026: Coffee Roast Detector
+
+Given a string representing the beans used to make a cup of coffee, determine the roast of the cup.
+• The given string will contain the following characters, each representing a type of bean:
+• An apostrophe (') is a light roast bean worth 1 point each.
+• A dash (-) is a medium roast bean worth 2 points each.
+• A period (.) is a dark roast bean worth 3 points each.
+• The roast level is determined by the average of all the beans.
+Return:
+• "Light" if the average is less than 1.75.
+• "Medium" if the average is 1.75 to 2.5.
+• "Dark" if the average is greater than 2.5.
+*/
+
+function detectRoast(beans) {
+  let val={"'":1,"-":2,".":3};
+  let res=beans.split("").map((item)=>val[item]).reduce((a,b)=>a+b,0)/beans.length;
+  return res<1.75?"Light":res<=2.5?"Medium":"Dark";
+}
+
+/* 23-03-2026: No Consecutive Repeats */
+
+Given a string, determine if it has no repeating characters.
+• A string has no repeats if it does not have the same character two or more times in a row. */
+
+function hasNoRepeats(str) {
+  let a0="abcdefghijklmnopqrstuvwxyz";
+  let a=a0+a0.toUpperCase();
+  for(let i=1;i<str.length;i++){
+    if(str[i]==str[i-1]) return false;
+  }
+  return true;
+}
+
+/* 24-03-2026: Passing Exam Count
+
+Given an array of student exam scores and the score needed to pass it, return the number of students that passed the exam. */
+
+function passingCount(scores, passingScore) {
+  return scores.filter((item)=>item>=passingScore).length;
+}
