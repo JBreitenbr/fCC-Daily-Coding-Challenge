@@ -530,3 +530,175 @@ Given an array of student exam scores and the score needed to pass it, return th
 function passingCount(scores, passingScore) {
   return scores.filter((item)=>item>=passingScore).length;
 }
+
+/* 25-03-2026: Cooldown Time
+
+Given two timestamps, the first representing when a user finished an exam, and the second representing the current time, determine whether the user can take an exam again.
+• Both timestamps will be given the format: "YYYY-MM-DDTHH:MM:SS", for example "2026-03-25T14:00:00". Note that the time is 24-hour clock.
+• A user must wait at least 48 hours before retaking an exam. */
+
+function canRetake(finishTime, currentTime) {
+  let d1=parseInt(finishTime.slice(8,10));
+  let d2=parseInt(currentTime.slice(8,10));
+  let t1=parseInt(finishTime.slice(11,13))*3600+
+  parseInt(finishTime.slice(14,16))*60+parseInt(finishTime.slice(17,19));
+  let t2=parseInt(currentTime.slice(11,13))*3600+parseInt(currentTime.slice(14,16))*60+parseInt(currentTime.slice(17,19));
+  if(d2-d1<2 || t2<t1) return false;
+  return true;
+}
+
+/* 26.03.2006: Movie Night
+
+Given a string for the day of the week, another string for a showtime, and an integer number of tickets, return the total cost of the movie tickets for that showing.
+The given day will be one of:
+• "Monday"
+• "Tuesday"
+• "Wednesday"
+• "Thursday"
+• "Friday"
+• "Saturday"
+• "Sunday"
+The showtime will be given in the format "H:MMam" or "H:MMpm". For example "10:00am" or "10:00pm".
+Return the total cost in the format "$D.CC" using these rules:
+• Weekend (Friday - Sunday): $12.00 per ticket.
+• Weekday (Monday - Thursday): $10.00 per ticket.
+• Matinee (before 5:00pm): subtract $2.00 per ticket (except on Tuesdays).
+• Tuesdays: all tickets are $5.00 each. */
+
+function getMovieNightCost(day, showtime, numberOfTickets) {
+  if(day=="Tuesday"){
+    return `$${5*numberOfTickets}.00`;
+  }
+  let t=parseInt(showtime.slice(0,2));
+  let apm=showtime.slice(showtime.length-2,showtime.length);
+  let d1=["Monday","Wednesday","Thursday"];
+  let d2=["Friday","Saturday","Sunday"];
+  let p=d1.includes(day)?10:d2.includes(day)?12:5;
+  let d=(apm=="am"||apm=="pm"&&t<5)?2:0;
+  p-=d;
+  p*=numberOfTickets;
+  return `$${p.toString()}.00`;
+}
+
+/* 27-03-2026: Truncate the Text 2
+
+Given a string, return a new string that is truncated so that the total width of the characters does not exceed 50 units.
+Each character has a specific width:
+LettersWidth"ilI"1"fjrt"2"abcdeghkmnopqrstuvwxyzJL"3"ABCDEFGHKMNOPQRSTUVWXYZ"4
+The table above includes all upper and lower case letters. Additionally:
+• Spaces (" ") have a width of 2
+• Periods (".") have a width of 1
+• If the given string is 50 units or less, return the string as-is, otherwise
+• Truncate the string and add three periods at the end ("...") so it's total width, including the three periods, is as close as possible to 60 units without going over.  */
+
+function truncateText(str) {
+  let d={};
+  let s1="ilI".split("");
+  let s2="fjrt".split("");
+  let s3="abcdeghkmnopqrstuvwxyzJL".split("");
+  let s4="ABCDEFGHKMNOPQRSTUVWXYZ".split("");
+  s1.forEach((item)=>d[item]=1)
+  s2.forEach((item)=>d[item]=2)
+  s3.forEach((item)=>d[item]=3)
+  s4.forEach((item)=>d[item]=4)
+  d[" "]=2;
+  d["."]=1;
+  let sn=0;
+  let res="";
+  for(let i=0;i<str.length;i++){
+    sn+=d[str[i]];
+    res+=str[i];
+    if(sn>=50) break;
+  }
+  if(sn<=50) return str;
+  let t1=res.slice(0,res.length-1)+"...";
+  let t2=res.slice(0,res.length-2)+"...";
+  if(res[res.length-3]==" ") return t1;
+  else return t2;
+}
+
+/* 28-03-2026: Pascal's Triangle Row
+
+Given an integer n, return the nth row of Pascal's triangle as an array.
+In Pascal's Triangle, each row begins and ends with 1, and each interior value is the sum of the two values directly above it.
+Here's the first 5 rows of the triangle:
+            1 
+          1  1 
+        1  2  1
+      1  3  3  1 
+    1  4  6  4  1          */
+
+function pascalRow(n) {
+  let res=[[1],[1,1],[1,2,1]];
+  for(let j=0;j<n-3;j++){
+    let r=[1];
+    for(let i=0;i<j+2;i++){
+      let s=res[res.length-1][i]+res[res.length-1][i+1];
+      r.push(s);
+    }
+    r.push(1);
+  res.push(r);
+}
+  return n<4?res[n-1]:res[res.length-1];
+}
+
+/* 29-03-2026: ISBN-10 Validator
+
+Given a string, determine if it's a valid ISBN-10.
+An ISBN-10 consists of hyphens ("-") and 10 other characters. After removing the hyphens ("-"):
+• The first 9 characters must be digits, and
+• The final character may be a digit or the letter "X", which represents the number 10.
+To validate it:
+• Multiply each digit (or value) by its position (multiply the first digit by 1, the second by 2, and so on).
+• Add all the results together.
+• If the total is divisible by 11, it's valid. */
+
+function isValidIsbn10(str) {
+  let s=str.replaceAll("-","");
+  let ind=s.indexOf("X");
+  if(![-1,9].includes(ind)) return false;
+    else {
+      return s.split("").map((item,index)=>item=="X"?100:parseInt(item)*(index+1)).reduce((a,b)=>a+b,0)%11==0;
+    }
+}
+
+/* 30-03-2026: Due Date
+
+Given a date string, return the date 9 months in the future.
+• The given and return strings have the format "YYYY-MM-DD".
+• If the month nine months into the future doesn't contain the original day number, return the last day of that month. */
+
+function isLeapYear(year) {
+    return year%400==0||year%4==0&&year%100!=0;
+}
+
+function getDueDate(dateStr) {
+  let _d=parseInt(dateStr.slice(8,10));
+  let _m=parseInt(dateStr.slice(5,7));
+  let _y=parseInt(dateStr.slice(0,4));
+  let m=_m+9>12?_m-3:_m+9;
+  let y=_m+9>12?_y+1:_y;
+  let lD={1:31,2:isLeapYear(y)?29:28,3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31};
+  let d=Math.min(_d,lD[m]);
+  let fy=y.toString();
+  let fm=m<10?"0"+m.toString():m.toString();
+  let fd=d<10?"0"+d.toString():d.toString();
+  return fy+"-"+fm+"-"+fd;
+}
+
+/*  31-03-2026: Wake-Up Alarm
+
+Given a string representing the time you set your alarm and a string representing the time you actually woke up, determine if you woke up early, on time, or late.
+• Both times will be given in "HH:MM" 24-hour format.
+Return:
+• "early" if you woke up before your alarm time.
+• "on time" if you woke up at your alarm time, or within the 10 minute snooze window after the alarm time.
+• "late" if you woke up more than 10 minutes after your alarm time.
+Both times are on the same day. */
+
+function alarmCheck(alarmTime, wakeTime) {
+  let at=parseInt(alarmTime.slice(0,2))*60+parseInt(alarmTime.slice(3,5));
+  let wt=parseInt(wakeTime.slice(0,2))*60+parseInt(wakeTime.slice(3,5));
+  let diff=wt-at;
+  return diff<0?"early":diff<=10?"on time":"late";
+}
