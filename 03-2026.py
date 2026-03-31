@@ -547,3 +547,201 @@ def passing_count(scores, passing_score):
         if el>=passing_score:
             sn+=1
     return sn
+    
+""" 25-03-2026: Cooldown Time
+
+Given two timestamps, the first representing when a user finished an exam, and the second representing the current time, determine whether the user can take an exam again.
+• Both timestamps will be given the format: "YYYY-MM-DDTHH:MM:SS", for example "2026-03-25T14:00:00". Note that the time is 24-hour clock.
+• A user must wait at least 48 hours before retaking an exam. """
+
+def can_retake(finish_time, current_time):
+    d1=int(finish_time[8:10])
+    d2=int(current_time[8:10])
+    t1=int(finish_time[11:13])*3600+int(finish_time[14:16])*60+int(finish_time[17:19])
+    t2=int(current_time[11:13])*3600+int(current_time[14:16])*60+int(current_time[17:19])
+    if d2-d1 < 2 or t2 < t1:
+        return False
+    return True
+
+""" 26.03.2006: Movie Night
+
+Given a string for the day of the week, another string for a showtime, and an integer number of tickets, return the total cost of the movie tickets for that showing.
+The given day will be one of:
+• "Monday"
+• "Tuesday"
+• "Wednesday"
+• "Thursday"
+• "Friday"
+• "Saturday"
+• "Sunday"
+The showtime will be given in the format "H:MMam" or "H:MMpm". For example "10:00am" or "10:00pm".
+Return the total cost in the format "$D.CC" using these rules:
+• Weekend (Friday - Sunday): $12.00 per ticket.
+• Weekday (Monday - Thursday): $10.00 per ticket.
+• Matinee (before 5:00pm): subtract $2.00 per ticket (except on Tuesdays).
+• Tuesdays: all tickets are $5.00 each. """
+
+def get_movie_night_cost(day, showtime, number_of_tickets):
+    sp=showtime.split(":")
+    t=int(sp[0])
+    apm=showtime[-2:]
+    if day=="Tuesday":
+       return "$"+str(5*number_of_tickets)+".00"
+    if day in ["Monday","Wednesday","Thursday"]:
+        p=10
+    if day in ["Friday","Saturday","Sunday"]:
+        p=12
+    if apm=="am" or apm=="pm" and t<5 and day!="Tuesday":
+        p-=2
+    p=p*number_of_tickets
+    return "$"+str(p)+".00"
+
+""" 27-03-2026: Truncate the Text 2
+
+Given a string, return a new string that is truncated so that the total width of the characters does not exceed 50 units.
+Each character has a specific width:
+LettersWidth"ilI"1"fjrt"2"abcdeghkmnopqrstuvwxyzJL"3"ABCDEFGHKMNOPQRSTUVWXYZ"4
+The table above includes all upper and lower case letters. Additionally:
+• Spaces (" ") have a width of 2
+• Periods (".") have a width of 1
+• If the given string is 50 units or less, return the string as-is, otherwise
+• Truncate the string and add three periods at the end ("...") so it's total width, including the three periods, is as close as possible to 60 units without going over.  """
+
+def truncate_text(s):
+    d={}
+    s1=list("ilI")
+    s2=list("fjrt")
+    s3=list("abcdeghkmnopqrstuvwxyzJL")
+    s4=list("ABCDEFGHKMNOPQRSTUVWXYZ")
+    for el in s1:
+        d[el]=1
+    for el in s2:
+        d[el]=2
+    for el in s3:
+        d[el]=3
+    for el in s4:
+        d[el]=4
+    d[" "]=2
+    d["."]=1
+    cnt=0
+    res=""
+    for i in range(len(s)):
+       res+=s[i]
+       cnt+=d[s[i]]
+       if cnt>50:
+           break
+    if cnt<50:
+        return s
+    elif res[-3]==" ":
+       return res[:-1]+"..."
+    else:
+       return res[:-2]+"..."
+
+""" 28-03-2026: Pascal's Triangle Row
+
+Given an integer n, return the nth row of Pascal's triangle as an array.
+In Pascal's Triangle, each row begins and ends with 1, and each interior value is the sum of the two values directly above it.
+Here's the first 5 rows of the triangle:
+            1 
+          1  1 
+        1  2  1
+      1  3  3  1 
+    1  4  6  4  1          """
+
+def pascal_row(n):
+    if n==1:
+        return [1]
+    if n==2:
+        return [1,1]
+    if n==3:
+        return [1,2,1]
+    res=[[1],[1,1],[1,2,1]]
+    for j in range(n-3):
+        r=[1]
+        for i in range(j+2):
+            s=res[-1][i]+res[-1][i+1]
+            r.append(s)
+        r.append(1)
+        res.append(r)
+    return res[-1]
+
+
+""" 29-03-2026: ISBN-10 Validator
+
+Given a string, determine if it's a valid ISBN-10.
+An ISBN-10 consists of hyphens ("-") and 10 other characters. After removing the hyphens ("-"):
+• The first 9 characters must be digits, and
+• The final character may be a digit or the letter "X", which represents the number 10.
+To validate it:
+• Multiply each digit (or value) by its position (multiply the first digit by 1, the second by 2, and so on).
+• Add all the results together.
+• If the total is divisible by 11, it's valid. """
+
+def is_valid_isbn10(s):
+    c=s.replace("-","")
+    ind=c.find("X")
+    sn=0
+    if not ind in [-1,9]:
+        return False
+    else:
+        for i in range(len(c)):
+            if c[i]=="X":
+                sn+=100
+            else:
+                sn+=int(c[i])*(i+1)
+    return sn%11==0
+
+""" 30-03-2026: Due Date
+
+Given a date string, return the date 9 months in the future.
+• The given and return strings have the format "YYYY-MM-DD".
+• If the month nine months into the future doesn't contain the original day number, return the last day of that month. """
+
+def is_leap_year(year):
+    return year%400==0 or year%4==0 and year%100!=0
+
+def get_due_date(date_str):
+    _d=int(date_str[8:10])
+    _m=int(date_str[5:7])
+    _y=int(date_str[0:4])
+    if _m+9>12:
+        m=_m-3
+        y=_y+1
+    else:
+        m=_m+9
+        y=_y
+    lD={1:31,2:28,3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31};
+    if is_leap_year(y):
+        lD[2]=29
+    d=min(_d,lD[m])
+    fy=str(y)
+    if m<10:
+        fm="0"+str(m)
+    else:
+        fm=str(m)
+    if d<10:
+        fd="0"+str(d)
+    else:
+        fd=str(d)
+    return fy+"-"+fm+"-"+fd
+
+""" 31-03-2026: Wake-Up Alarm
+
+Given a string representing the time you set your alarm and a string representing the time you actually woke up, determine if you woke up early, on time, or late.
+• Both times will be given in "HH:MM" 24-hour format.
+Return:
+• "early" if you woke up before your alarm time.
+• "on time" if you woke up at your alarm time, or within the 10 minute snooze window after the alarm time.
+• "late" if you woke up more than 10 minutes after your alarm time.
+Both times are on the same day. """
+
+def alarm_check(alarm_time, wake_time):
+    at=int(alarm_time[0:2])*60+int(alarm_time[3:5])
+    wt=int(wake_time[0:2])*60+int(wake_time[3:5])
+    diff=wt-at
+    if diff<0:
+        return "early"
+    elif diff<=10:
+        return "on time"
+    else:
+        return "late"
