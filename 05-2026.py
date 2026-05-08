@@ -125,4 +125,53 @@ def get_longest_substring(s):
     res.sort(key=lambda s: len(s))
     return res[-1]
 
-      
+ 
+""" 08-05-2026: Medication Reminder
+Given an array of medications and a string representing the current time, return the next medication you need to take and how long until you need to take it.
+• Each medication is in the format [name, lastTaken], where name is the name of the medication and lastTaken is the time it was last taken.
+• All given times will be in "HH:MM" (24-hour) format.
+Use the following medication schedule:
+
+Name
+Schedule
+
+Deployxitrin
+08:00, 16:00
+
+Debuggamanizole
+07:00, 13:00, 21:00
+
+Mergeflictamine
+every 4 hours
+
+
+Return a string in the format "{name} in Hh Mm". For example, "Debuggamanizole in 2h 0m" or "Deployxitrin in 1h 5m". """
+
+import math
+
+def to_min(tstri):
+    return int(tstri[0:2])*60+int(tstri[3:5])
+
+def to_stri(mins):
+    _h=str(math.floor(mins/60))
+    _m=str(mins-60*int(_h))
+    return _h+"h "+_m+"m"
+
+print(to_stri(120))
+def medication_reminder(medis, curr_t):
+    meds=["Deployxitrin","Debuggamanizole","Mergeflictamine"]
+    if medis[0][1]=="08:00":
+        first=to_min("16:00")
+    else:
+        first=to_min("08:00")
+    if medis[1][1]=="07:00":
+        second=to_min("13:00")
+    elif medis[1][1]=="13:00":
+        second=to_min("21:00")
+    else:
+        second=to_min("07:00")
+    third=to_min(medis[2][1])+240
+    curr=to_min(curr_t)
+    arr=[abs(first-curr),abs(second-curr),abs(third-curr)]
+    ind=arr.index(min(arr))
+    return f"{meds[ind]} in {to_stri(arr[ind])}"     
