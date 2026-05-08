@@ -122,3 +122,47 @@ res.push(sl);
 }
 return res.filter((item)=>indices(str,item).length>=2).sort((a,b)=>b.length-a.length)[0];
 }
+
+/* 08-05-2026: Medication Reminder
+Given an array of medications and a string representing the current time, return the next medication you need to take and how long until you need to take it.
+• Each medication is in the format [name, lastTaken], where name is the name of the medication and lastTaken is the time it was last taken.
+• All given times will be in "HH:MM" (24-hour) format.
+Use the following medication schedule:
+
+Name
+Schedule
+
+Deployxitrin
+08:00, 16:00
+
+Debuggamanizole
+07:00, 13:00, 21:00
+
+Mergeflictamine
+every 4 hours
+
+
+Return a string in the format "{name} in Hh Mm". For example, "Debuggamanizole in 2h 0m" or "Deployxitrin in 1h 5m". */
+  
+function toMin(tStri){
+  return parseInt(tStri.slice(0,2))*60+parseInt(tStri.slice(3,5));
+}
+
+function toStri(mins){
+  let _h=(Math.floor(mins/60)).toString();
+  let _m=(mins-parseInt(_h*60)).toString();
+  return _h+"h "+_m+"m";
+}
+
+function medicationReminder(medis, currT) {
+  let meds=["Deployxitrin","Debuggamanizole","Mergeflictamine"];
+  let first=medis[0][1]=="08:00"?toMin("16:00"):toMin("08:00");
+  let second=medis[1][1]=="07:00"?toMin("13:00"):medis[1][1]=="13:00"?toMin("21:00"):toMin("07:00");
+  let third=toMin(medis[2][1])+240;
+  let curr=toMin(currT);
+  let arr=[Math.abs(first-curr),Math.abs(second-curr),Math.abs(third-curr)];
+  let mini=Math.min(...arr);
+  let ind=arr.indexOf(mini);
+  return ${meds[ind]} in ${toStri(arr[ind])};
+}
+
