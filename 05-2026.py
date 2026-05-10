@@ -157,7 +157,6 @@ def to_stri(mins):
     _m=str(mins-60*int(_h))
     return _h+"h "+_m+"m"
 
-print(to_stri(120))
 def medication_reminder(medis, curr_t):
     meds=["Deployxitrin","Debuggamanizole","Mergeflictamine"]
     if medis[0][1]=="08:00":
@@ -174,4 +173,36 @@ def medication_reminder(medis, curr_t):
     curr=to_min(curr_t)
     arr=[abs(first-curr),abs(second-curr),abs(third-curr)]
     ind=arr.index(min(arr))
-    return f"{meds[ind]} in {to_stri(arr[ind])}"     
+    return f"{meds[ind]} in {to_stri(arr[ind])}"    
+    
+""" 09-03-2026: Transposed Matrix
+Given a matrix (an array of arrays), return the transposed version of it. """
+from itertools import chain
+def transpose(matrix):
+n = len(matrix[0])
+L = list(chain(*matrix))
+return [L[i::n] for i in range(n)]
+
+""" 10-05-2026: ISBN-13 Validator
+Given a string, determine if it is a valid ISBN-13 number.
+A valid ISBN-13:
+• Contains only digits and hyphens
+• Has exactly 13 digits after removing hyphens
+• Passes the following check:
+A. Multiply each digit by 1 or 3, alternating (multiply the first digit by 1, the second by 3, the third by 1, and so on).
+B. The sum of the results must be divisible by 10. """
+
+import re
+def is_valid_isbn_13(s):
+    s=s.replace("-","")
+    r=re.findall("[0-9]+",s)
+    if len(r)!=1 or len(r[0])!=13:
+        return False
+    lst=list(r[0])
+    sn=0
+    for i in range(len(lst)):
+        if i%2==0:
+            sn+=int(lst[i])
+        else:
+            sn+=int(lst[i])*3
+    return sn%10==0
