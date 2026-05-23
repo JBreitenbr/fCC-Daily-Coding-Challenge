@@ -202,3 +202,143 @@ function getOldest(people) {
 Character Frequency
 Given a string, return an object (JavaScript) or dictionary (Python) mapping each character to the number of times it appears. */
 
+function getFrequency(str) {
+  let obj={};
+  for(let i=0;i<str.length;i++){
+   obj[str[i]]=0;
+  }
+  for(let i=0;i<str.length;i++){
+   obj[str[i]]+=1;
+  }
+  return obj;
+}
+
+/* 13-05-2026: Offending Element
+Given an array of integers that is sorted in ascending order except for one out-of-place element, return the index of that element.
+• If more than one element could be considered out of place, return the index of the first one. */
+  
+function checkSorted(arr) {
+  return arr.every((value, index, array) => index === 0 || value >= array[index - 1]);
+}
+
+function minusOne(arr,ind){
+  let res=[];
+  for(let i=0;i<arr.length;i++){
+  if(i!=ind){
+  res.push(arr[i]);
+   }
+ }
+  return res;
+}
+
+function findOffender(arr) {
+  for(let i=0;i<arr.length;i++){
+   if(checkSorted(minusOne(arr,i))){
+    return i;
+    }
+  }
+}
+
+/* 14-05-2026: Mirror Image
+Given two strings, determine if the second string is a mirror image of the first.
+A mirror image is formed by reversing the string and replacing each character with its mirror equivalent.
+• Symmetric characters look like themselves in a mirror:
+W, T, Y, U, I, O, H, A, X, V, M, w, o, x, v, 0, 8, =, +, :, |, -, _, *, ^, !, ., and the space ().
+• Mirrored pairs swap with each other in a mirror:
+
+Character
+Swaps with
+
+[
+]
+
+{
+}
+
+<
+>
+
+b
+d
+
+p
+q
+
+(
+)
+
+
+If either string includes a character not in the lists above, it doesn't have mirror image that can be created from the characters.
+For example, the mirrored image of "[HOW]" is "[WOH]". */
+
+function isMirrorImage(str1, str2) {
+   let swap={"[":"]","{":"}","<":">","b":"d","p":"q","(":")"};
+   for(let k of Object.keys(swap)) swap[swap[k]]=k;
+   return str1.split("").reverse().map((item)=>Object.keys(swap).includes(item)?swap[item]:item).join("")==str2;
+}
+
+/*  15-05-2026: Coffee Order Parser
+Given a string for a coffee order, identify any menu items and return a formatted order.
+Use the following menu items and prices:
+
+Item
+Price
+
+"cold brew"
+$4.50
+
+"oat latte"
+$5.00
+
+"cappuccino"
+$4.75
+
+"espresso"
+$3.00
+
+"vanilla syrup"
+$0.75
+
+"caramel drizzle"
+$0.60
+
+"extra shot"
+$0.50
+
+"oat milk"
+$0.75
+
+"cream"
+$0.75
+
+
+Return a string with the matched items joined by " + ", followed by a colon and space (": "), and the total price.
+For example, given "I'd like an oat latte with vanilla syrup and an extra shot please.", return "oat latte + vanilla syrup + extra shot: $6.25"
+Items should appear in the order they appear in the menu and the total price should always have two decimal places. */
+
+function formatCoffeeOrder(order) {
+  let drinks=["cold brew","oat latte","cappuccino","espresso","vanilla syrup",
+"caramel drizzle" ,"extra shot","oat milk","cream"];
+  let prices=[4.50,5.00,4.75,3.00,0.75,0.60,0.50,0.75,0.75];
+  let ind=drinks.map((item,index)=>[order.indexOf(item),order.indexOf(item)+item.length,index]).filter((item)=>item[0]>=0);
+  let sn=0;
+  let pre="";
+  for(let i=0;i<ind.length;i++){
+    pre+=order.slice(ind[i][0],ind[i][1])+" + ";
+    sn+=prices[ind[i][2]];
+  }
+  let pr=parseInt(sn)==sn?sn.toString()+".00":
+   parseInt(10*sn)==10*sn?sn.toString()+"0":sn.toString();
+  let res=pre.slice(0,pre.length-3)+": $"+pr;
+  return res;
+}
+
+/* 16-05-2026: Longest Domino Chain
+Given a 2D array representing a set of dominoes, return the longest valid chain.
+• Each domino is a pair of numbers from 0–6, e.g. [3, 2].
+• A chain is valid when the second number of each domino matches the first number of the next.
+• The first number of the first domino and the second number of the last one don't need to match anything.
+• Any domino can be flipped, so [3, 2] can be played as [2, 3].
+• There is always exactly one longest valid chain.
+For example, given [[1, 2], [4, 5], [2, 3]], return [[1, 2], [2, 3]]. */
+
