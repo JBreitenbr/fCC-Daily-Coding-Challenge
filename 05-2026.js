@@ -342,3 +342,169 @@ Given a 2D array representing a set of dominoes, return the longest valid chain.
 • There is always exactly one longest valid chain.
 For example, given [[1, 2], [4, 5], [2, 3]], return [[1, 2], [2, 3]]. */
 
+/* 17-05-2026: Mongo ID Date
+Given a MongoDB ID string, return its creation time as an ISO 8601 string.
+• A MongoDB ID is a 24-character hex string. The first 8 characters represent a Unix timestamp (in seconds) encoded as a base-16 integer.
+For example, "6a094b50bcf86cd799439011" has a timestamp of "6a094b50" in hex, which is 1778994000 in decimal, representing a creation time of "2026-05-17T05:00:00.000Z". */
+
+  function mongoIdToDate(id) {
+   return new Date(parseInt(id.slice(0,8),16)*1000).toISOString();
+}
+
+/* 18-05-2026: Bingo Range
+Given a bingo letter, return the number range associated with that letter.
+
+Letter
+Number Range
+
+"B"
+1-15
+
+"I"
+16-30
+
+"N"
+31-45
+
+"G"
+46-60
+
+"O"
+61-75
+
+
+Return an array with all numbers in the range from smallest to largest. */
+
+function getBingoRange(letter) {
+  let letters=["B","I","N","G","O"];
+  return Array.from(Array(15).keys()).map((item)=>item+1+letters.indexOf(letter)*15);
+}
+
+/* 19-05-2026: Sleep Debt
+Given an array of hours slept each night leading up to today, and a target number of hours per night, return how many hours of sleep you need tonight to eliminate your sleep debt.
+• Include tonight's hours in the total time needed to catch up.
+• If you've slept enough to cover tonight's target or more, return 0. */
+function sleepDebt(hoursSlept, targetHours) {
+  return Math.max(targetHours+hoursSlept.map((item)=>targetHours-item).reduce((a,b)=>a+b,0),0);
+}
+
+/* 20-05-2026: String Zipper
+Given two strings, return a new string that interleaves their characters one at a time. If one string is longer, append the remaining characters at the end.
+Begin with the first character of the first string. */
+
+
+function zipStrings(a, b) {
+  let res="";
+  let mini=Math.min(a.length,b.length);
+  for(let i=0;i<mini;i++){
+   res+=a[i];
+   res+=b[i];
+  }
+   return a.length>b.length?res+a.slice(mini):res+b.slice(mini);
+}
+
+/* 21-05-2026: I Before E
+Given a word or sentence, return a corrected version where every word follows the "I before E except after C" rule.
+• If a word contains "ei" not preceded by "c", replace it with "ie".
+• If a word contains "ie" preceded by "c", replace it with "ei".
+• All other words are left unchanged. */
+
+function iBeforeE(sent) {
+  let sp=sent.split(" ");
+  let s=sp.map((item)=>[item.indexOf("c"),item.indexOf("ei"),item.indexOf("ie")]);
+  for(let i=0;i<s.length;i++){
+     if(s[i][0]==-1 && s[i][1]>0 || s[i][1]<s[i][0]){
+      sp[i]=sp[i].replace("ei","ie");
+    }
+     if(s[i][0]>0 && s[i][2]>0 && s[i][0]<s[i][2]){
+      sp[i]=sp[i].replace("ie","ei");
+    }
+   }
+  return sp.join(" ");
+}
+
+/* 22-05-2026: Meeting Time
+Given a 3D array representing availability windows for multiple people, return the earliest time where everyone has one hour free. If no such time exists, return "None".
+• Each person's availability is an array of [start, end] integer pairs in 24-hour time. For example, [10, 12] would mean the person is available from 10 to 12. Start times range from 0-23, and end times range from 1-24.
+For example, given:
+json
+[
+  [[10, 12], [15, 16]], // person 1
+  [[11, 14], [15, 16]]  // person 2
+]
+
+Return 11, the start of their first shared free hour. */
+
+function isIn(el,arr){
+  if(el>=arr[0] && el<arr[1]){
+   return true;
+  }
+  return false;
+}
+
+function gimmeSomeTruth(arr){
+  for(let i=0;i<arr.length;i++){
+  if(arr[i].filter((item)=>item).length==0){
+   return false;
+   }
+  }
+  return true;
+}
+
+function getMeetingTime(av) {
+  let l=av.length;
+  let cands=[];
+  let fl=av.flat();
+  let mini=fl.flat().sort((a,b)=>a-b)[0];
+  let maxi=fl.flat().sort((a,b)=>b-a)[0];
+  let hlp=[];
+  for(let i=mini;i<maxi;i++){
+   for(let j=0;j<fl.length;j++){
+    hlp.push(isIn(i,fl[j]));
+   }
+  }
+  for(let k=0;k<hlp.length/fl.length;k++){
+   let sl=hlp.slice(fl.lengthk,fl.length(k+1));
+    if(sl.filter((item)=>item).length==l){
+      cands.push(k+mini);
+      };
+  }
+  for(let j=0;j<cands.length;j++){
+    let hlp=[];
+    for(let i=0;i<l;i++){
+      let s=av[i];
+      let flt=s.map((item)=>isIn(cands[j],item));
+      hlp.push(flt);
+      if(gimmeSomeTruth(hlp)) return cands[j];
+     }
+   }
+ return "None";
+}
+
+/* 23-05-2026: Open Issues
+Given an array of issue numbers and another array of pull request (PR) numbers, return an array of issues that remain open after all PRs have been merged.
+• A PR closes an issue if their digits are a rotation of each other. For example, issue 123 would be closed by PR 231 or 312.
+• A PR does not close an issue with the exact same number. For example, PR 123 does not close issue 123. So an issue with all the same number can't get closed.
+• Either number may have leading zeros stripped. For example, PR 201 would close issue 12 (012, a rotation of 201). Similarily, issue 201 would be closed by PR 12.
+Return the remaining open issues in the order they were given. */
+
+function getOpenIssues(issues, prs) {
+  let m1=issues.map((item)=>item.toString().split("")).map((item)=>item.map((item)=>item=="0"?"":item));
+  let m2=prs.map((item)=>item.toString().split("")).map((item)=>item.map((item)=>item=="0"?"":item));
+  let pre=[];
+  for(let i=0;i<m2.length;i++){
+    pre.push(m2[i].sort());
+  }
+  pre=pre.map((item)=>item.join(""));
+  let hlp=Array.from((new Set(issues)).intersection(new Set(prs)));
+  for(let i=0;i<m1.length;i++){
+    let s=m1[i].sort();
+    if(!pre.includes(s.join(""))){hlp.push(issues[i]);}
+   }
+  let ind=[];
+  for(let i=0;i<hlp.length;i++){
+     ind.push(issues.indexOf(hlp[i]));
+    }
+    return ind.sort((a,b)=>a-b).map((item)=>issues[item]);
+}
+
