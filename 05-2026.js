@@ -188,3 +188,17 @@ function isValidIsbn13(str) {
   if(m.length!=1||m[0].length!=13) return false;
   return m[0].split("").map((item,index)=>index%2==0?parseInt(item):parseInt(item)*3).reduce((a,b)=>a+b,0)%10==0;
 }
+  
+/* 11-05-2026: Oldest Person
+Given an array of objects, each with a "name" and "age" property, return an array containing the name of the oldest person.
+If multiple people share the oldest age, return all of their names in the order they appear in the input. */
+
+function getOldest(people) {
+  let maxi=Math.max(...people.map((item)=>item.age));
+  return people.filter((item)=>item.age==maxi).map((item)=>item.name);
+}
+
+/* 12-05-2026:
+Character Frequency
+Given a string, return an object (JavaScript) or dictionary (Python) mapping each character to the number of times it appears. */
+
