@@ -206,3 +206,42 @@ def is_valid_isbn_13(s):
         else:
             sn+=int(lst[i])*3
     return sn%10==0
+    
+""" 11-05-2026: Oldest Person
+Given an array of objects, each with a "name" and "age" property, return an array containing the name of the oldest person.
+If multiple people share the oldest age, return all of their names in the order they appear in the input. """
+
+def get_oldest(people):
+    return [el["name"] for el in people if el["age"]==max([el["age"] for el in people])]
+
+""" 12-05-2026:
+Character Frequency
+Given a string, return an object (JavaScript) or dictionary (Python) mapping each character to the number of times it appears. """
+
+def get_frequency(s):
+    d={}
+    for l in s:
+      if not l in d:
+          d[l]=1
+      else:
+          d[l]+=1
+   return d
+
+
+""" 13-05-2026: Offending Element
+Given an array of integers that is sorted in ascending order except for one out-of-place element, return the index of that element.
+• If more than one element could be considered out of place, return the index of the first one. """
+
+def minus_one(lst,ind):
+    res=[]
+    for i in range(len(lst)):
+        if i!=ind:
+            res.append(lst[i])
+    return res
+
+def find_offender(arr):
+    for i in range(len(arr)):
+        if minus_one(arr,i)==sorted(minus_one(arr,i)):
+            return i
+    
+
