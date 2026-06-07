@@ -82,6 +82,23 @@ Roles = "user" | "creator" | "moderator" | "staff" | "admin"
 • The question mark (?) after supporter means that the field is optional, but is the specified type if it exists.
 • Extra keys are allowed """
 
+def is_valid_schema(obj):
+    roles=["user","creator","moderator","staff","admin"]
+    k=list(obj.keys())
+    if not "username" in k or not "posts" in k or not "verified" in k or not "role" in k:
+        return False
+    ind1=k.index("username")
+    c1=isinstance(obj[k[ind1]],str)
+    ind2=k.index("posts")
+    c2=isinstance(obj[k[ind2]],int) and not isinstance(obj[k[ind2]],bool)
+    ind3=k.index("verified")
+    c3=isinstance (obj[k[ind3]], bool)
+    if not "supporter" in k:
+       return c1 and c2 and c3 and obj["role"] in roles
+    else: 
+       return c1 and c2 and c3 and obj["role"] in roles and isinstance(obj[k[k.index("supporter")]],bool)
+
+
 """ 05-06-2026: Schema Validator Part 5
 Given an object (JavaScript) or dictionary (Python), determine if it matches the following schema:
 json
@@ -100,6 +117,28 @@ Roles = "user" | "creator" | "moderator" | "staff" | "admin"
 • The question mark (?) after supporter means that the field is optional, but is the specified type if it exists.
 • The brackets [] after string means that badges should be an array of strings (or empty).
 • Extra keys are allowed  """
+
+def is_valid_schema(obj):
+    roles=["user","creator","moderator","staff","admin"]
+    k=list(obj.keys())
+    if not "username" in k or not "posts" in k or not "verified" in k or not "role" in k or not "badges" in k:
+        return False
+    ind1=k.index("username")
+    c1=isinstance(obj[k[ind1]],str)
+    ind2=k.index("posts")
+    c2=isinstance(obj[k[ind2]],int) and not isinstance(obj[k[ind2]],bool)
+    ind3=k.index("verified")
+    c3=isinstance(obj[k[ind3]], bool)
+    if "supporter" in k:
+        ind4=k.index("supporter")
+        c4=isinstance(obj[k[ind4]],bool)
+    for i in range(len(obj["badges"])):
+        if not isinstance(obj["badges"][i],str):
+            return False
+    if "supporter" in k:
+        return c1 and c2 and c3 and c4 and obj["role"] in roles
+    else:
+        return c1 and c2 and c3 and obj["role"] in roles          
 
 """ 06-06-2026: Schema Validator Part 6
 Given an object (JavaScript) or dictionary (Python), determine if it matches the following schema:
