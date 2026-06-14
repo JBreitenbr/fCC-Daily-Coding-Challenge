@@ -243,5 +243,46 @@ def find_offender(arr):
     for i in range(len(arr)):
         if minus_one(arr,i)==sorted(minus_one(arr,i)):
             return i
-    
 
+""" 14-05-2026: Mirror Image
+Given two strings, determine if the second string is a mirror image of the first.
+A mirror image is formed by reversing the string and replacing each character with its mirror equivalent.
+• Symmetric characters look like themselves in a mirror:
+W, T, Y, U, I, O, H, A, X, V, M, w, o, x, v, 0, 8, =, +, :, |, -, _, *, ^, !, ., and the space ().
+• Mirrored pairs swap with each other in a mirror:
+
+Character
+Swaps with
+
+[
+]
+
+{
+}
+
+<
+>
+
+b
+d
+
+p
+q
+
+(
+)
+
+
+If either string includes a character not in the lists above, it doesn't have mirror image that can be created from the characters.
+For example, the mirrored image of "[HOW]" is "[WOH]". """
+
+def is_mirror_image(s1, s2):
+    swap={"[":"]","{":"}","<":">","b":"d","p":"q","(":")","]":"[","}":"{",">":"<","d":"b","q":"p",")":"("}
+    m=list(s1[::-1])
+    res=""
+    for el in m:
+        if el in swap.keys():
+            res+=swap[el]
+        else:
+            res+=el
+    return res==s2
