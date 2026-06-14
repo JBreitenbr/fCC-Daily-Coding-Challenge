@@ -508,3 +508,233 @@ function getOpenIssues(issues, prs) {
     return ind.sort((a,b)=>a-b).map((item)=>issues[item]);
 }
 
+/* 24-05-2026: Roman Numeral Fixer
+Given a string of malformed Roman numerals, return the value in standard Roman numeral notation.
+The input will only use additive notation, so each symbol adds its value to the total. As a reminder, here are the symbols and values:
+
+Symbol
+Value
+
+"I"
+1
+
+"V"
+5
+
+"X"
+10
+
+"L"
+50
+
+"C"
+100
+
+"D"
+500
+
+"M"
+1000
+
+
+When re-encoding, use the largest possible symbol at each step, using subtractive pairs ("IV", "IX", "XL", "XC", "CD", "CM") where needed. */
+
+function convertToRoman(numToConv) {
+  let nums=[1000,900,500,400,100,90,50,40,10,9,5,4,1];
+  let romans=['M','CM','D','CD','C','XC','L','XL','X','IX','V','IV','I'];
+  let romRes="";
+  while(numToConv > 0){
+   for(let i=0; i<romans.length; i++){
+    if(numToConv >= nums[i]){
+      numToConv=numToConv-nums[i];
+      romRes=romRes+romans[i];
+      break;
+     }
+    }
+   }
+   return romRes;
+}
+
+function fixNumerals(str) {
+  let rObj={"I":1,"V":5,"X":10,"L":50,"C":100,"D":500,"M":1000};
+  let sn=0;
+  for(let i=0;i<str.length;i++){
+   sn+=rObj[str[i]];
+   }
+   return convertToRoman(sn);
+}
+
+/* 25-05-2026: Secret Number
+Given a secret number and a guess, determine if the guess is correct.
+Return:
+• "higher" if the secret number is higher than the guess.
+• "lower" if the secret number is lower than the guess.
+• "you got it!" if the guess is correct. */
+
+function guessNumber(secret, guess) {
+  return secret>guess?"higher":secret<guess?"lower":"you got it!";
+}
+
+/* 26-05-2026: Sum of Differences
+Given an array of numbers, return the sum of the differences between each number and the one that follows it.
+For example, given [1, 3, 4], return 3 (2 + 1). */
+
+function sumOfDifferences(arr) {
+  let sn=0;
+  for(let i=1;i<arr.length;i++){
+  sn+=(arr[i]-arr[i-1]);
+  }
+ return sn;
+}
+
+/* 27-05-2026: Pizza Party
+Given an array of hours worked today per person, return the number of pizzas to order for a pizza party.
+• Divide each person's hours worked by 3 to get their slice count.
+• You can't eat a partial slice, so round each person's slice count up to the nearest whole number.
+• Each person gets a minimum of two slices.
+• Each pizza has 8 slices. Round the total number of pizzas up to the nearest whole pizza. */
+
+function getPizzasToOrder(hoursWorked) {
+  return Math.ceil(hoursWorked.map((item)=>Math.max(Math.ceil(item/3),2)).reduce((a,b)=>a+b,0)/8);
+}
+
+/* 28-05-2026: FizzBuzz Count
+Given a start and end number, count the number of fizz and buzz appearances in the range (inclusive).
+• Numbers divisible by 3 count as a fizz.
+• Numbers divisible by 5 count as a buzz.
+• Numbers divisible by both 3 and 5 count as both a fizz and a buzz.
+Return an object or dictionary with the counts in the format: { fizz, buzz }. */
+
+function fizzBuzzCount(start, end) {
+  let res={};
+  let stri=Array.from(Array(end-start+1).keys()).map((item)=>item+=start).map((item)=>item%3==0&&item%5!=0?"fizz":item%3!=0&&item%5==0?"buzz":item%3==0&&item%5==0?"fizzbuzz":item).filter((item)=>typeof item!="number").join("");
+  res["fizz"]=stri.split("fizz").length-1;
+  res["buzz"]=stri.split("buzz").length-1;
+  return res;
+}
+
+/* 29-05-2026: Wider Aspect Ratio
+Given two strings for different image dimensions, return the aspect ratio of the image with a greater width-to-height ratio.
+• The given strings will be in the format "WxH", for example, "1920x1080".
+• The aspect ratio is the ratio of width to height, reduced to the lowest whole numbers. For example, "1920x1080" reduces to "16:9".
+• Return a string in format "W:H", for example, "16:9". */
+
+function gcd(a, b) {
+  return b === 0 ? a : gcd(b, a % b);
+}
+
+function getWiderAspectRatio(a, b) {
+  let x1=a.split("x").map((item)=>item).map((item)=>parseInt(item));
+  let x2=b.split("x").map((item)=>item).map((item)=>parseInt(item));
+  let gcd1=gcd(x1[0],x1[1]);
+  let gcd2=gcd(x2[0],x2[1]);
+  let d11=x1[0]/gcd1;
+  let d12=x1[1]/gcd1;
+  let d21=x2[0]/gcd2;
+  let d22=x2[1]/gcd2;
+  return d11/d12>d21/d22?(d11+":"+d12):(d21+":"+d22);
+}
+
+/* 30-05-2026: Best Hand
+Given an array of five strings representing playing cards, return the name of the best hand.
+• Each card is represented as a two-character string: the rank followed by the suit, "2h" for example.
+◦ Ranks, from low to high, are: "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", and "A".
+◦ Suits are: "h", "d", "c", and "s".
+• Aces ("A") can be used as high or low in a straight.
+The hands, in order from worst to best, are:
+
+Name
+Description
+
+"High Card"
+No pair or better
+
+"Pair"
+Two of one rank
+
+"Two Pair"
+Two of one rank and two of another
+
+"Three of a Kind"
+Three of one rank
+
+"Straight"
+Five ranks in a row
+
+"Flush"
+Five of the same suit
+
+"Full House"
+Three of one rank, and two of another
+
+"Four of a Kind"
+Four of one rank
+
+"Straight Flush"
+Five ranks in a row of the same suit
+
+"Royal Flush"
+"A", "K", "Q", "J", "T" of the same suit
+
+
+Return the name of the best hand. */
+function getBestHand(cards) {
+  let rObj={"2":2,"3":3,"4":4,"5":5,"6":6,"7":7,"8":8, "9":9,"T":10,"J":11,"Q":12, "K":13,"A":14};
+  let ranks=cards.map((item)=>rObj[item[0]]).sort((a,b)=>b-a);
+  let suits=cards.map((item)=>item[1]);
+  let rankCounts={};
+  ranks.forEach(r=> rankCounts[r] = (rankCounts[r]||0)+1);
+  let suitCounts={};
+  suits.forEach(s=>suitCounts[s]=(suitCounts[s]||0)+1);
+  let counts = Object.values(rankCounts).sort((a, b) => b - a);
+  let uniqueValues = Object.keys(rankCounts).map(Number).sort((a, b) => b - a);
+  let isFlush = Object.values(suitCounts).includes(5);
+  let isStraight = false;
+  let straightHighCard = ranks[0];
+  if (uniqueValues.length == 5) {
+  if (ranks[0] - ranks[4] ==4) {
+     isStraight = true;
+  } else if (ranks[0] == 14 && ranks[1] == 5 && ranks[4] == 2) {
+    isStraight = true;
+    straightHighCard = 5;
+   }
+  }
+  if (isFlush && isStraight) {
+  if (straightHighCard == 14) return "Royal Flush" ;
+  else return "Straight Flush" };
+  if(counts[0]==4) return "Four of a Kind";
+  if(counts[0]==3 && counts[1]==2) return "Full House";
+  if(isFlush) return "Flush";
+  if(isStraight) return "Straight";
+  if(counts[0]==3) return "Three of a Kind";
+  if(counts[0]==2&&counts[1]==2) return "Two Pair";
+  if(counts[0]==2) return "Pair";
+  return "High Card";
+}
+
+/* 31-05-2026:Parentheses Combinations
+Given an integer, n, return the number of valid combinations of n pairs of parentheses.
+• A valid combination is a string where every opening parentheses has a corresponding closing parentheses, and no closing parentheses appears before its matching opening parentheses.
+For example, given 2, there are 2 valid combinations:
+json
+(())
+()()
+
+
+*/
+
+function addParenthesis (n,open,curr,res) {
+  if (curr.length==2*n){
+  res.push(curr);
+  return;
+ }
+ if(open < n) { addParenthesis(n,open+1,curr+'(',res); }
+ if(curr.length-open < open) { addParenthesis(n,open,curr+')',res); }
+}
+
+function getCombinations(n) {
+  let res=[];
+  addParenthesis(n, 0, '',res);
+  return res.length;
+}
+
