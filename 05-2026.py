@@ -351,3 +351,80 @@ Given a 2D array representing a set of dominoes, return the longest valid chain.
 • There is always exactly one longest valid chain.
 For example, given [[1, 2], [4, 5], [2, 3]], return [[1, 2], [2, 3]]. """
 
+""" 17-05-2026: Mongo ID Date
+Given a MongoDB ID string, return its creation time as an ISO 8601 string.
+• A MongoDB ID is a 24-character hex string. The first 8 characters represent a Unix timestamp (in seconds) encoded as a base-16 integer.
+For example, "6a094b50bcf86cd799439011" has a timestamp of "6a094b50" in hex, which is 1778994000 in decimal, representing a creation time of "2026-05-17T05:00:00.000Z". """
+
+from datetime import datetime
+def mongo_id_to_date(s):
+    return (datetime.utcfromtimestamp(int(s[0:8],16))).isoformat()+".000Z"
+
+""" 18-05-2026: Bingo Range
+Given a bingo letter, return the number range associated with that letter.
+
+Letter
+Number Range
+
+"B"
+1-15
+
+"I"
+16-30
+
+"N"
+31-45
+
+"G"
+46-60
+
+"O"
+61-75
+
+
+Return an array with all numbers in the range from smallest to largest. """
+
+def get_bingo_range(letter):
+    letters=["B","I","N","G","O"]
+    ind=letters.index(letter)
+    return list(range(15*ind+1,15*(ind+1)+1))
+
+""" 19-05-2026: Sleep Debt
+Given an array of hours slept each night leading up to today, and a target number of hours per night, return how many hours of sleep you need tonight to eliminate your sleep debt.
+• Include tonight's hours in the total time needed to catch up.
+• If you've slept enough to cover tonight's target or more, return 0. """
+
+def sleep_debt(hours_slept, target_hours):
+    return max(0,target_hours+sum([target_hours - el for el in hours_slept ]))
+
+""" 20-05-2026: String Zipper
+Given two strings, return a new string that interleaves their characters one at a time. If one string is longer, append the remaining characters at the end.
+Begin with the first character of the first string. """
+
+""" 21-05-2026: I Before E
+Given a word or sentence, return a corrected version where every word follows the "I before E except after C" rule.
+• If a word contains "ei" not preceded by "c", replace it with "ie".
+• If a word contains "ie" preceded by "c", replace it with "ei".
+• All other words are left unchanged. """
+• 
+""" 22-05-2026: Meeting Time
+Given a 3D array representing availability windows for multiple people, return the earliest time where everyone has one hour free. If no such time exists, return "None".
+• Each person's availability is an array of [start, end] integer pairs in 24-hour time. For example, [10, 12] would mean the person is available from 10 to 12. Start times range from 0-23, and end times range from 1-24.
+For example, given:
+json
+[
+  [[10, 12], [15, 16]], // person 1
+  [[11, 14], [15, 16]]  // person 2
+]
+
+Return 11, the start of their first shared free hour. """
+
+""" 23-05-2026: Open Issues
+Given an array of issue numbers and another array of pull request (PR) numbers, return an array of issues that remain open after all PRs have been merged.
+• A PR closes an issue if their digits are a rotation of each other. For example, issue 123 would be closed by PR 231 or 312.
+• A PR does not close an issue with the exact same number. For example, PR 123 does not close issue 123. So an issue with all the same number can't get closed.
+• Either number may have leading zeros stripped. For example, PR 201 would close issue 12 (012, a rotation of 201). Similarily, issue 201 would be closed by PR 12.
+Return the remaining open issues in the order they were given. """
+
+
+
