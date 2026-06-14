@@ -286,3 +286,68 @@ def is_mirror_image(s1, s2):
         else:
             res+=el
     return res==s2
+    
+""" 15-05-2026: Coffee Order Parser
+Given a string for a coffee order, identify any menu items and return a formatted order.
+Use the following menu items and prices:
+
+Item
+Price
+
+"cold brew"
+$4.50
+
+"oat latte"
+$5.00
+
+"cappuccino"
+$4.75
+
+"espresso"
+$3.00
+
+"vanilla syrup"
+$0.75
+
+"caramel drizzle"
+$0.60
+
+"extra shot"
+$0.50
+
+"oat milk"
+$0.75
+
+"cream"
+$0.75
+
+
+Return a string with the matched items joined by " + ", followed by a colon and space (": "), and the total price.
+For example, given "I'd like an oat latte with vanilla syrup and an extra shot please.", return "oat latte + vanilla syrup + extra shot: $6.25"
+Items should appear in the order they appear in the menu and the total price should always have two decimal places. """
+
+def format_coffee_order(order):
+    drinks=["cold brew","oat latte","cappuccino","espresso","vanilla syrup",
+    "caramel drizzle"	,"extra shot","oat milk","cream"]
+    prices=[4.50,5.00,4.75,3.00,0.75,0.60,0.50,0.75,0.75]
+    ind=[[order.find(drinks[i]),order.find(drinks[i])+len(drinks[i]),prices[i]] for i in range(len(drinks)) if order.find(drinks[i])>=0]
+    print(ind)
+    sn=0
+    pre=""
+    for i in range(len(ind)):
+        sn+=ind[i][2]
+        pre+=order[ind[i][0]:ind[i][1]]+" + "
+    pr=str(sn)
+    if int(sn)==sn or int(10*sn)==10*sn:
+        pr=str(sn)+"0"
+    return pre[0:-3]+": $"+pr
+
+""" 16-05-2026: Longest Domino Chain
+Given a 2D array representing a set of dominoes, return the longest valid chain.
+• Each domino is a pair of numbers from 0–6, e.g. [3, 2].
+• A chain is valid when the second number of each domino matches the first number of the next.
+• The first number of the first domino and the second number of the last one don't need to match anything.
+• Any domino can be flipped, so [3, 2] can be played as [2, 3].
+• There is always exactly one longest valid chain.
+For example, given [[1, 2], [4, 5], [2, 3]], return [[1, 2], [2, 3]]. """
+
