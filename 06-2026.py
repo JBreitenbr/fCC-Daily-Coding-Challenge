@@ -302,6 +302,25 @@ The itinerary always includes "breakfast", "lunch", and "dinner", these will not
 • At most, one optional stop may appear after "dinner".
 Return the number of valid arrangements. """
 
+from itertools import permutations 
+def combs(arr):
+    res=[]
+    for p in permutations(arr):
+        res.append(list(p))
+    return res
+
+def constr(arr):
+    c1=arr[0]!="lunch" and arr[1]!="dinner"
+    c2=arr.index("dinner")-arr.index("lunch")>=2
+    c3=arr.index("dinner")>=len(arr)-2
+    return c1 and c2 and c3
+
+def get_itinerary_count(stops):
+    stops.append("lunch")
+    stops.append("dinner")
+    lst=[el for el in combs(stops) if constr(el)]
+    return len(lst)
+
 """ 11-06-2026: Idea Rankings
 Given a 2D array where each inner array contains (in this order) an idea name, an optimistic estimate, a realistic estimate, and a pessimistic estimate (in days), return an array of the idea names sorted by expected time to completion, shortest first.
 Calculate the expected time to completion for each idea using the following formula:
