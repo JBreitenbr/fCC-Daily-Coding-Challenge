@@ -401,12 +401,25 @@ def sleep_debt(hours_slept, target_hours):
 Given two strings, return a new string that interleaves their characters one at a time. If one string is longer, append the remaining characters at the end.
 Begin with the first character of the first string. """
 
+def zip_strings(a, b):
+    mini=min(len(a),len(b))
+    s=list(zip(list(a),list(b)))
+    res=""
+    for i in range(len(s)):
+        res+=s[i][0]+s[i][1]
+    if len(a)>len(b):
+        res+=a[mini:]
+    if len(b)>len(a):
+        res+=b[mini:]
+    return res
+    
 """ 21-05-2026: I Before E
 Given a word or sentence, return a corrected version where every word follows the "I before E except after C" rule.
 • If a word contains "ei" not preceded by "c", replace it with "ie".
 • If a word contains "ie" preceded by "c", replace it with "ei".
 • All other words are left unchanged. """
-• 
+
+
 """ 22-05-2026: Meeting Time
 Given a 3D array representing availability windows for multiple people, return the earliest time where everyone has one hour free. If no such time exists, return "None".
 • Each person's availability is an array of [start, end] integer pairs in 24-hour time. For example, [10, 12] would mean the person is available from 10 to 12. Start times range from 0-23, and end times range from 1-24.
