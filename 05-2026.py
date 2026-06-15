@@ -443,6 +443,33 @@ json
 
 Return 11, the start of their first shared free hour. """
 
+def get_meeting_time(av):
+    pre=[]
+    for i in range(len(av)):
+        hlp=[]
+        for j in range(len(av[i])):
+            rg=list(range(av[i][j][0],av[i][j][1]))
+            hlp.append(rg)
+        pre.append(hlp)
+    c2=[]
+    for i in range(len(pre)):
+        c1=[]
+        for j in range(len(pre[i])):
+            c1+=pre[i][j]
+        c2.append(c1)
+    cands=[]
+    for i in range(len(c2)):
+        cands+=c2[i]
+    cands=sorted(list(set(cands)))
+    lst=[[] for i in range(len(cands))]
+    for j in range(len(cands)):
+        for i in range(len(c2)):
+           lst[j].append(cands[j] in c2[i])
+    for i in range(len(lst)):
+        if sum(lst[i])==len(lst[i]):
+            return cands[i]
+    return "None"
+
 """ 23-05-2026: Open Issues
 Given an array of issue numbers and another array of pull request (PR) numbers, return an array of issues that remain open after all PRs have been merged.
 • A PR closes an issue if their digits are a rotation of each other. For example, issue 123 would be closed by PR 231 or 312.
