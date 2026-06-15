@@ -419,6 +419,17 @@ Given a word or sentence, return a corrected version where every word follows th
 • If a word contains "ie" preceded by "c", replace it with "ei".
 • All other words are left unchanged. """
 
+def i_before_e(sentence):
+    sp=sentence.split(" ")
+    s=[[sp[i].find("c"),sp[i].find("ei"),sp[i].find("ie")] for i in range(len(sp))]
+    for i in range(len(sp)):
+        c1=s[i][0]==-1 or s[i][0]>s[i][1]
+        if c1:
+           sp[i]=sp[i].replace("ei","ie")
+        c2=s[i][0]!=-1 and s[i][2]>0 and s[i][2]>s[i][0]
+        if c2:
+           sp[i]=sp[i].replace("ie","ei")
+    return " ".join(sp) 
 
 """ 22-05-2026: Meeting Time
 Given a 3D array representing availability windows for multiple people, return the earliest time where everyone has one hour free. If no such time exists, return "None".
