@@ -262,6 +262,38 @@ json
 
 • People can only share a room with someone from the same group and are paired in the order they are given.
 • Return an array of strings with names separated by " and " for a shared room, and just the name for a solo room. Names must appear in the order they were paired. For the example above, return ["Alice and Carol", "Bob"]. """
+
+def flatten(arr):
+    fl=[]
+    for el in arr:
+        if isinstance(el,list):
+            fl.extend(flatten(el))
+        else:
+            fl.append(el)
+    return fl
+
+def rhlp(lst):
+    res=[]
+    for i in range(0,len(lst),2):
+        sl=" and ".join(lst[i:i+2])
+        res.append(sl)
+    return res
+
+def get_roommates(people):
+    s=list(set([people[i]["group"] for i in range(len(people))]))
+    d={}
+    for i in range(len(s)):
+        d[s[i]]=[]
+    for i in range(len(people)):
+        for j in range(len(s)):
+            if people[i]["group"]==s[j]:
+                d[s[j]].append(people[i]["name"])
+    res=[]
+    k=list(d.keys())
+    for i in range(len(k)):
+        res.append(rhlp(d[k[i]]))
+    return flatten(res)
+
 """ 10-06-2026: Itinerary Arrangements
 Given an array of at least two optional stops for a day trip, return the number of valid itinerary arrangements.
 The itinerary always includes "breakfast", "lunch", and "dinner", these will not be passed in as arguments. The optional stops can be placed anywhere in the itinerary, subject to the following rules:
