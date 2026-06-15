@@ -477,5 +477,17 @@ Given an array of issue numbers and another array of pull request (PR) numbers, 
 • Either number may have leading zeros stripped. For example, PR 201 would close issue 12 (012, a rotation of 201). Similarily, issue 201 would be closed by PR 12.
 Return the remaining open issues in the order they were given. """
 
+def get_open_issues(issues, prs):
+    hlp=[issues[i] for i in range(len(issues)) if issues[i] in prs]
+    m1=[int("".join(sorted(list(str(issues[i]).replace("0",""))))) for i in range(len(issues)) ]
+    m2=[int("".join(sorted(list(str(prs[i]).replace("0",""))))) for i in range(len(prs))]
+    for i in range(len(m1)):
+        if not m1[i] in m2:
+            hlp.append(issues[i])
+    ind=[]
+    for i in range(len(hlp)):
+        ind.append(issues.index(hlp[i]))
+    ind=sorted(ind)
+    return [issues[ind[i]] for i in range(len(ind))]
 
 
