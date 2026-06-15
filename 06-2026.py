@@ -326,6 +326,10 @@ Given a 2D array where each inner array contains (in this order) an idea name, a
 Calculate the expected time to completion for each idea using the following formula:
 • expected = ((optimistic + 4 * realistic + pessimistic) / 6) * length of idea name  """
 
+def analyze_ideas(ideas):
+    lst=[len(el[0])*(el[1]+4*el[2]+el[3])/6 for el in ideas]
+    return [ideas[lst.index(el)][0] for el in sorted(lst)]
+    
 """ 12-06-2026: HTML Content Extractor
 Given a string of HTML, return the plain text content with all tags removed. """
 
