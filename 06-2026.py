@@ -203,3 +203,119 @@ Calculate your average daily usage from the usage history and assume that amount
 import math
 def last_load_date(scoops, usage):
     return math.floor(scoops/(sum(usage)/len(usage)))
+
+""" 08-06-2026: Jet Lagged
+Given a departure city, an arrival city, a flight duration in hours, and a direction of travel, return the number of jet lag hours the traveller is experiencing.
+The given cities will be from the following list that includes their UTC offset:
+
+City
+Offset
+
+"Los Angeles"
+-8
+
+"New York"
+-5
+
+"London"
+0
+
+"Istanbul"
++3
+
+"Dubai"
++4
+
+"Hong Kong"
++8
+
+"Tokyo"
++9
+
+
+To calculate jet lag hours:
+1. Find the timezone difference in hours between the two cities.
+2. Determine the direction multiplier. If travelling "east", it's 1.5, otherwise, it's 1.0.
+3. Get the jet lag hours with the formula: timezone difference + (flight duration * 0.1) * direction multiplier
+Return the jet lag hours rounded to one decimal place.  """
+
+""" 09-06-2026: Roommates
+Given an array of people and their roommate group, return the room assignments for a hotel stay using the following rules:
+• Each person has a name and a group property:
+json
+[
+  { "name": "Alice", "group": "A" },
+  { "name": "Bob", "group": "B" },
+  { "name": "Carol", "group": "A" }
+]
+
+• People can only share a room with someone from the same group and are paired in the order they are given.
+• Return an array of strings with names separated by " and " for a shared room, and just the name for a solo room. Names must appear in the order they were paired. For the example above, return ["Alice and Carol", "Bob"]. """
+""" 10-06-2026: Itinerary Arrangements
+Given an array of at least two optional stops for a day trip, return the number of valid itinerary arrangements.
+The itinerary always includes "breakfast", "lunch", and "dinner", these will not be passed in as arguments. The optional stops can be placed anywhere in the itinerary, subject to the following rules:
+• "breakfast" is always first, with at least one stop before "lunch".
+• "lunch" must appear before "dinner", with at least one stop in between.
+• At most, one optional stop may appear after "dinner".
+Return the number of valid arrangements. """
+
+""" 11-06-2026: Idea Rankings
+Given a 2D array where each inner array contains (in this order) an idea name, an optimistic estimate, a realistic estimate, and a pessimistic estimate (in days), return an array of the idea names sorted by expected time to completion, shortest first.
+Calculate the expected time to completion for each idea using the following formula:
+• expected = ((optimistic + 4 * realistic + pessimistic) / 6) * length of idea name  """
+
+""" 12-06-2026: HTML Content Extractor
+Given a string of HTML, return the plain text content with all tags removed. """
+
+import re
+def extract_content(html):
+    clean = re.compile('<.*?>')
+    return re.sub(clean, '', html)
+
+""" 13-06-2026: Zoning Regulations
+Given a 2D grid (array of arrays) representing a city's building layout, return the coordinates of all buildings that are violating zoning rules.
+Each cell in the grid contains one of the labels from the table below. A building is in violation if any of its (up to) 4 neighbors, horizontal or vertical, are a type it cannot be adjacent to.
+
+Label
+Type
+Cannot be adjacent to
+
+"i"
+industrial
+"R", "I"
+
+"A"
+Agricultural
+"C"
+
+"R"
+Residential
+"i", "C"
+
+"I"
+Institutional
+"i"
+
+"C"
+Commercial
+"R", "A"
+
+"" (empty string)
+undeveloped
+no restrictions
+
+
+Return the coordinates of all violating cells as an array of [row, col] pairs, in any order. If no violations exist, return an empty array. """
+
+""" 14-06-2026: Credit Card Validator
+Given a string of digits for a credit card number, determine if it's a valid card number using the following method:
+• Starting from the second-to-last digit, double every other digit moving left.
+• If doubling a digit results in a number greater than 9, subtract 9.
+• Sum all the digits (doubled and undoubled).
+• If the total is divisible by 10, the number is valid. """
+
+
+
+
+
+
