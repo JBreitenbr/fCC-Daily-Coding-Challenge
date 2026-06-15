@@ -376,8 +376,18 @@ Given a string of digits for a credit card number, determine if it's a valid car
 • Sum all the digits (doubled and undoubled).
 • If the total is divisible by 10, the number is valid. """
 
-
-
-
-
-
+def is_valid_card(number):
+    pre=[]
+    lst=list(number[::-1])
+    for i in range(len(lst)):
+        if i%2==1:
+            pre.append(2*int(lst[i]))
+        else:
+            pre.append(int(lst[i]))
+    res=[]
+    for i in range(len(pre)):
+        if pre[i]<=9:
+            res.append(pre[i])
+        else:
+            res.append(pre[i]-9)
+    return sum(res)%10==0
