@@ -239,6 +239,17 @@ To calculate jet lag hours:
 3. Get the jet lag hours with the formula: timezone difference + (flight duration * 0.1) * direction multiplier
 Return the jet lag hours rounded to one decimal place.  """
 
+def get_jet_lag_hours(departure_city, arrival_city, flight_duration, direction):
+   d={"Los Angeles":-8,
+ "New York":-5,
+ "London":0,"Istanbul":3,"Dubai":4,"Hong Kong":8,
+ "Tokyo":9}
+   tdiff=abs(d[departure_city]-d[arrival_city])
+   if direction=="east":
+      return tdiff+0.1*flight_duration*1.5
+   else:
+      return tdiff+0.1*flight_duration
+
 """ 09-06-2026: Roommates
 Given an array of people and their roommate group, return the room assignments for a hotel stay using the following rules:
 • Each person has a name and a group property:
