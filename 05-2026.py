@@ -521,6 +521,25 @@ Value
 
 When re-encoding, use the largest possible symbol at each step, using subtractive pairs ("IV", "IX", "XL", "XC", "CD", "CM") where needed. """
 
+def convert_to_roman(num):
+    nums=[1000,900,500,400,100,90,50,40,10,9,5,4,1]
+    romans=['M','CM','D','CD','C','XC','L','XL','X','IX','V','IV','I']
+    res=""
+    while num>0:
+        for i in range(len(romans)):
+            if num>=nums[i]:
+                num-=nums[i]
+                res+=romans[i]
+                break
+    return res
+
+def fix_numerals(s):
+    rObj={"I":1,"V":5,"X":10,"L":50,"C":100,"D":500,"M":1000}
+    sn=0
+    for i in range(len(s)):
+        sn+=rObj[s[i]]
+    return convert_to_roman(sn)
+
 """ 25-05-2026: Secret Number
 Given a secret number and a guess, determine if the guess is correct.
 Return:
