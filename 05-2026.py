@@ -664,3 +664,16 @@ json
 (())
 ()()
 
+def add_parentheses(n,openCount,curr,res):
+    if len(curr)==2*n:
+        res.append(curr)
+        return
+    if openCount < n:
+        add_parentheses(n, openCount+1,curr+'(', res)
+    if len(curr) - openCount < openCount:
+        add_parentheses(n, openCount,curr+')', res)
+
+def get_combinations(n):
+    res=[]
+    add_parentheses(n, 0, '', res)  
+    return len(res)
