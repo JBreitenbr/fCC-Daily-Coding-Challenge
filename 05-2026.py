@@ -558,6 +558,13 @@ def guess_number(secret, guess):
 """ 26-05-2026: Sum of Differences
 Given an array of numbers, return the sum of the differences between each number and the one that follows it.
 For example, given [1, 3, 4], return 3 (2 + 1). """
+
+def sum_of_differences(arr):
+    sn=0
+    for i in range(1,len(arr)):
+        sn+=(arr[i]-arr[i-1])
+    return sn
+
 """ 27-05-2026: Pizza Party
 Given an array of hours worked today per person, return the number of pizzas to order for a pizza party.
 • Divide each person's hours worked by 3 to get their slice count.
