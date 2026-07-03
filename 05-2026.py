@@ -571,6 +571,11 @@ Given an array of hours worked today per person, return the number of pizzas to 
 • You can't eat a partial slice, so round each person's slice count up to the nearest whole number.
 • Each person gets a minimum of two slices.
 • Each pizza has 8 slices. Round the total number of pizzas up to the nearest whole pizza. """
+
+import math
+def get_pizzas_to_order(hours_worked):
+    return math.ceil(sum([max(math.ceil(hours_worked[i]/3),2) for i in range(len(hours_worked))])/8)
+
 """ 28-05-2026: FizzBuzz Count
 Given a start and end number, count the number of fizz and buzz appearances in the range (inclusive).
 • Numbers divisible by 3 count as a fizz.
