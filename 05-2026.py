@@ -583,11 +583,34 @@ Given a start and end number, count the number of fizz and buzz appearances in t
 • Numbers divisible by both 3 and 5 count as both a fizz and a buzz.
 Return an object or dictionary with the counts in the format: { fizz, buzz }. """
 
+from collections import Counter 
+def fizz_buzz_count(start, end):
+    lst=[]
+    for i in range(start,end+1):
+        if i%3==0:
+            lst.append("fizz")
+        if i%5==0:
+            lst.append("buzz")
+    return dict(Counter(lst))
+
 """ 29-05-2026: Wider Aspect Ratio
 Given two strings for different image dimensions, return the aspect ratio of the image with a greater width-to-height ratio.
 • The given strings will be in the format "WxH", for example, "1920x1080".
 • The aspect ratio is the ratio of width to height, reduced to the lowest whole numbers. For example, "1920x1080" reduces to "16:9".
 • Return a string in format "W:H", for example, "16:9". """
+
+import math
+def get_wider_aspect_ratio(a, b):
+    d11=int(a.split("x")[0])
+    d12=int(a.split("x")[1])
+    d21=int(b.split("x")[0])
+    d22=int(b.split("x")[1])
+    gcd1=math.gcd(d11,d12)
+    gcd2=math.gcd(d21,d22)
+    if d11/d12>d21/d22:
+        return str(int(d11/gcd1))+":"+str(int(d12/gcd1))
+    else:
+        return str(int(d21/gcd2))+":"+str(int(d22/gcd2))
 
 """ 30-05-2026: Best Hand
 Given an array of five strings representing playing cards, return the name of the best hand.
