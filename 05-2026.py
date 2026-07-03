@@ -490,4 +490,114 @@ def get_open_issues(issues, prs):
     ind=sorted(ind)
     return [issues[ind[i]] for i in range(len(ind))]
 
+""" 24-05-2026: Roman Numeral Fixer
+Given a string of malformed Roman numerals, return the value in standard Roman numeral notation.
+The input will only use additive notation, so each symbol adds its value to the total. As a reminder, here are the symbols and values:
+
+Symbol
+Value
+
+"I"
+1
+
+"V"
+5
+
+"X"
+10
+
+"L"
+50
+
+"C"
+100
+
+"D"
+500
+
+"M"
+1000
+
+
+When re-encoding, use the largest possible symbol at each step, using subtractive pairs ("IV", "IX", "XL", "XC", "CD", "CM") where needed. """
+
+""" 25-05-2026: Secret Number
+Given a secret number and a guess, determine if the guess is correct.
+Return:
+• "higher" if the secret number is higher than the guess.
+• "lower" if the secret number is lower than the guess.
+• "you got it!" if the guess is correct. """
+""" 26-05-2026: Sum of Differences
+Given an array of numbers, return the sum of the differences between each number and the one that follows it.
+For example, given [1, 3, 4], return 3 (2 + 1). """
+""" 27-05-2026: Pizza Party
+Given an array of hours worked today per person, return the number of pizzas to order for a pizza party.
+• Divide each person's hours worked by 3 to get their slice count.
+• You can't eat a partial slice, so round each person's slice count up to the nearest whole number.
+• Each person gets a minimum of two slices.
+• Each pizza has 8 slices. Round the total number of pizzas up to the nearest whole pizza. """
+""" 28-05-2026: FizzBuzz Count
+Given a start and end number, count the number of fizz and buzz appearances in the range (inclusive).
+• Numbers divisible by 3 count as a fizz.
+• Numbers divisible by 5 count as a buzz.
+• Numbers divisible by both 3 and 5 count as both a fizz and a buzz.
+Return an object or dictionary with the counts in the format: { fizz, buzz }. """
+
+""" 29-05-2026: Wider Aspect Ratio
+Given two strings for different image dimensions, return the aspect ratio of the image with a greater width-to-height ratio.
+• The given strings will be in the format "WxH", for example, "1920x1080".
+• The aspect ratio is the ratio of width to height, reduced to the lowest whole numbers. For example, "1920x1080" reduces to "16:9".
+• Return a string in format "W:H", for example, "16:9". """
+
+""" 30-05-2026: Best Hand
+Given an array of five strings representing playing cards, return the name of the best hand.
+• Each card is represented as a two-character string: the rank followed by the suit, "2h" for example.
+◦ Ranks, from low to high, are: "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", and "A".
+◦ Suits are: "h", "d", "c", and "s".
+• Aces ("A") can be used as high or low in a straight.
+The hands, in order from worst to best, are:
+
+Name
+Description
+
+"High Card"
+No pair or better
+
+"Pair"
+Two of one rank
+
+"Two Pair"
+Two of one rank and two of another
+
+"Three of a Kind"
+Three of one rank
+
+"Straight"
+Five ranks in a row
+
+"Flush"
+Five of the same suit
+
+"Full House"
+Three of one rank, and two of another
+
+"Four of a Kind"
+Four of one rank
+
+"Straight Flush"
+Five ranks in a row of the same suit
+
+"Royal Flush"
+"A", "K", "Q", "J", "T" of the same suit
+
+
+Return the name of the best hand. """
+
+""" 31-05-2026:Parentheses Combinations
+Given an integer, n, return the number of valid combinations of n pairs of parentheses.
+• A valid combination is a string where every opening parentheses has a corresponding closing parentheses, and no closing parentheses appears before its matching opening parentheses.
+For example, given 2, there are 2 valid combinations:
+json
+(())
+()()
 
