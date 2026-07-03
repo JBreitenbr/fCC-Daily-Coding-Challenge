@@ -546,6 +546,15 @@ Return:
 • "higher" if the secret number is higher than the guess.
 • "lower" if the secret number is lower than the guess.
 • "you got it!" if the guess is correct. """
+
+def guess_number(secret, guess):
+    if guess<secret:
+        return "higher"
+    elif guess>secret:
+        return "lower"
+    else:
+        return "you got it!"
+        
 """ 26-05-2026: Sum of Differences
 Given an array of numbers, return the sum of the differences between each number and the one that follows it.
 For example, given [1, 3, 4], return 3 (2 + 1). """
