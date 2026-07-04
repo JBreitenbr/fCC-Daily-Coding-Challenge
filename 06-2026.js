@@ -348,22 +348,26 @@ no restrictions
 
 Return the coordinates of all violating cells as an array of [row, col] pairs, in any order. If no violations exist, return an empty array. */
 
-function moves(i, j){
-  return [[i - 1, j],[i , j - 1],[i , j + 1],[i + 1, j ]];
+function  moves(i, j){
+return [[i - 1, j],[i , j - 1],[i , j + 1],[i + 1, j ]];
 }
 
-function getZoneViolations(grid) {
-  let restr={"i":["R", "I"],"A":"C","R":["i", "C"],"I":"i","C":["R", "A"]};
+ function getZoneViolations(grid) {
+  let restr={
+"i":["R", "I"],"A":"C",
+"R":["i", "C"],"I":"i",
+"C":["R", "A"]};
   let r=grid.length;
   let c=grid[0].length;
   let res=[];
   for(let i=0;i<r;i++){
     for(let j=0;j<c;j++){
-      let pre=moves(i,j);
-      let flt=grid[i][j]==""?"":pre.filter((item)=>item[0]>=0&&item[1]>=0&&item[0]<r&&item[1]<c).map((item)=>item==""?"":grid[item[0]][item[1]]).filter((item)=>restr[grid[i][j]].includes(item)&&item!="");  
-     }
-   }
-   return res;
+  let pre=moves(i,j);
+  let flt=grid[i][j]==""?"":pre.filter((item)=>item[0]>=0&&item[1]>=0&&item[0]<r&&item[1]<c).map((item)=>item==""?"":grid[item[0]][item[1]]).filter((item)=>restr[grid[i][j]].includes(item)&&item!="");
+  if(flt.length>0){res.push([i,j]);}
+    }
+  }
+  return res;
 }
 
 /* 14-06-2026: Credit Card Validator
