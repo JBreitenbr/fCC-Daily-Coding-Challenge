@@ -360,8 +360,7 @@ function getZoneViolations(grid) {
   for(let i=0;i<r;i++){
     for(let j=0;j<c;j++){
       let pre=moves(i,j);
-      let flt=grid[i][j]==""?"":pre.filter((item)=>item[0]>=0&&item[1]>=0&&item[0]<r&&item[1]<c).map((item)=>item==""?"":grid[item[0]][item[1]]).filter((item)=>restr[grid[i][j]].includes(item)&&item!="");if grid[i][j] == "": flt = "" else: flt = [] for item in pre: # 1. Prüfen, ob die Koordinaten im Grid liegen if 0 <= item[0] < r and 0 <= item[1] < c: val = grid[item[0]][item[1]] # 2. Prüfen, ob der Wert gültig und in den Restriktionen erlaubt ist if val != "" and val in restr[grid[i][j]]: flt.append(val)
-      if(flt.length>0){res.push([i,j]);}
+      let flt=grid[i][j]==""?"":pre.filter((item)=>item[0]>=0&&item[1]>=0&&item[0]<r&&item[1]<c).map((item)=>item==""?"":grid[item[0]][item[1]]).filter((item)=>restr[grid[i][j]].includes(item)&&item!="");  
      }
    }
    return res;
