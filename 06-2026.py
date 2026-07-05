@@ -764,6 +764,21 @@ Compatibility rules:
 • "B" can receive from "B" and "O".
 • "O" can only receive from "O".
 Duplicate entries in the given arrays represent quantity. """
+
+from collections import Counter
+def triage_blood(bank, patients):
+    p={"O":["O"],"A":["A","O"],"B":["B","O"],"AB":["AB","A","B","O"]}
+    sn=0
+    d=dict(Counter(bank))
+    for i in range(len(patients)):
+        for j in range(len(p[patients[i]])):
+            s=p[patients[i]][j]
+            if s in d.keys() and d[p[patients[i]][j]]>0:
+               d[p[patients[i]][j]]-=1
+               sn+=1
+               continue
+    return f"{sn} of {len(patients)} patients served"
+
 """ 27-06-2026: Periodic Spelling
 Given a word, determine if it can be spelled using element symbols from the periodic table.
 • Ignore casing when spelling a word. "neon" can be spelled with the symbols "Ne", "O", and "N".
@@ -772,6 +787,51 @@ json
 ["H","He","Li","Be","B","C","N","O","F","Ne","Na","Mg","Al","Si","P","S","Cl","Ar","K","Ca","Sc","Ti","V","Cr","Mn","Fe","Co","Ni","Cu","Zn","Ga","Ge","As","Se","Br","Kr","Rb","Sr","Y","Zr","Nb","Mo","Tc","Ru","Rh","Pd","Ag","Cd","In","Sn","Sb","Te","I","Xe","Cs","Ba","La","Ce","Pr","Nd","Pm","Sm","Eu","Gd","Tb","Dy","Ho","Er","Tm","Yb","Lu","Hf","Ta","W","Re","Os","Ir","Pt","Au","Hg","Tl","Pb","Bi","Po","At","Rn","Fr","Ra","Ac","Th","Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr","Rf","Db","Sg","Bh","Hs","Mt","Ds","Rg","Cn","Nh","Fl","Mc","Lv","Ts","Og"];
 
 Return an array of the elements used to spell the word, in their original casing and in the order to spell the word. Or, an empty array if it can't be spelled. """
+
+from itertools import chain, combinations
+
+def powerset(iterable):
+    s = list(iterable)
+    lst=list(chain.from_iterable(combinations(s, r) for r in range(len(s)+1)))
+    return [list(el) for el in lst if len(el)>=2]
+
+def indices(src,find):   
+    res=[]
+    l=len(find)
+    for i in range(len(src)):
+        if find==src[i:i+l]:
+            res.append(i)
+    return res
+
+def make_wrd(lst):
+    res=""
+    for i in range(len(lst)):
+        res+=lst[i][0]
+    return res
+
+from operator import itemgetter
+def get_periodic_spelling(word):
+    lst=["H","He","Li","Be","B","C","N","O","F","Ne","Na","Mg","Al","Si","P","S","Cl","Ar","K","Ca","Sc","Ti","V","Cr","Mn","Fe","Co","Ni","Cu","Zn","Ga","Ge","As","Se","Br","Kr","Rb","Sr","Y","Zr","Nb","Mo","Tc","Ru","Rh","Pd","Ag","Cd","In","Sn","Sb","Te","I","Xe","Cs","Ba","La","Ce","Pr","Nd","Pm","Sm","Eu","Gd","Tb","Dy","Ho","Er","Tm","Yb","Lu","Hf","Ta","W","Re","Os","Ir","Pt","Au","Hg","Tl","Pb","Bi","Po","At","Rn","Fr","Ra","Ac","Th","Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr","Rf","Db","Sg","Bh","Hs","Mt","Ds","Rg","Cn","Nh","Fl","Mc","Lv","Ts","Og"]
+    lst2=[el.lower() for el in lst]
+    hlp=[]
+    for i in range(len(lst2)):
+        c=indices(word,lst2[i])
+        if len(c)>=1:
+            hlp.append([lst2[i],c,i])
+    hlp1=[[el[0],min(el[1]),el[2]] for el in hlp]
+    hlp1 = sorted(hlp1, key=itemgetter(1))
+    hlp2=[[el[0],max(el[1]),el[2]] for el in hlp]
+    hlp2 = sorted(hlp2,key=itemgetter(1))
+    flt1=[el for el in powerset(hlp1) if make_wrd(el)==word]
+    flt2=[el for el in powerset(hlp2) if make_wrd(el)==word]
+    print(flt1)
+    if len(flt1)==0 and len(flt2)==0:
+        return []
+    elif len(flt1)==0:
+        return [lst[el[2]] for el in flt2[0]]
+    else:
+        return [lst[el[2]] for el in flt1[0]]
+
 """ 28-06-2026: Connect 3
 Given a matrix of strings representing pieces on a game grid, determine if any player has three in a row.
 • Each cell contains "R", "Y", or "" (empty string).
