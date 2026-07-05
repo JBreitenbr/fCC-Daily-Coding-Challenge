@@ -840,6 +840,36 @@ Return:
 • A flat array with the winner and the coordinates of their three winning cells in the format: ["R", [0,2], [1,3], [2,4]]. Coordinates are returned top-to-bottom, then left-to-right.
 • An empty array if there is no winner. """
 
+def connect_three(matrix):
+    h=[['00', '01', '02'], ['01', '02', '03'], ['10', '11', '12'], ['11', '12', '13'], ['20', '21', '22'], ['21', '22', '23'], ['30', '31', '32'], ['31', '32', '33']]
+    v=[['00','10','20'],['10','20','30'],['01','11','21'],['11','21','31'],['02','12','22'],['12','22','32'],['03','13','23'],['13','23','33']]
+    d=[["00","11","22"],["01","12","23"],["10","21","32"],["11","22","33"],["02","11","20"],["03","12","21"],["12","21","30"],["13","22","31"]];
+    arr=h+v+d
+    y=[]
+    r=[]
+    pre=[]
+    res=[]
+    for i in range(4):
+        for j in range(4):
+            if matrix[i][j]=="Y":
+                y.append(str(i)+str(j))
+            if matrix[i][j]=="R":
+                r.append(str(i)+str(j))
+    for i in range(len(arr)):
+        s1=set(arr[i]).intersection(set(r))
+        s2=set(arr[i]).intersection(set(y))
+        if len(list(s1))==3:
+            for j in range(len(list(s1))):
+               pre.append([int(list(s1)[j][0]),int(list(s1)[j][1])])
+            pre=sorted(pre)
+            res=["R"]+pre
+        if len(list(s2))==3:
+            for j in range(len(list(s2))):
+                pre.append([int(list(s2)[j][0]),int(list(s2)[j][1])])
+            pre=sorted(pre)
+            res=["Y"]+pre
+    return res
+
 """ 29-06-2026: Song Mood Finder
 Given a genre string and a BPM number for a song, determine the mood using the following table:
 
