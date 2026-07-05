@@ -627,6 +627,29 @@ Return a 24-character string using "☀️" for daytime hours and "🌑" for nig
 • Each character represents one hour, starting at midnight (hour 0)
 • Sunrise and sunset fall symmetrically around noon
 For example, a latitude of 0 (the equator) has 12 hours of daylight, so sunrise is at 6:00 AM and sunset is at 6:00 PM. Return: "🌑🌑🌑🌑🌑🌑☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️🌑🌑🌑🌑🌑🌑". """
+
+import math
+def get_daytime_hours(lat):
+    res=""
+    pre=12+(lat/90)*12
+    if math.floor(pre)%2==0:
+        dt_hours=math.floor(pre)
+    elif round(pre)%2==0:
+        dt_hours=round(pre)
+    else:
+        dt_hours=round(pre)+1
+    st=int((24-dt_hours)/2)
+    if lat==90:
+        return "☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️"
+    else:
+        for i in range(st):
+            res+="🌑"
+        for i in range(dt_hours):
+            res+="☀️"
+        for i in range(st):
+            res+="🌑"
+    return res
+
 """ 22-06-2026: 1337 Speak
 Given a lowercase string, return it translated into leet speak by replacing the letters below with their leet substitutions:
 
