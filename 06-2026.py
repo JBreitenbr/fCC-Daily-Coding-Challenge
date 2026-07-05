@@ -504,6 +504,17 @@ A combo multiplier is applied based on how many spells in a row have been cast f
 • The score for each spell is its base score multiplied by the current multiplier.
 Return the total score from the sequence of spells. """
 
+def get_streaming_bill(cart, subscription):
+    d={"HDrent":3.99,"HDbuy":12.99,"4Krent":5.99,"4Kbuy":19.99}
+    sn=0
+    for i in range(len(cart)):
+        sn+=d["".join(list(cart[i].values()))]
+    if subscription=="basic":
+        sn=0.900001*sn
+    if subscription=="premium":
+        sn=0.749999*sn
+    return "$"+str(round(sn,2))
+
 """ 18-06-2026: Streaming Cost
 Given an array representing movies in the cart of your streaming service, and a string for your subscription tier, return the total cost of the movies.
 Each item in the cart is an object with a "format" ("HD" or "4K") and a "type" ("rent" or "buy"). Their costs are:
