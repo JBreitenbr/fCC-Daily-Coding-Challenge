@@ -395,3 +395,307 @@ def is_valid_card(number):
         else:
             res.append(pre[i]-9)
     return sum(res)%10==0
+""" 15-06-2026: Number Sort
+Given a string of numbers separated by commas, return an array of the numbers sorted from smallest to largest. """
+
+def sort_numbers(s):
+    return sorted([int(s.split(",")[i]) for i in range(len(s.split(",")))])
+
+""" 16-06-2026: British to American
+Given a sentence, convert any British English spellings to their American English equivalents using the following lookup table and return the updated sentence:
+
+British
+American
+
+"colour"
+"color"
+
+"flavour"
+"flavor"
+
+"honour"
+"honor"
+
+"neighbour"
+"neighbor"
+
+"labour"
+"labor"
+
+"humour"
+"humor"
+
+"centre"
+"center"
+
+"fibre"
+"fiber"
+
+"defence"
+"defense"
+
+"offence"
+"offense"
+
+"organise"
+"organize"
+
+"recognise"
+"recognize"
+
+"analyse"
+"analyze"
+
+
+• Replacements should be case-insensitive. For example, "Colour" should become "Color".
+• The input may contain words that build on the exact spelling of a root in the table that also need to be changed. For example, "colouring" should become "coloring", and "disorganised" should become "disorganized". """
+
+def british_to_american(sentence):
+     brit=["colour","flavour","honour","neighbour","labour","humour","centre","fibre","defence","offence","organise","recognise","analyse"]
+     ami=["color","flavor","honor","neighbor","labor","humor","center","fiber","defense","offense","organize","recognize","analyze"]
+     for i in range(len(brit)):
+        sentence=sentence.replace(brit[i],ami[i])
+     return sentence
+
+""" 17-06-2026: Spellcaster
+Given a string of spell codes you are casting, calculate the total score.
+Each character in the string represents a spell:
+
+Code
+Spell
+Category
+Base Score
+
+"f"
+Fire
+Destruction
+3
+
+"l"
+Lightning
+Destruction
+3
+
+"i"
+Ice
+Control
+2
+
+"w"
+Wind
+Control
+2
+
+"h"
+Heal
+Restoration
+1
+
+"s"
+Shield
+Restoration
+1
+
+
+A combo multiplier is applied based on how many spells in a row have been cast from different categories:
+• The first spell always scores at base value.
+• Each consecutive spell from a different category than the previous increases the multiplier by 1.
+• Casting a spell from the same category as the previous resets the multiplier back to 1.
+• The score for each spell is its base score multiplied by the current multiplier.
+Return the total score from the sequence of spells. """
+
+""" 18-06-2026: Streaming Cost
+Given an array representing movies in the cart of your streaming service, and a string for your subscription tier, return the total cost of the movies.
+Each item in the cart is an object with a "format" ("HD" or "4K") and a "type" ("rent" or "buy"). Their costs are:
+
+
+"rent"
+"buy"
+
+"HD"
+$3.99
+$12.99
+
+"4K"
+$5.99
+$19.99
+
+
+Apply the following subscription tier discounts:
+• "none": full price
+• "basic": 10% off
+• "premium": 25% off
+Return the total cost rounded to two decimal places in the format "$D.CC"."""
+
+""" 19-06-2026: Rental Cost
+Given a rental timestamp, a return timestamp, and a rental tier, return the total cost of the rental including any late fees.
+• Given timestamps are UTC ISO strings, for example: "2026-06-18T18:30:00Z".
+• The rental tier is the number of days before the rental is due back: 1, 3, or 7.
+• Rentals are due back by 12:00 PM UTC or earlier on the last day of the rental period. For example, a 1-day rental checked out at any time on March 15 is due back by 12:00 PM UTC on March 16.
+• Each day past the due date and time incurs a late fee.
+Pricing is as follows:
+
+Tier
+Base cost
+Late fee per day
+
+1 day
+$4.99
+$3.99
+
+3 days
+$3.99
+$2.99
+
+7 days
+$2.99
+$0.99
+
+
+Return the total cost rounded to two decimal places in the format "$D.CC". """
+
+""" 20-06-2026: Prime Factorization
+Given an integer greater than 1, return its prime factorization as an array of numbers in ascending order.
+A prime factorization is the set of prime numbers that multiply together to produce the given integer. Each number has exactly one set. For example, the prime factorization of 20 is [2, 2, 5] because 2 * 2 * 5 = 20.
+If the given integer is itself prime, return it in a single-element array. """
+""" 21-06-2026: Summer Solstice
+Today is the summer solstice, the longest day of the year in the Northern Hemisphere and the shortest in the Southern. Given a latitude, return a string representing daytime and nighttime hours.
+• The latitude will be between 90 (north pole) and -90 (south pole), inclusive
+• The number of daytime hours = 12 + (latitude / 90) * 12
+• Round the daytime hours to the nearest even number
+Return a 24-character string using "☀️" for daytime hours and "🌑" for nighttime hours, where:
+• Each character represents one hour, starting at midnight (hour 0)
+• Sunrise and sunset fall symmetrically around noon
+For example, a latitude of 0 (the equator) has 12 hours of daylight, so sunrise is at 6:00 AM and sunset is at 6:00 PM. Return: "🌑🌑🌑🌑🌑🌑☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️☀️🌑🌑🌑🌑🌑🌑". """
+""" 22-06-2026: 1337 Speak
+Given a lowercase string, return it translated into leet speak by replacing the letters below with their leet substitutions:
+
+Letter
+Leet
+
+a
+4
+
+e
+3
+
+g
+9
+
+i
+1
+
+l
+1
+
+o
+0
+
+s
+5
+
+t
+7
+
+
+• Characters with no substitution are left unchanged. """
+""" 23-06-2026: BMI Calculator
+Given a weight in pounds and a height in inches, return the BMI (Body Mass Index) rounded to one decimal place.
+To get BMI: divide the weight by the height squared, then multiply the result by 703. """
+
+""" 24-06-2026: DNA Mutations
+Given two DNA strands of equal length, return an array of indexes where the strands differ (mutations).
+• DNA strands are strings made up of the characters "A", "T", "C", and "G"
+• Return the indexes in ascending order
+• If there are no mutations, return an empty array """
+""" 25-06-2026: Frontmatter Parser
+Given a string representing a frontmatter block, parse it and return an object (JavaScript) or dictionary (Python) with the keys and values.
+Frontmatter is wrapped in --- delimiters and contains key: value pairs within them, one per line. For example:
+md
+---
+title: My Post
+draft: false
+views: 100
+---
+
+Should return:
+js
+{
+  title: "My Post",
+  draft: false,
+  views: 100
+}
+
+• Numbers, Booleans, and Strings should all be returned as their respective type.
+• The given string will have new lines separated with the newline character ("\n"). The above example would be given as: "---\ntitle: My Post\ndraft: false\nviews: 100\n---".  """
+
+""" 26-06-2026: Blood Bank
+Given an array of the inventory at a blood bank and an array of patient blood type requests, return a string in the format "X of Y patients served". Where X is the maximum number of patients that can receive blood from the bank's inventory, and Y is the total number of patients.
+Each entry in both arrays is one of the following blood types: "AB", "A", "B", or "O".
+Compatibility rules:
+• "AB" can receive from any blood type.
+• "A" can receive from "A" and "O".
+• "B" can receive from "B" and "O".
+• "O" can only receive from "O".
+Duplicate entries in the given arrays represent quantity. """
+""" 27-06-2026: Periodic Spelling
+Given a word, determine if it can be spelled using element symbols from the periodic table.
+• Ignore casing when spelling a word. "neon" can be spelled with the symbols "Ne", "O", and "N".
+Here's a full list of the element symbols:
+json
+["H","He","Li","Be","B","C","N","O","F","Ne","Na","Mg","Al","Si","P","S","Cl","Ar","K","Ca","Sc","Ti","V","Cr","Mn","Fe","Co","Ni","Cu","Zn","Ga","Ge","As","Se","Br","Kr","Rb","Sr","Y","Zr","Nb","Mo","Tc","Ru","Rh","Pd","Ag","Cd","In","Sn","Sb","Te","I","Xe","Cs","Ba","La","Ce","Pr","Nd","Pm","Sm","Eu","Gd","Tb","Dy","Ho","Er","Tm","Yb","Lu","Hf","Ta","W","Re","Os","Ir","Pt","Au","Hg","Tl","Pb","Bi","Po","At","Rn","Fr","Ra","Ac","Th","Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr","Rf","Db","Sg","Bh","Hs","Mt","Ds","Rg","Cn","Nh","Fl","Mc","Lv","Ts","Og"];
+
+Return an array of the elements used to spell the word, in their original casing and in the order to spell the word. Or, an empty array if it can't be spelled. """
+""" 28-06-2026: Connect 3
+Given a matrix of strings representing pieces on a game grid, determine if any player has three in a row.
+• Each cell contains "R", "Y", or "" (empty string).
+• Three in a row means three consecutive non-empty cells of the same type horizontally, vertically, or diagonally.
+Return:
+• A flat array with the winner and the coordinates of their three winning cells in the format: ["R", [0,2], [1,3], [2,4]]. Coordinates are returned top-to-bottom, then left-to-right.
+• An empty array if there is no winner. """
+
+""" 29-06-2026: Song Mood Finder
+Given a genre string and a BPM number for a song, determine the mood using the following table:
+
+Mood
+Genre
+BPM Range
+
+"focus"
+"classical"
+60–109
+
+"focus"
+"electronic"
+60–89
+
+"happy"
+"pop"
+60–180
+
+"happy"
+"classical"
+110–180
+
+"happy"
+"rock"
+60–129
+
+"happy"
+"electronic"
+90–134
+
+"hype"
+"rock"
+130–180
+
+"hype"
+"electronic"
+135–180
+
+
+"""
+
+""" 30-06-2026: Duplicate Character Count
+Given two strings, return a count of characters from the second string that can be found in the first.
+• Duplicate characters in the second string are counted separately. """
