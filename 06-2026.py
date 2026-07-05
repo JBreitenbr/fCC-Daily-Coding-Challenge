@@ -708,6 +708,10 @@ Given two DNA strands of equal length, return an array of indexes where the stra
 • DNA strands are strings made up of the characters "A", "T", "C", and "G"
 • Return the indexes in ascending order
 • If there are no mutations, return an empty array """
+
+def detect_mutations(strand1, strand2):
+    return [i for i in range(len(strand1)) if strand1[i]!=strand2[i]]
+
 """ 25-06-2026: Frontmatter Parser
 Given a string representing a frontmatter block, parse it and return an object (JavaScript) or dictionary (Python) with the keys and values.
 Frontmatter is wrapped in --- delimiters and contains key: value pairs within them, one per line. For example:
@@ -728,6 +732,28 @@ js
 
 • Numbers, Booleans, and Strings should all be returned as their respective type.
 • The given string will have new lines separated with the newline character ("\n"). The above example would be given as: "---\ntitle: My Post\ndraft: false\nviews: 100\n---".  """
+
+import re
+def parse_frontmatter(s):
+    pre=s.split("\n")[1:-1]
+    k=[pre[i].split(": ")[0]for i in range(len(pre))]
+    v0=[pre[i].split(": ")[1] for i in range(len(pre))]
+    v=[]
+    for i in range(len(v0)):
+        if v0[i].isnumeric():
+            v.append(int(v0[i]))
+        elif v0[i].replace(".","").isnumeric() and "." in v0[i] and len(v0[i].split("."))<3:
+            v.append(float(v0[i]))
+        elif v0[i]=="false":
+            v.append(False)
+        elif v0[i]=="true":
+            v.append(True)
+        else:
+            v.append(v0[i])
+    res={}
+    for i in range(len(k)):
+        res[k[i]]=v[i]
+    return res
 
 """ 26-06-2026: Blood Bank
 Given an array of the inventory at a blood bank and an array of patient blood type requests, return a string in the format "X of Y patients served". Where X is the maximum number of patients that can receive blood from the bank's inventory, and Y is the total number of patients.
