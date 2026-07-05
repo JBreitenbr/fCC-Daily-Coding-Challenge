@@ -582,10 +582,42 @@ $0.99
 
 Return the total cost rounded to two decimal places in the format "$D.CC". """
 
+from datetime import datetime
+def get_rental_cost(rented, returned, tier):
+    d={1:{"base":4.99,"late":3.99},3:{"base":3.99,"late":2.99},7:{"base":2.99,"late":0.99}}
+    d1=datetime.strptime(rented[0:10], "%Y-%m-%d")
+    d2=datetime.strptime(returned[0:10], "%Y-%m-%d")
+    diff=(d2-d1).days
+    m=int(returned[14:16])+int(returned[11:13])*60
+    if m<=720:
+        z=max(diff-tier,0)
+    else:
+        z=max(diff-tier+1,0)
+    ges=d[tier]["base"]+z*d[tier]["late"]
+    p=str(ges).split(".")
+    return "$"+p[0]+"."+p[1][:2]
+    
 """ 20-06-2026: Prime Factorization
 Given an integer greater than 1, return its prime factorization as an array of numbers in ascending order.
 A prime factorization is the set of prime numbers that multiply together to produce the given integer. Each number has exactly one set. For example, the prime factorization of 20 is [2, 2, 5] because 2 * 2 * 5 = 20.
 If the given integer is itself prime, return it in a single-element array. """
+
+def is_prime(n):
+    return True if len([i for i in range(2,n) if n % i == 0]) == 0 else False
+
+def prime_factorization(n):
+    pre=[]
+    for i in range(2,n+1):
+        if n%i==0 and is_prime(i):
+            pre.append(i)
+    res=[]
+    for i in range(3):
+        for j in range(len(pre)):
+            if n%pre[j]==0:
+                res.append(pre[j])
+                n=n/pre[j]
+    return sorted(res)
+    
 """ 21-06-2026: Summer Solstice
 Today is the summer solstice, the longest day of the year in the Northern Hemisphere and the shortest in the Southern. Given a latitude, return a string representing daytime and nighttime hours.
 • The latitude will be between 90 (north pole) and -90 (south pole), inclusive
