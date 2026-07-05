@@ -504,16 +504,22 @@ A combo multiplier is applied based on how many spells in a row have been cast f
 • The score for each spell is its base score multiplied by the current multiplier.
 Return the total score from the sequence of spells. """
 
-def get_streaming_bill(cart, subscription):
-    d={"HDrent":3.99,"HDbuy":12.99,"4Krent":5.99,"4Kbuy":19.99}
-    sn=0
-    for i in range(len(cart)):
-        sn+=d["".join(list(cart[i].values()))]
-    if subscription=="basic":
-        sn=0.900001*sn
-    if subscription=="premium":
-        sn=0.749999*sn
-    return "$"+str(round(sn,2))
+def cast(spells):
+    c="fliwhs"
+    s=["Fire","Lightning","Ice","Wind","Heal","Shield"]
+    cat=["Destruction","Destruction","Control","Control","Restoration","Restoration"]
+    b=[3,3,2,2,1,1]
+    base=[b[c.index(spells[i])] for i in range(len(spells))]
+    cats=[cat[c.index(spells[i])] for i in range(len(spells))]
+    sn=base[0]
+    m=1
+    for i in range(1,len(spells)):
+        if cats[i]!=cats[i-1]:
+            m+=1
+        else:
+            m=1
+        sn+=m*base[i]
+    return sn
 
 """ 18-06-2026: Streaming Cost
 Given an array representing movies in the cart of your streaming service, and a string for your subscription tier, return the total cost of the movies.
@@ -538,6 +544,17 @@ Apply the following subscription tier discounts:
 • "premium": 25% off
 Return the total cost rounded to two decimal places in the format "$D.CC"."""
 
+def get_streaming_bill(cart, subscription):
+    d={"HDrent":3.99,"HDbuy":12.99,"4Krent":5.99,"4Kbuy":19.99}
+    sn=0
+    for i in range(len(cart)):
+        sn+=d["".join(list(cart[i].values()))]
+    if subscription=="basic":
+        sn=0.900001*sn
+    if subscription=="premium":
+        sn=0.749999*sn
+    return "$"+str(round(sn,2))
+  
 """ 19-06-2026: Rental Cost
 Given a rental timestamp, a return timestamp, and a rental tier, return the total cost of the rental including any late fees.
 • Given timestamps are UTC ISO strings, for example: "2026-06-18T18:30:00Z".
