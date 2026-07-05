@@ -682,9 +682,26 @@ t
 
 
 • Characters with no substitution are left unchanged. """
+
+def make_leet(s):
+    letter="aegilost"
+    leet="43911057"
+    lst=list(s)
+    ind=[letter.find(lst[i]) for i in range(len(lst))]
+    res=""
+    for i in range(len(ind)):
+        if ind[i]==-1:
+            res+=lst[i]
+        else:
+            res+=leet[ind[i]]
+    return res
+
 """ 23-06-2026: BMI Calculator
 Given a weight in pounds and a height in inches, return the BMI (Body Mass Index) rounded to one decimal place.
 To get BMI: divide the weight by the height squared, then multiply the result by 703. """
+
+def calculate_bmi(weight, height):
+    return round(weight/(height*height)*703,1)
 
 """ 24-06-2026: DNA Mutations
 Given two DNA strands of equal length, return an array of indexes where the strands differ (mutations).
