@@ -945,6 +945,14 @@ BPM Range
 
 """
 
+def get_mood(genre, bpm):
+    if genre=="pop" or genre=="classical" and bpm>=110 or genre=="rock" and bpm<130 or genre=="electronic" and bpm>=90 and  bpm<135:
+        return "happy"
+    elif genre=="classical" and bpm<110 or genre=="electronic" and bpm<90:
+        return "focus"
+    else:
+        return "hype"
+
 """ 30-06-2026: Duplicate Character Count
 Given two strings, return a count of characters from the second string that can be found in the first.
 • Duplicate characters in the second string are counted separately. """
