@@ -656,6 +656,45 @@ Five ranks in a row of the same suit
 
 Return the name of the best hand. """
 
+from collections import Counter
+def get_best_hand(cards):
+    rDict={"2":2,"3":3,"4":4,"5":5,"6":6,"7":7,"8":8,"9":9,"T":10,"J":11,"Q":12,"K":13,"A":14}
+    ranks=sorted([rDict[s[0]] for s in cards],reverse=True)
+    suits=[s[1] for s in cards]
+    rCount=dict(Counter(ranks))
+    sCount=dict(Counter(suits))
+    counts=sorted(rCount.values(),reverse=True)
+    uniques=list(rCount.values())
+    is_flush=5 in list(sCount.values())
+    is_straight=False
+    straight_high_card=ranks[0]
+    if len(uniques)==5:
+        if ranks[0]-ranks[4]==4:
+            is_straight=True
+        elif ranks[0] == 14 and ranks[1] == 5 and ranks[4] == 2:
+            is_straight=True
+            straight_high_card=5
+    if is_flush and is_straight:
+        if straight_high_card==14:
+            return "Royal Flush"
+        else:
+            return "Straight Flush"
+    if counts[0]==4:
+        return "Four of a Kind"
+    if counts[0]==3 and counts[1]==2:
+        return "Full House"
+    if is_flush:
+        return "Flush"
+    if is_straight:
+        return "Straight"
+    if counts[0]==3:
+        return "Three of a Kind"
+    if counts[0]==2 and counts[1]==2:
+        return "Two Pair"
+    if counts[0]==2:
+        return "Pair"
+    return "High Card"
+
 """ 31-05-2026:Parentheses Combinations
 Given an integer, n, return the number of valid combinations of n pairs of parentheses.
 • A valid combination is a string where every opening parentheses has a corresponding closing parentheses, and no closing parentheses appears before its matching opening parentheses.
