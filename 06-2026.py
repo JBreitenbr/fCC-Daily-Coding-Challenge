@@ -373,6 +373,39 @@ no restrictions
 
 Return the coordinates of all violating cells as an array of [row, col] pairs, in any order. If no violations exist, return an empty array. """
 
+import math
+def moves(i,j,r,c,grid):
+    m=[[i - 1, j],[i , j - 1],[i , j + 1],[i + 1, j ]]
+    s=[grid[el[0]][el[1]] for el in m if el[0]>=0 and el[0]<r and el[1]>=0 and el[1]<c]
+    return s
+    
+def get_zone_violations(grid):
+    r=len(grid)
+    c=len(grid[0])
+    restr={"i":["R", "I"],"A":"C","R":["i", "C"],"I":"i","C":["R", "A"]}
+    res=[]
+    t1=[]
+    t2=[]
+    for i in range(r):
+        for j in range(c):
+            t1.append(moves(i,j,r,c,grid))
+            if grid[i][j]=="i":
+                t2.append(["R","I"])
+            elif grid[i][j]=="A":
+                t2.append(["C"])
+            elif grid[i][j]=="R":
+                t2.append(["i","C"])
+            elif grid[i][j]=="I":
+                t2.append(["i"])
+            elif grid[i][j]=="C":
+                t2.append(["R","A"])
+            else:
+                t2.append([""])
+    pre=[]
+    for k in range(len(t1)):
+        pre.append(list(set(t1[k]).intersection(set(t2[k]))))
+    return [[math.floor(i/c),i-c*math.floor(i/c)] for i in range(len(pre)) if len(pre[i])>=1 and pre[i]!=[""]]
+
 """ 14-06-2026: Credit Card Validator
 Given a string of digits for a credit card number, determine if it's a valid card number using the following method:
 • Starting from the second-to-last digit, double every other digit moving left.
