@@ -238,9 +238,31 @@ Four dice with the same value
 "five of a kind"
 All five dice with the same value
 
-
-
 """
+
+from collections import Counter
+def five_dice(dice):
+    d=dict(Counter(dice))
+    k=d.keys()
+    v=d.values()
+    if 5 in v:
+        return "five of a kind"
+    elif 4 in v:
+        return "four of a kind"
+    elif 2 in v and 3 in v:
+        return "full house"
+    elif 3 in v and not 2 in v:
+        return "three of a kind"
+    elif list(v).count(2)==2:
+        return "two pair"
+    elif 2 in v and list(v).count(1)==3:
+        return "pair"
+    elif list(v).count(1)==5 and (not 1 in dice or not 6 in dice):
+        return "large straight"
+    elif list(v).count(1)==5 and (not 2 in dice or not 5 in dice):
+        return "small straight"
+    else:
+        return "no pair"
 
 """ 12-07-2026: Horoscope Match
 Given two star sign strings, return their compatibility percentage.
