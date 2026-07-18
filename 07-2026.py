@@ -146,6 +146,15 @@ Given a number of milliseconds since the last post on an issue, and the last mes
 • If the last message is less than 7 days ago, return "leave it"
 • If the last message is 7 or more days ago and its content contains "bump" (case-insensitive), return "close it"
 • Otherwise, return "bump it" """
+
+def triage_issue(ms, message):
+    t=ms/1000/3600/24
+    if t<7:
+        return "leave it"
+    elif "bump" in message.lower():
+        return "close it"
+    return "bump it"
+    
 """ 09-07-2026: Issue Triage 2
 Given an issue title and an array of current labels, return an updated array of labels based on the following rules:
 If the issue doesn't have any labels, add:
