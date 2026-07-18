@@ -78,6 +78,53 @@ def kaprekar(n):
 Given a 2D grid, a starting position ([row, col]), and a new value, replace the value at the starting position and all connected cells of the same value with the new value.
 • Cells are connected if they are adjacent horizontally or vertically (not diagonally).
 Return the updated grid. """
+
+from itertools import chain, combinations
+
+def powerset(iterable):
+    s = list(iterable)
+    lst=list(chain.from_iterable(combinations(s, r) for r in range(len(s)+1)))
+    return [list(el) for el in lst if len(el)>=2]
+
+def is_subset_connected(subset_coords):
+    subset_set = set(subset_coords)
+    start_cell = next(iter(subset_set))
+    queue = [start_cell]
+    visited = {start_cell}
+    dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    for curr_row, curr_col in queue:
+        for dr, dc in dirs:
+            neighbor = (curr_row + dr, curr_col + dc)
+            if neighbor in subset_set and neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+    return len(subset_set)==len(visited)              
+                 
+def bucket_fill(grid, pos, new_value):
+    ch=grid[pos[0]][pos[1]]
+    hlp=[]
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            if grid[i][j]==ch:
+                hlp.append([i,j])
+    s=powerset(hlp)
+    r=[[] for i in range(len(s))]
+    for i in range(len(s)):
+        for j in range(len(s[i])):
+            el=(s[i][j][0],s[i][j][1])
+            r[i].append(el)
+    t=[]
+    for i in range(len(r)):
+        t.append(set(r[i]))
+    m=[]
+    for i in range(len(t)):
+        if is_subset_connected(t[i]):
+            m.append([i,len(t[i])])
+    c=s[m[-1][0]]
+    for i in range(len(c)):
+        grid[c[i][0]][c[i][1]]=new_value
+    return grid
+
 """ 06-07-2026: lowercase words
 Given a string, return only the words that are entirely lowercase, in their original order and with a space between each word. """
 
