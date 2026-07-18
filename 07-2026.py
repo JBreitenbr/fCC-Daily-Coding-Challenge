@@ -128,6 +128,9 @@ def bucket_fill(grid, pos, new_value):
 """ 06-07-2026: lowercase words
 Given a string, return only the words that are entirely lowercase, in their original order and with a space between each word. """
 
+def get_lowercase_words(s):
+    return " ".join([w for w in s.split(" ") if w.islower()])
+    
 """ 07-07-2026: Nearest Multiple
 Given two integers, round the first to the nearest multiple of the second. """
 """ 08-07-2026: Issue Triage
