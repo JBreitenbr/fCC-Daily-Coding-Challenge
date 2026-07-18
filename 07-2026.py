@@ -168,6 +168,28 @@ Otherwise, if the given labels contain:
 If the title contains:
 • "security", add a "critical" label """
 
+def triage_issue(title, labels):
+    if len(labels)==0:
+        if "error" in title or "bug" in title:
+            pre=["bug","needs triage"]
+        elif "feature" in title or "add" in title:
+            pre=["enhancement", "discussing"]
+        else:
+            pre=[]
+    else:
+        if "needs triage" in labels and "simple" in title or "easy" in title:
+            pre=[labels[i].replace("needs triage","good first issue") for i in range(len(labels))]
+        elif "discussing" in labels and "planned" in title or "next" in title:
+            pre=[labels[i].replace("discussing","on the roadmap") for i in range(len(labels))]
+        else:
+            if "discussing" in labels or "needs triage" in labels:
+               pre=[labels[i].replace("discussing", "help wanted").replace("needs triage","help wanted") for i in range(len(labels))]
+    print(pre)
+    if "security" in title:
+        return pre+["critical"]
+    else:
+        return pre
+        
 """ 10-07-2026: Exact Change
 Given an integer amount in cents, return the number of distinct ways to make exact change using pennies (1 cent), nickels (5 cents), dimes (10 cents), and quarters (25 cents). """
 """ 11-07-2026: Five Dice
