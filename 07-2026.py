@@ -192,6 +192,18 @@ def triage_issue(title, labels):
         
 """ 10-07-2026: Exact Change
 Given an integer amount in cents, return the number of distinct ways to make exact change using pennies (1 cent), nickels (5 cents), dimes (10 cents), and quarters (25 cents). """
+
+import math
+def exact_change(amount):
+    sn=0
+    for m in range(math.ceil(amount/25)):
+        for i in range(math.ceil(amount/10)):
+            for j in range(math.ceil(amount/5)):
+                for k in range(amount+1):
+                    if 25*m+10*i+5*j+k==amount:
+                        sn+=1
+    return sn
+    
 """ 11-07-2026: Five Dice
 Given an array of five dice with values 1-6, return the best possible hand.
 Here are the hands ranked lowest to highest:
