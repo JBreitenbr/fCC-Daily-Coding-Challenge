@@ -342,6 +342,10 @@ Multiplier
 "bird"
 5
 
-
-
 """
+
+def pet_years(pet, age):
+    pets=["dog","cat","rabbit","hamster","guinea pig","goldfish","bird"]
+    m=[7,6,8,30,12,6,5]
+    return m[pets.index(pet)]*age
+    
