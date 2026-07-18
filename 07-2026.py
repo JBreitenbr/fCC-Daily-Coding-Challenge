@@ -310,6 +310,11 @@ Given a string of tally marks, return the total count represented.
 • Every fifth mark is represented as a forward slash "/", completing a group of five ("||||/").
 • Groups are separated by a space. """
 
+def get_tally_count(s):
+    sp1=s.split("/")
+    sp2=sp1[-1].split("|")
+    return 5*(len(sp1)-1)+(len(sp2)-1)
+
 """ 14-07-2026: Pet Age Calculator
 Given a pet type and age in human years, return the equivalent age in pet years using the following conversion table:
 
