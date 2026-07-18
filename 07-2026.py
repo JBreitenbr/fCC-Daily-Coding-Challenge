@@ -133,6 +133,14 @@ def get_lowercase_words(s):
     
 """ 07-07-2026: Nearest Multiple
 Given two integers, round the first to the nearest multiple of the second. """
+
+import math
+def round_to_nearest_multiple(num, multiple):
+    lst=[i*multiple for i in range(1,math.ceil(num/multiple)+1) if i*multiple>=num-multiple]
+    if abs(lst[0]-num)>abs(lst[1]-num):
+        return lst[1]
+    return lst[0]
+    
 """ 08-07-2026: Issue Triage
 Given a number of milliseconds since the last post on an issue, and the last message posted on the issue, determine what you should do with the issue according to these rules:
 • If the last message is less than 7 days ago, return "leave it"
