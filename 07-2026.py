@@ -292,9 +292,18 @@ Compatibility
 6
 "50%"
 
-
-
 """
+
+def horoscope_match(sign1, sign2):
+    signs=["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"]
+    dist=[100,40,80,30,90,20,50]
+    d1=abs(signs.index(sign1)-signs.index(sign2));
+    if d1<=6:
+        d2=d1
+    else:
+        d2=12-d1
+    return str(dist[d2])+"%"
+    
 """ 13-07-2026: Tally Counter
 Given a string of tally marks, return the total count represented.
 • Each pipe "|" represents one count.
