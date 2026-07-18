@@ -6,6 +6,21 @@ Given a string of a person's first and last name, calculate their lucky number u
 • Do the same for the two larger counts and the larger name
 • Subtract the smaller value from the larger one to get their lucky number
 If the final value is zero (0), return 13. """
+
+def get_lucky_number(name):
+    sp=name.split(" ")
+    stri1="".join(["v" if sp[0][i].lower() in "aeiou" else "c" for i in range(len(sp[0]))])
+    stri2="".join(["v" if sp[1][i].lower() in "aeiou" else "c" for i in range(len(sp[1]))])
+    lst=[len(stri1.split("v"))-1,len(stri1.split("c"))-1,len(stri2.split("v"))-1,len(stri2.split("c"))-1]
+    m1=min(lst[0],lst[2])*min(lst[1],lst[3])*min(len(sp[0]),len(sp[1]))
+    m2=max(lst[0],lst[2])*max(lst[1],lst[3])*max(len(sp[0]),len(sp[1]))
+    if m1==m2:
+        return 13
+    elif m2>m1:
+        return m2-m1
+    else:
+        return m1-m2
+      
 """ 02-07-2026: Max Profit
 Given an array of daily stock prices and a budget (in dollars), calculate the maximum profit you could make by buying and selling the stock over the given period.
 • You may only sell after you buy.
