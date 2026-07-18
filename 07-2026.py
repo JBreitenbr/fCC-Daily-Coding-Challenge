@@ -27,9 +27,19 @@ Given an array of daily stock prices and a budget (in dollars), calculate the ma
 • You may perform at most one buy and one sell transaction. Once you sell, you cannot buy again.
 • You can only buy whole shares.
 • Return the maximum possible profit as a string, rounded down to the nearest cent and formatted to two decimal places. """
+
+
 """ 03-07-2026: Database Migration
 Given two database objects, return the second object with any missing properties from the first filled in.
 • Fields that already exist in the record should not be overwritten. """
+
+def migrate_record(schema, record):
+    res=schema
+    k=list(record.keys())
+    for i in range(len(k)):
+        res[k[i]]=record[k[i]]
+    return res
+    
 """ 04-07-2026: Kaprekar's Routine
 Given a 4-digit number, return the number of times you need to apply Kaprekar's routine until reaching 6174.
 Kaprekar's routine works as follows:
