@@ -205,7 +205,7 @@ function exactChange(amount) {
    for(let i=0;i<Math.ceil(amount/10);i++){
       for(let j=0;j<Math.ceil(amount/5);j++){
          for(let k=0;k<amount+1;k++){
-            if(25m+10i+5*j+k==amount ){
+            if(25*m+10*i+5*j+k==amount ){
               sn+=1;
              }
           }
