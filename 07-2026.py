@@ -28,6 +28,23 @@ Given an array of daily stock prices and a budget (in dollars), calculate the ma
 • You can only buy whole shares.
 • Return the maximum possible profit as a string, rounded down to the nearest cent and formatted to two decimal places. """
 
+import math
+def get_max_profit(prices, budget):
+    max_profit=0
+    for i in range(len(prices)):
+      for j in range(i,len(prices)):
+            if prices[j]>prices[i]:
+                  shares=math.floor(budget/prices[i])
+                  profit=shares*(prices[j]-prices[i])
+                  if profit>max_profit:
+                        max_profit=profit
+    res=str(round(max_profit,2))
+    if "." in res:
+      if res[::-1].find(".")==1:
+            res+="0"
+    else:
+      res+=".00"
+    return res
 
 """ 03-07-2026: Database Migration
 Given two database objects, return the second object with any missing properties from the first filled in.
