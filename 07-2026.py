@@ -64,6 +64,16 @@ Kaprekar's routine works as follows:
 • Arrange the digits in ascending order to form the smallest number (pad with leading zeros if necessary)
 • Subtract the smaller from the larger
 • Repeat with the new number  """
+
+def kaprekar(n):
+    s=n
+    for i in range(7):
+        mini="".join(sorted(list(str(s))))
+        maxi="".join(sorted(list(str(s)),reverse=True))
+        s=int(maxi)-int(mini)
+        if s==6174:
+            return i+1
+            
 """ 05-07-2026: Bucket Fill
 Given a 2D grid, a starting position ([row, col]), and a new value, replace the value at the starting position and all connected cells of the same value with the new value.
 • Cells are connected if they are adjacent horizontally or vertically (not diagonally).
