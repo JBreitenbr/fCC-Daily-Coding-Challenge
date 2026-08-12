@@ -167,6 +167,18 @@ Given a 2D grid of single-letter color strings and a target color, return the mi
 Given two buckets of paint, each with an RGB color and a fullness level, return the mixed RGB color as an array of three integers.
 • Each bucket is an object (JavaScript) or dictionary (Python) with a color property (an array of three integers [r, g, b]) and a fullness property (0–100).
 • The mixed color is a weighted average of each channel in the two colors based on fullness level, with each channel rounded to the nearest integer. """
+
+def mix_paint(bucket1, bucket2):
+    b1=bucket1["color"]
+    b2=bucket2["color"]
+    m1=[]
+    m2=[]
+    for i in range(3):
+        m1.append(bucket1["fullness"]*b1[i]/100)
+        m2.append(bucket2["fullness"]*b2[i]/100)
+    rel=100/(bucket1["fullness"]+bucket2["fullness"])
+    return [round(rel*(m1[0]+m2[0]),0),round(rel*(m1[1]+m2[1]),0),round(rel*(m1[2]+m2[2]),0)]
+
 """ 10-08-2026: The Last Challenge: Bucket Fill 3
 Today marks a year of daily coding challenges. This is the last new one for now. Good luck!
 Given a 2D grid of single-letter color strings and a target color, return the minimum number of flood fill "clicks" needed to make the entire grid that color.
