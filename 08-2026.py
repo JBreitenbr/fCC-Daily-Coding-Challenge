@@ -2,6 +2,19 @@
 """ 01-08-2026:  Magic Square Solver
 Given a 3x3 grid with one missing number (represented as 0), return the missing number that completes the magic square, or "impossible" if no valid number exists.
 A magic square is a grid where every row, column, and diagonal adds up to the same number. """
+
+def transp(m):
+    return [[m[j][i] for j in range(len(m))] for i in range(len(m[0]))]
+
+def solve_magic_square(grid):
+    m1=list(set([sum(grid[i]) for i in range(len(grid))]))
+    m2=list(set([sum(transp(grid)[i]) for i in range(len(grid))]))
+    if len(m1)>2 or len(m2)>2:
+        return "impossible"
+    s=max(m1)
+    r=sum([el for el in grid if 0 in el][0])
+    return s-r
+  
 """ 02-08-2026: Food Chain
 Given an array of [predator, prey] pairs, return the food chain from the apex predator down to the bottom.
 • The apex predator is the animal that is never prey to another animal.
