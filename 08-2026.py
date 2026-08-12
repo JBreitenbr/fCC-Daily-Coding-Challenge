@@ -77,6 +77,25 @@ Given a number of seconds, return the duration in spoken English.
 • Use singular or plural as appropriate ("1 hour", "2 hours").
 • If present, join the last two units with "and", and the second and third to last units with a comma ("1 hour, 2 minutes and 3 seconds")."""
 
+import math
+def get_spoken_duration(seconds):
+    hrs=math.floor(seconds/3600)
+    mins=math.floor((seconds-3600*hrs)/60)
+    secs=seconds-3600*hrs-60*mins
+    vals=[hrs,mins,secs]
+    units=["hour","minute","second"]
+    ends=["" if vals[i]==1 else "s" for i in range(len(vals))]
+    pre=[]
+    for i in range(3):
+        if vals[i]!=0:
+            pre.append(str(vals[i])+" "+units[i]+ends[i])
+    if len(pre)==1:
+        return pre[0]
+    elif len(pre)==2:
+        return pre[0]+" and "+pre[1]
+    else:
+        return pre[0]+", "+pre[1]+" and "+pre[2]
+
 """ 06-08-2026: Spoken Time
 Given the angles for the hour and minute hands of an analog clock in degrees (clockwise from 12), return the time in spoken English.
 Convert the minute hand angle to minutes (360° = 60 minutes), then use the following rules:
