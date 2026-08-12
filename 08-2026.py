@@ -125,6 +125,21 @@ Spoken
 Where Y is the current hour and Z is the next hour, both derived from the hour hand angle (360° = 12 hours).
 Note: Hand angles may not land exactly on a number, consider rounding them somehow. """
 
+import math 
+def get_spoken_time(hour_angle, minute_angle):
+    lst=[math.floor(12*hour_angle/360),math.floor(60*minute_angle/360)]
+    if lst[1]==0:
+        return str(lst[0])+" o'clock"
+    elif lst[1]==15:
+        return "quarter past "+str(lst[0])
+    elif lst[1]==30:
+        return "half past "+str(lst[0])
+    elif lst[1]==45:
+        return "quarter to "+str(lst[0]+1)
+    elif lst[1]<30:
+        return str(lst[1])+" minutes past "+str(lst[0])
+    elif lst[1]>30:
+        return str(60-lst[1])+" minutes to "+str(lst[0]+1)
 
 """ 07-08-2026: Nonogram Validator
 Given an array of clue numbers and an array of cells, determine whether the cells satisfy the nonogram clue.
