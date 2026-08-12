@@ -66,6 +66,10 @@ def get_emoji_phrase(s):
 """ 04-08-2026: Golf Handicap Calculator
 Given an array of golf scores and a corresponding array of course par values, return the golfer's handicap index using the following method:
 • Calculate the differential for each round by subtracting the par from the score, then return the average of all differentials rounded to one decimal place. """
+
+def calculate_handicap(scores, pars):
+    return round(sum([scores[i]-pars[i] for i in range(len(scores))])/len(scores)+0.01,1)
+    
 """ 05-08-2016: Spoken Duration
 Given a number of seconds, return the duration in spoken English.
 • Break the duration into hours, minutes, and seconds.
