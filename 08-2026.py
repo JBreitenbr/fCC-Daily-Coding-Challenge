@@ -144,7 +144,20 @@ def get_spoken_time(hour_angle, minute_angle):
 """ 07-08-2026: Nonogram Validator
 Given an array of clue numbers and an array of cells, determine whether the cells satisfy the nonogram clue.
 • The clue is an array of numbers representing the lengths of consecutive filled cells, in order. For example, a clue of [3, 2] means there should be 3 consecutive filled cells followed by 2 consecutive filled cells, separated by at least one empty cell.
-• The row is an array of 1s (filled) and 0s (empty). 
+• The row is an array of 1s (filled) and 0s (empty). """
+
+def is_valid_nonogram(clue, cells):
+    lst=[]
+    sn=0
+    for i in range(len(cells)):
+        if cells[i]==1:
+            sn+=1
+            if i<len(cells)-1 and cells[i+1]==0 or i==len(cells)-1:
+                lst.append(sn)
+        if cells[i]==0:
+            sn=0
+    return clue==lst
+
 """ 08-08-2026: Bucket Fill 2
 Given a 2D grid of single-letter color strings and a target color, return the minimum number of flood fill "clicks" needed to make the entire grid the target color.
 • Each click changes the clicked cell's color and the entire region of connected cells of the same color with the target color.
