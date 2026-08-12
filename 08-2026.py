@@ -19,6 +19,7 @@ def solve_magic_square(grid):
 Given an array of [predator, prey] pairs, return the food chain from the apex predator down to the bottom.
 • The apex predator is the animal that is never prey to another animal.
 • Return the chain as an array of strings. """
+
 """ 03-08-2026: Emoji Translator
 Given a string of emojis, return the phrase using the following table:
 
@@ -57,6 +58,10 @@ Word
 
 
 Return the words separated by spaces. """
+
+def get_emoji_phrase(s):
+    emojis={"👶":"baby","🐱":"cat","🐕":"dog","🐟":"fish","🥵":"hot","🧊":"ice","🪨":"rock","🦈":"shark","🍲":"soup","⭐":"star"}
+    return " ".join([emojis[el] for el in list(s)])
 
 """ 04-08-2026: Golf Handicap Calculator
 Given an array of golf scores and a corresponding array of course par values, return the golfer's handicap index using the following method:
