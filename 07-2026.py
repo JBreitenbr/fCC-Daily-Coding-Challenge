@@ -533,9 +533,15 @@ $0.10
 quarters
 $0.25
 
-
 """
 
+def piggy_bank(coins):
+    pb={"pennies":1,"nickels":5,"quarters":25,"dimes":10}
+    k=list(coins.keys())
+    if len(k)==0:
+       return "$0.00"
+    return "$"+str(sum([coins[el]*pb[el] for el in k])/100)
+    
 """ 23-07-2026: Game Theory
 Given two equal length strings representing two players' strategies for a game, return the scores as an array [player1, player2].
 • The given strings will only contain one of two letters: "C" (cooperate) or "D" (defect).
