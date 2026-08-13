@@ -352,6 +352,13 @@ def pet_years(pet, age):
 """ 15-07-2026: Array Chunks
 Given an array and a chunk size, return the array split into sub-arrays of that size.
 The last chunk may be smaller if the array doesn't divide evenly. """
+
+def chunk_array(arr, size):
+    res=[]
+    for i in range(0,len(arr),size):
+        res.append(arr[i:i+size])
+    return res
+
 """ 16-07-2026: Pig Latin Converter
 Given a string, convert it to Pig Latin using the following rules:
 • If a word begins with a vowel ("a", "e", "i", "o", or "u"), add "way" to the end. For example, "universe" converts to "universeway".
