@@ -202,6 +202,23 @@ Given a string representing a number, and an integer base from 2 to 36, determin
 ◦ Base 16: 0-9 and A-F
 ◦ Base 36: 0-9 and A-Z """
 
+import re
+def is_valid_number(n, base):
+    r1=re.findall("[0-9A-Za-z]",n)
+    r2=re.findall("[0-9A-Fa-f]",n)
+    r3=re.findall("[0-9]",n)
+    r4=re.findall("[0-7]",n)
+    r5=re.findall("[0-1]",n)
+    if base>16:
+        return len(r1)==len(n)
+    if base>10:
+        return len(r2)==len(n)
+    if base>8:
+        return len(r3)==len(n)
+    if base>2:
+        return len(r4)==len(n)
+    return len(r5)==len(n)
+
 
 def fibonacci_sequence(start_seq, length):
     if length==0:
