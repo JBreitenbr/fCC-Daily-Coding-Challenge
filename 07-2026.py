@@ -386,6 +386,49 @@ Given today's date and a birthday, return the number of days until the person's 
 • The birthday is given as a string in "M/D" format, without leading zeros, for example: "9/7".
 • If today is their birthday, return the number of days until their next birthday (not 0).
 • Leap years should be accounted for. """
+
+from datetime import datetime
+
+def is_leap_year(year):
+    return year%400==0 or year%100!=0 and year%4==0
+
+def days_until_birthday(today, birthday):
+    _year=int(today[0:4])
+    m1=int(today[5:7])
+    d1=int(today[8:10])
+    m2=int(birthday.split("/")[0])
+    d2=int(birthday.split("/")[1])
+    nxt=[el for el in list(range(_year,_year+9)) if is_leap_year(el)]
+    if birthday=="2/29":
+        if m1<=2:
+            if is_leap_year(_year):
+                year=_year
+            else:
+                year=nxt[0]
+        else:
+            if is_leap_year(_year+1):
+                year=_year+1
+            else:
+                year=nxt[1]
+    else:
+        if m1<m2 or m1==m2 and d1<d2:
+            year=_year
+        else:
+            year=_year+1
+    if m2<10:
+        month="0"+str(m2)
+    else:
+        month=str(m2)
+    if d2<10:
+        day="0"+str(d2)
+    else:
+        day=str(d2)
+    bd=str(year)+"-"+month+"-"+day
+    ts1=int(datetime.strptime(today, "%Y-%m-%d").timestamp())
+    ts2=int(datetime.strptime(bd,"%Y-%m-%d").timestamp())
+    diff=(ts2-ts1)/3600/24
+    return int(diff)
+
 """ 18-07-2026: Dice Odds
 Given a number of six-sided dice to roll and a target sum, return the odds of rolling that sum as a string in the format "1 in X".
 • The number of dice will be between 1 and 6.
