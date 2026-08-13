@@ -189,6 +189,18 @@ Given a string, determine whether the number of vowels in the first half of the 
 • The string can contain any characters.
 • The letters a, e, i, o, and u, in either uppercase or lowercase, are considered vowels.
 • If there's an odd number of characters in the string, ignore the center character. """
+
+import re
+def is_balanced(s):
+    if len(s)%2==1:
+        p1=s[0:round(len(s)/2-1)]
+    else:
+        p1=s[0:round(len(s)/2)]
+    p2=s[round(len(s)/2):]
+    r1=re.findall("[aeiouAEIOU]",p1)
+    r2=re.findall("[aeiouAEIOU]",p2)
+    return len(r1)==len(r2)
+
 """ 12-08-2026: Base Check
 Given a string representing a number, and an integer base from 2 to 36, determine whether the number is valid in that base.
 • The string may contain integers, and uppercase or lowercase characters.
