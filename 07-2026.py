@@ -434,6 +434,48 @@ Given a number of six-sided dice to roll and a target sum, return the odds of ro
 • The number of dice will be between 1 and 6.
 • The target sum is always achievable with the given number of dice.
 • Round "X" to the nearest whole number. """
+
+def enh(lst):
+    res=[]
+    for i in range(1,7):
+        res.append(lst+[i])
+    return res
+    
+def add_dim(lst):
+    pre=[]
+    for i in range(len(lst)):
+        pre.append(enh(lst[i]))
+    res=[]
+    for i in range(len(pre)):
+        for j in range(6):
+            res.append(pre[i][j])
+    return res
+
+import math
+def get_odds(dice, target):
+    s=[[1],[2],[3],[4],[5],[6]]
+    if dice==1:
+        return "1 in 6"
+    n=dice-1
+    while n>0:
+        s=add_dim(s)
+        n-=1
+    m=len([el for el in s if sum(el)==target])
+    p=math.pow(6,dice)
+    fr=m/p
+    res=[]
+    hlp=[]
+    for i in range(min(int(p)+2,7778)):
+        res.append(i)
+        hlp.append(abs(fr*i-1))
+        if i*fr==1:
+            break
+    mini=min(hlp)
+    if 0.0 in hlp:
+        return f"1 in {res[-1]}"
+    else:
+        return f"1 in {hlp.index(mini)}"
+
 """ 19-07-2026: Elevator Stops
 Given a number for the current floor of an elevator and an array of requested floors, return an array of the order the elevator should visit them to minimize number of floors traveled.
 • If tied, go up first
