@@ -508,6 +508,12 @@ def is_golden_ratio(a, b):
 Given two words, return a new word by combining the first half of the first word with the second half of the second word.
 • For odd-length words, the first half is the shorter half. """
 
+import math
+def blend_words(word1, word2):
+    p1=word1[0:math.floor(len(word1)/2)]
+    p2=word2[math.floor(len(word2)/2):]
+    return p1+p2
+    
 """ 22-07-2026: Piggy Bank
 Given an object representing a piggy bank, return the total value as a string formatted as "$D.CC".
 The object may contain any of the following:
