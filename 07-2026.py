@@ -364,6 +364,22 @@ Given a string, convert it to Pig Latin using the following rules:
 • If a word begins with a vowel ("a", "e", "i", "o", or "u"), add "way" to the end. For example, "universe" converts to "universeway".
 • If a word begins with one or more consonants, move them to the end and add "ay". For example, "hello" converts to "ellohay".
 • Preserve the case of the first letter. For example, "Hello" converts to "Ellohay". """
+
+import re
+def little_pig(s):
+    ind=s.find(re.findall("[aeiou]",s)[0])
+    if ind==0:
+        pre=s+"way"
+    else:
+        pre=s[ind:]+s[0:ind]+"ay"
+    if s[0].islower():
+        return pre.lower()
+    else:
+        return pre[0].upper()+pre[1:].lower()
+
+def pig_latin(s):
+    return " ".join([little_pig(el) for el in s.split(" ")])
+
 """ 17-07-2026: Birthday Countdown
 Given today's date and a birthday, return the number of days until the person's next birthday.
 • Today's date is given as a string in "YYYY-MM-DD" format, with leading zeros, for example: "2026-07-16".
