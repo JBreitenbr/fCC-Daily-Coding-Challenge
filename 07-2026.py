@@ -349,3 +349,64 @@ def pet_years(pet, age):
     m=[7,6,8,30,12,6,5]
     return m[pets.index(pet)]*age
     
+""" 15-07-2026: Array Chunks
+Given an array and a chunk size, return the array split into sub-arrays of that size.
+The last chunk may be smaller if the array doesn't divide evenly. """
+""" 16-07-2026: Pig Latin Converter
+Given a string, convert it to Pig Latin using the following rules:
+• If a word begins with a vowel ("a", "e", "i", "o", or "u"), add "way" to the end. For example, "universe" converts to "universeway".
+• If a word begins with one or more consonants, move them to the end and add "ay". For example, "hello" converts to "ellohay".
+• Preserve the case of the first letter. For example, "Hello" converts to "Ellohay". """
+""" 17-07-2026: Birthday Countdown
+Given today's date and a birthday, return the number of days until the person's next birthday.
+• Today's date is given as a string in "YYYY-MM-DD" format, with leading zeros, for example: "2026-07-16".
+• The birthday is given as a string in "M/D" format, without leading zeros, for example: "9/7".
+• If today is their birthday, return the number of days until their next birthday (not 0).
+• Leap years should be accounted for. """
+""" 18-07-2026: Dice Odds
+Given a number of six-sided dice to roll and a target sum, return the odds of rolling that sum as a string in the format "1 in X".
+• The number of dice will be between 1 and 6.
+• The target sum is always achievable with the given number of dice.
+• Round "X" to the nearest whole number. """
+""" 19-07-2026: Elevator Stops
+Given a number for the current floor of an elevator and an array of requested floors, return an array of the order the elevator should visit them to minimize number of floors traveled.
+• If tied, go up first
+• Floors with a request must be visited when the elevator first passes them  """
+
+""" 20-07-2026: Golden Ratio
+Given two numbers, determine if their ratio approximates the golden ratio.
+• Use a golden ratio of 1.618
+• Allow a tolerance of 0.01 """
+""" 21-07-2026: Blender
+Given two words, return a new word by combining the first half of the first word with the second half of the second word.
+• For odd-length words, the first half is the shorter half. """
+""" 22-07-2026: Piggy Bank
+Given an object representing a piggy bank, return the total value as a string formatted as "$D.CC".
+The object may contain any of the following:
+
+Coin
+Value
+
+pennies
+$0.01
+
+nickels
+$0.05
+
+dimes
+$0.10
+
+quarters
+$0.25
+
+
+"""
+
+""" 23-07-2026: Game Theory
+Given two equal length strings representing two players' strategies for a game, return the scores as an array [player1, player2].
+• The given strings will only contain one of two letters: "C" (cooperate) or "D" (defect).
+• Each character represents one round, scored as follows:
+◦ If both players cooperate, each scores 3.
+◦ If both players defect, each scores 1.
+◦ If one player defects and the other cooperates, the defector scores 5 and the cooperator scores 0. """
+
