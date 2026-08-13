@@ -481,6 +481,21 @@ Given a number for the current floor of an elevator and an array of requested fl
 • If tied, go up first
 • Floors with a request must be visited when the elevator first passes them  """
 
+def min_dist(curr,lst):
+    mini=min([abs(curr-lst[i]) for i in range(len(lst))])
+    return sorted([lst[i] for i in range(len(lst)) if abs(curr-lst[i])==mini])[0]
+
+def elevator_stops(current_floor, stops):
+    res=[]
+    l=len(stops)
+    while l>0:
+       s=min_dist(current_floor,stops)
+       res.append(s)
+       stops.remove(s)
+       current_floor=s
+       l-=1
+    return res
+
 """ 20-07-2026: Golden Ratio
 Given two numbers, determine if their ratio approximates the golden ratio.
 • Use a golden ratio of 1.618
