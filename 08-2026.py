@@ -201,3 +201,14 @@ Given a string representing a number, and an integer base from 2 to 36, determin
 ◦ Base 10: 0-9
 ◦ Base 16: 0-9 and A-F
 ◦ Base 36: 0-9 and A-Z """
+
+
+def fibonacci_sequence(start_seq, length):
+    if length==0:
+        return []
+    if length==1:
+        return [start_seq[0]]
+    res=[start_seq[0],start_seq[1]]
+    for i in range(2,length):
+        res.append(res[i-2]+res[i-1])
+    return res
