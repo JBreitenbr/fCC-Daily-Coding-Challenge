@@ -550,3 +550,19 @@ Given two equal length strings representing two players' strategies for a game, 
 ◦ If both players defect, each scores 1.
 ◦ If one player defects and the other cooperates, the defector scores 5 and the cooperator scores 0. """
 
+def play_game(p1, p2):
+    s1=0
+    s2=0
+    for i in range(len(p1)):
+        if p1[i]=="C" and p2[i]=="C":
+            s1+=3
+            s2+=3
+        if p1[i]=="D" and p2[i]=="D":
+            s1+=1
+            s2+=1
+        if p1[i]=="C" and p2[i]=="D":
+            s2+=5
+        if p1[i]=="D" and p2[i]=="C":
+            s1+=5
+    return [s1,s2]
+
