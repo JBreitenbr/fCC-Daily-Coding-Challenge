@@ -500,9 +500,14 @@ def elevator_stops(current_floor, stops):
 Given two numbers, determine if their ratio approximates the golden ratio.
 • Use a golden ratio of 1.618
 • Allow a tolerance of 0.01 """
+
+def is_golden_ratio(a, b):
+    return abs(max(a,b)/min(a,b)-1.618)<0.01
+
 """ 21-07-2026: Blender
 Given two words, return a new word by combining the first half of the first word with the second half of the second word.
 • For odd-length words, the first half is the shorter half. """
+
 """ 22-07-2026: Piggy Bank
 Given an object representing a piggy bank, return the total value as a string formatted as "$D.CC".
 The object may contain any of the following:
