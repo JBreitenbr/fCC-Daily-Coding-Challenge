@@ -593,6 +593,15 @@ def letter_distance(str1, str2):
 Given a number, determine whether it is a pronic number.
 A pronic number is the product of two consecutive integers. For example, 6 is pronic because 2 * 3 = 6. """
 
+def is_pronic(n):
+    if n==0:
+        return True
+    lst=[el for el in list(range(2,n)) if n%el==0]
+    for i in range(1,len(lst)):
+        if lst[i-1]*lst[i]==n and lst[i]==lst[i-1]+1:
+            return True
+    return False 
+
 """ 28-07-2026: Contrast Rating 1
 Given a contrast ratio and a boolean indicating whether the text is large, return the WCAG rating using the following table:
 
