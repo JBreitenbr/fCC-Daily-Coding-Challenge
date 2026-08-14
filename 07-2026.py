@@ -566,3 +566,175 @@ def play_game(p1, p2):
             s1+=5
     return [s1,s2]
 
+""" 24-07-2026: Loan Calculator
+Given a loan amount, annual interest rate percentage, and fixed monthly payment, return an array of remaining balances after each monthly payment until the loan is paid off.
+• Each month, interest is calculated on the remaining balance using the monthly interest rate: (annual rate / 100) / 12, then the monthly payment is subtracted.
+• Return each remaining balance rounded to the nearest dollar.
+• Include the loan amount in the returned array. The first element in the array will always be the loan amount, and the last element of the array will always be 0. """
+""" 25-07-2026: Cell Signal
+Given a grid containing three cell tower readings, determine the location of the phone.
+• Each cell in the grid is either 0 (no tower) or a positive integer representing the number of cells to the phone, measured in a straight line: horizontal, vertical, or diagonal.
+• Return the [row, col] of the cell that is the correct number of cells from all three towers.
+• There is always exactly one solution. """
+
+""" 26-07-2026: Letter Distance
+Given two strings of equal length, return the sum of the shortest distances between each pair of characters.
+• The input will only contain lowercase letters
+• The alphabet is treated as a circle, so the distance between a and z is 1. """
+
+""" 27-07-2026: Pronic Number
+Given a number, determine whether it is a pronic number.
+A pronic number is the product of two consecutive integers. For example, 6 is pronic because 2 * 3 = 6. """
+
+""" 28-07-2026: Contrast Rating 1
+Given a contrast ratio and a boolean indicating whether the text is large, return the WCAG rating using the following table:
+
+Rating
+Normal Text
+Large Text
+
+"AAA"
+7.0+
+4.5+
+
+"AA"
+4.5+
+3.0+
+
+"Fail"
+below 4.5
+below 3.0
+
+"""
+""" 29-07-2026: Contrast Rating 2
+Given two relative luminance values and a boolean indicating whether the text is large, return the WCAG contrast rating using the following method:
+Calculate the contrast ratio by adding 0.05 to each luminance value, then dividing the lighter one by the darker one. The lighter one will always be the first argument.
+Return the rating based on the contrast ratio using the following table:
+
+Rating
+Normal Text
+Large Text
+
+"AAA"
+7.0+
+4.5+
+
+"AA"
+4.5+
+3.0+
+
+"Fail"
+below 4.5
+below 3.0
+
+
+
+"""
+
+""" 30-07-2026: Contrast Rating 3
+Given two arrays representing RGB values and a boolean indicating whether the text is large, return the WCAG contrast rating using the following method:
+First, convert each RGB value to relative luminance:
+• Divide each channel [R, G, B] by 255 to get a value between 0 and 1
+• Apply the gamma correction formula to each channel:
+◦ If the channel value is less than or equal to 0.04045: channel / 12.92
+◦ Otherwise: ((channel + 0.055) / 1.055) ^ 2.4
+• Calculate luminance: 0.2126 * R + 0.7152 * G + 0.0722 * B
+Then, calculate the contrast ratio by adding 0.05 to each luminance value, then dividing the lighter one by the darker one. The lighter one will always be the first argument.
+Return the rating based on the contrast ratio using the following table:
+
+Rating
+Normal Text
+Large Text
+
+"AAA"
+7.0+
+4.5+
+
+"AA"
+4.5+
+3.0+
+
+"Fail"
+below 4.5
+below 3.0
+
+
+"""
+
+""" 31-07-2026: Morse Code
+Given a Morse code string, return the decoded message using the following table:
+
+Code
+Letter
+Code
+Letter
+
+.-
+A
+-.
+N
+
+-...
+B
+---
+O
+
+-.-.
+C
+.--.
+P
+
+-..
+D
+--.-
+Q
+
+.
+E
+.-.
+R
+
+..-.
+F
+...
+S
+
+--.
+G
+-
+T
+
+....
+H
+..-
+U
+
+..
+I
+...-
+V
+
+.---
+J
+.--
+W
+
+-.-
+K
+-..-
+X
+
+.-..
+L
+-.--
+Y
+
+--
+M
+--..
+Z
+
+
+• Letters are separated by a single space
+• Words are separated by three spaces """
+
