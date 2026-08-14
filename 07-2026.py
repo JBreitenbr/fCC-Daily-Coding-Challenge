@@ -582,6 +582,13 @@ Given two strings of equal length, return the sum of the shortest distances betw
 • The input will only contain lowercase letters
 • The alphabet is treated as a circle, so the distance between a and z is 1. """
 
+def letter_distance(str1, str2):
+    alph="abcdefghijklmnopqrstuvwxyz"
+    pre=[]
+    for i in range(len(str1)):
+        pre.append([alph.index(str1[i]),alph.index(str2[i])])
+    return [min(abs(pre[i][1]-pre[i][0]),26-abs(pre[i][1]-pre[i][0])) for i in range(len(pre))]
+    
 """ 27-07-2026: Pronic Number
 Given a number, determine whether it is a pronic number.
 A pronic number is the product of two consecutive integers. For example, 6 is pronic because 2 * 3 = 6. """
