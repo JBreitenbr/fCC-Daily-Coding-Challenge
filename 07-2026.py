@@ -652,10 +652,17 @@ Large Text
 below 4.5
 below 3.0
 
-
-
 """
 
+def get_contrast_rating(l1, l2, is_large_text):
+    ratio=(l1+0.05)/(l2+0.05)
+    if not is_large_text and float(ratio)>=7.0 or is_large_text and float(ratio)>=4.5:
+        return "AAA"
+    elif not is_large_text and float(ratio)>=4.5 or is_large_text and float(ratio)>=3.0:
+        return "AA"
+    elif not is_large_text and float(ratio)<4.5 or is_large_text and float(ratio)<3.0:
+        return "Fail"
+        
 """ 30-07-2026: Contrast Rating 3
 Given two arrays representing RGB values and a boolean indicating whether the text is large, return the WCAG contrast rating using the following method:
 First, convert each RGB value to relative luminance:
