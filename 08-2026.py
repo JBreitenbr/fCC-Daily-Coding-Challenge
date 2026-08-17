@@ -231,6 +231,14 @@ def is_valid_number(n, base):
         return len(r4)==len(n)
     return len(r5)==len(n)
 
+""" 13-08-2026: Fibonacci Sequence
+The Fibonacci sequence is a series of numbers where each number is the sum of the two preceding ones. When starting with 0 and 1, the first 10 numbers in the sequence are 0, 1, 1, 2, 3, 5, 8, 13, 21, 34.
+
+Given an array containing the first two numbers of a Fibonacci sequence, and an integer representing the length of the sequence, return an array containing the sequence of the given length.
+
+Your function should handle sequences of any length greater than or equal to zero.
+If the length is zero, return an empty array.
+Note that the starting numbers are part of the sequence. """
 
 def fibonacci_sequence(start_seq, length):
     if length==0:
@@ -241,3 +249,4 @@ def fibonacci_sequence(start_seq, length):
     for i in range(2,length):
         res.append(res[i-2]+res[i-1])
     return res
+    
