@@ -263,6 +263,9 @@ Given a string, return a jumbled version of that string where each word is trans
 • All letters between the first and last letter are sorted alphabetically.
 • The input strings will contain no punctuation, and will be entirely lowercase. """
 
+def jbelmu(text):
+    return " ".join([el[0]+"".join(sorted(list(el[1:-1])))+el[-1] if len(el)>1 else el[0] for el in text.split(" ")])
+
 """ 16-08-2026: Anagram Checker
 Given two strings, determine if they are anagrams of each other (contain the same characters in any order).
 • Ignore casing and white space. """
