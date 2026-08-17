@@ -770,3 +770,12 @@ Z
 • Letters are separated by a single space
 • Words are separated by three spaces """
 
+def decode_morse(code):
+    morse=[".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
+    alph=list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    c=code.split("   ")
+    res=[]
+    for wrd in c:
+        res.append("".join([alph[morse.index(el)] for el in wrd.split(" ")]))
+    return " ".join(res)
+    
