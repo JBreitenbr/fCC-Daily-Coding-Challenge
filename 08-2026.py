@@ -277,6 +277,10 @@ def are_anagrams(str1, str2):
 Given an array of numbers and an integer target, find two unique numbers in the array that add up to the target value. Return an array with the indices of those two numbers, or "Target not found" if no two numbers sum up to the target.
 • The returned array should have the indices in ascending order. """
 
-
+def find_target(arr, target):
+    c=[[arr.index(i),arr.index(j)] for i in arr for j in arr if i<j and i+j==target]
+    if len(c)==0:
+        return "Target not found"
+    return c[0] 
 
    
