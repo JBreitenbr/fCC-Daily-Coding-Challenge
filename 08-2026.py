@@ -250,3 +250,22 @@ def fibonacci_sequence(start_seq, length):
         res.append(res[i-2]+res[i-1])
     return res
     
+""" 14-08-2026: S P A C E J A M
+Given a string, remove all spaces from the string, insert two spaces between every character, convert all alphabetical letters to uppercase, and return the result.
+• Non-alphabetical characters should remain unchanged (except for spaces). """
+""" 15-08-2026: Jbelmud Text
+Given a string, return a jumbled version of that string where each word is transformed using the following constraints:
+• The first and last letters of the words remain in place
+• All letters between the first and last letter are sorted alphabetically.
+• The input strings will contain no punctuation, and will be entirely lowercase. """
+
+""" 16-08-2026: Anagram Checker
+Given two strings, determine if they are anagrams of each other (contain the same characters in any order).
+• Ignore casing and white space. """
+""" 17-08-2026: Targeted Sum
+Given an array of numbers and an integer target, find two unique numbers in the array that add up to the target value. Return an array with the indices of those two numbers, or "Target not found" if no two numbers sum up to the target.
+• The returned array should have the indices in ascending order. """
+
+
+
+   
