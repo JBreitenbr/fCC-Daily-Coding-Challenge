@@ -558,10 +558,16 @@ $0.10
 quarters
 $0.25
 
-
-
 */
 
+function piggyBank(coins) {
+  let c=["pennies","nickels","dimes","quarters"];
+  let v=[0.01,0.05,0.1,0.25];
+  let k=Object.keys(coins);
+  if(k.length==0) return "$0.00";
+  let m=k.map((item)=>coins[item]*v[c.indexOf(item)]).reduce((a,b)=>a+b,0);
+  return "$"+m.toFixed(2);
+}
 
 /* 23-07-2026: Game Theory
 Given two equal length strings representing two players' strategies for a game, return the scores as an array [player1, player2].
