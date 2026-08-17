@@ -690,9 +690,28 @@ Large Text
 below 4.5
 below 3.0
 
-
 """
 
+import math
+def get_contrast_rating(rgb1, rgb2, is_large_text):
+    r1=[el/255/12.92 if el/255<=0.04045 else math.pow(((el/255 + 0.055) / 1.055),2.4) for el in rgb1]
+    l1=0.2126*r1[0]+ 0.7152 * r1[1] + 0.0722 * r1[2]
+    r2=[el/255/12.92 if el/255<=0.04045 else math.pow(((el/255+0.055)/1.055),2.4) for el in rgb2]
+    l2=0.2126*r2[0]+0.7152*r2[1]+0.0722*r2[2]
+    ratio=(l1+0.05)/(l2+0.05)
+    if not is_large_text and ratio>=7:
+        return "AAA"
+    elif is_large_text and ratio>=4.5:
+        return "AAA"
+    elif not is_large_text and ratio>=4.5:
+        return "AA"
+    elif is_large_text and ratio>=3.0:
+        return "AA"
+    elif not is_large_text and ratio <4.5:
+        return "Fail"
+    elif is_large_text and ratio < 3.0:
+        return "Fail"
+        
 """ 31-07-2026: Morse Code
 Given a Morse code string, return the decoded message using the following table:
 
