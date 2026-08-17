@@ -368,3 +368,221 @@ function petYears(pet, age) {
   return m[pets.indexOf(pet)]*age;
 }
 
+/* 15-07-2026: Array Chunks
+Given an array and a chunk size, return the array split into sub-arrays of that size.
+The last chunk may be smaller if the array doesn't divide evenly. */
+
+function chunkArray(arr, size) {
+  let t=Math.ceil(arr.length/size);
+  let res=[];
+  for(let i=0;i<2*t;i=i+size){
+     res.push(arr.slice(i,i+size));
+   }
+  return res.filter((item)=>item.length>0);
+}
+
+
+/* 16-07-2026: Pig Latin Converter
+Given a string, convert it to Pig Latin using the following rules:
+• If a word begins with a vowel ("a", "e", "i", "o", or "u"), add "way" to the end. For example, "universe" converts to "universeway".
+• If a word begins with one or more consonants, move them to the end and add "ay". For example, "hello" converts to "ellohay".
+• Preserve the case of the first letter. For example, "Hello" converts to "Ellohay". */
+
+function pigLatin(str) {
+  let pre=[];
+  let sp=str.split(" ");
+  let c=sp.map((item)=>item[0].toUpperCase()==item[0]);
+  for(let i=0;i<sp.length;i++){
+     for(let j=0;j<sp[i].length;j++){
+      if("aeiou".includes(sp[i][j].toLowerCase())){
+        if(j==0){pre.push(sp[i]+"way");
+        }
+      else {
+        if(c[i]){pre.push(sp[i][j].toUpperCase()+sp[i].slice(j+1).toLowerCase()+sp[i].slice(0,j).toLowerCase()+"ay");}
+        else {
+          pre.push(sp[i].slice(j)+sp[i].slice(0,j).toLowerCase()+"ay")
+        }
+       }
+         break;
+       }
+     }
+  }
+    return pre.join(" ");
+}
+
+/* 17-07-2026: Birthday Countdown
+Given today's date and a birthday, return the number of days until the person's next birthday.
+• Today's date is given as a string in "YYYY-MM-DD" format, with leading zeros, for example: "2026-07-16".
+• The birthday is given as a string in "M/D" format, without leading zeros, for example: "9/7".
+• If today is their birthday, return the number of days until their next birthday (not 0).
+• Leap years should be accounted for. */
+
+function isLeapYear(year){
+  return year%400==0 || year%4==0 && year%100!=0
+}
+
+function daysUntilBirthday(today, birthday) {
+  let _year=parseInt(today.slice(0,4));
+  let nxt=Array.from(Array(9).keys()).map((item)=>item+_year).filter((item)=>isLeapYear(item));
+  let m1=parseInt(today.slice(5,7));
+  let d1=parseInt(today.slice(8,10));
+  let m2=parseInt(birthday.split("/")[0]);
+  let d2=parseInt(birthday.split("/")[1]);
+  let year;
+  if(birthday=="2/29"){
+     if(m1<=2){
+      year=isLeapYear(_year)?_year:nxt[0];
+     } else year=isLeapYear(_year+1)?_year+1:nxt[1];
+  } else {
+    year=m1<m2||m1==m2&&d1<d2?_year:_year+1;
+    }
+  let month=m2<10?"0"+m2.toString():m2.toString();
+  let day=d2<10?"0"+d2.toString():d2.toString();
+  let bd=year.toString()+"-"+month+"-"+day;
+  let dt1=+Date.parse(today)/1000;
+  let dt2=+Date.parse(bd)/1000;
+  let diff=(dt2-dt1)/3600/24;
+  return diff;
+}
+
+/* 18-07-2026: Dice Odds
+Given a number of six-sided dice to roll and a target sum, return the odds of rolling that sum as a string in the format "1 in X".
+• The number of dice will be between 1 and 6.
+• The target sum is always achievable with the given number of dice.
+• Round "X" to the nearest whole number. */
+
+function enh(arr){
+  return [[...arr,1],[...arr,2],[...arr,3],[...arr,4],[...arr,5],[...arr,6]];
+}
+
+function addDim(arr){
+  let res=[];
+  for(let i=0;i<arr.length;i++){
+    res=[...res,...enh(arr[i])];
+  }
+  return res;
+}
+
+function getOdds(dice, target) {
+  let s=[[1],[2],[3],[4],[5],[6]];
+  if(dice==1) return "1 in 6";
+  let n=dice-1;
+  while(n>0){
+    s=addDim(s);
+    n-=1;
+  }
+  let m=s.filter((item)=>item.reduce((a,b)=>a+b,0)==target).length;
+  let p=Math.pow(6,dice);
+  let fr=m/p;
+  let res=[];
+  let hlp=[];
+  for(let i=1;i<Math.min(p+2,7777);i++){
+    res.push(i);
+    hlp.push(Math.abs(i*fr-1))
+    if(i*fr-1==0) break;
+  }
+  let mini=Math.min(...hlp);
+  if(hlp.includes(0))
+    return `1 in ${res[res.length-1]}`; 
+  else return `1 in ${hlp.indexOf(mini)+1}`
+}
+
+/* 19-07-2026: Elevator Stops
+Given a number for the current floor of an elevator and an array of requested floors, return an array of the order the elevator should visit them to minimize number of floors traveled.
+• If tied, go up first
+• Floors with a request must be visited when the elevator first passes them */
+
+function minDist(curr,arr){
+  let dist=[];
+  let pre=[];
+  for(let i=0;i<arr.length;i++){
+   dist.push(Math.abs(arr[i]-curr));
+  }
+  let mini=Math.min(...dist);
+  for(let i=0;i<dist.length;i++){
+   if(dist[i]==mini) pre.push(arr[i]);
+  }
+  return pre.sort((a,b)=>a-b)[0];
+}
+
+function elevatorStops(currentFloor, stops) {
+  let res=[];
+  let l=stops.length;
+  while(l>0){
+   let s=minDist(currentFloor,stops);
+   res.push(s);
+   let ind = stops.indexOf(s);
+   stops.splice(ind, 1);
+   currentFloor=s;
+   l-=1;
+  }
+  return res;
+}
+
+/* 20-07-2026: Golden Ratio
+Given two numbers, determine if their ratio approximates the golden ratio.
+• Use a golden ratio of 1.618
+• Allow a tolerance of 0.01 */
+
+function isGoldenRatio(a, b) {
+  return Math.abs(1.618-Math.max(a,b)/Math.min(a,b))<0.01;
+}
+
+/* 21-07-2026: Blender
+Given two words, return a new word by combining the first half of the first word with the second half of the second word.
+• For odd-length words, the first half is the shorter half.
+*/
+function blendWords(word1, word2) {
+  let p1=word1.slice(0,Math.floor(word1.length/2));
+  let p2=word2.slice(Math.floor(word2.length/2),word2.length);
+  return p1+p2;
+}
+
+
+/* 22-07-2026: Piggy Bank
+Given an object representing a piggy bank, return the total value as a string formatted as "$D.CC".
+The object may contain any of the following:
+
+Coin
+Value
+
+pennies
+$0.01
+
+nickels
+$0.05
+
+dimes
+$0.10
+
+quarters
+$0.25
+
+
+
+*/
+
+
+/* 23-07-2026: Game Theory
+Given two equal length strings representing two players' strategies for a game, return the scores as an array [player1, player2].
+• The given strings will only contain one of two letters: "C" (cooperate) or "D" (defect).
+• Each character represents one round, scored as follows:
+◦ If both players cooperate, each scores 3.
+◦ If both players defect, each scores 1.
+◦ If one player defects and the other cooperates, the defector scores 5 and the cooperator scores 0. */
+
+
+function playGame(p1, p2) {
+  let s1=0;
+  let s2=0;
+  for(let i=0;i<p1.length;i++){
+    if(p1[i]=="C" && p2[i]=="C"){
+       s1+=3;s2+=3;
+   } else if(p1[i]=="C" && p2[i]=="D"){
+       s2+=5;
+   } else if (p1[i]=="D" && p2[i]=="C"){
+       s1+=5;
+   } else { s1+=1;s2+=1;}
+  }
+  return [s1,s2];
+}
