@@ -571,6 +571,34 @@ Given a loan amount, annual interest rate percentage, and fixed monthly payment,
 • Each month, interest is calculated on the remaining balance using the monthly interest rate: (annual rate / 100) / 12, then the monthly payment is subtracted.
 • Return each remaining balance rounded to the nearest dollar.
 • Include the loan amount in the returned array. The first element in the array will always be the loan amount, and the last element of the array will always be 0. """
+
+def my_round(amount):
+    if not "." in str(amount):
+       return amount
+    sp=str(amount).split(".")
+    s=int(sp[1][0])
+    if s>=5:
+       return int(sp[0])+1
+    else:
+       return int(sp[0])
+
+def get_loan_schedule(loan_amount, annual_rate, monthly_payment):
+   ir=loan_amount*(annual_rate / 100) / 12
+   res=[loan_amount]
+   pre=[]
+   s=loan_amount
+   while s>0:
+      s=round(s-monthly_payment+ir,2)
+      ir=s*(annual_rate/100)/12
+      if s<0:
+         pre.append(0)
+      else:
+         pre.append(s)
+   for i in range(0,len(pre)-1):
+      res.append(my_round(pre[i]))
+   res.append(0)
+   return res
+    
 """ 25-07-2026: Cell Signal
 Given a grid containing three cell tower readings, determine the location of the phone.
 • Each cell in the grid is either 0 (no tower) or a positive integer representing the number of cells to the phone, measured in a straight line: horizontal, vertical, or diagonal.
