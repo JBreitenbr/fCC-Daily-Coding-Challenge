@@ -605,6 +605,28 @@ Given a grid containing three cell tower readings, determine the location of the
 • Return the [row, col] of the cell that is the correct number of cells from all three towers.
 • There is always exactly one solution. """
 
+def dist(p1,p2):
+    return max([abs(p1[0]-p2[0]),abs(p1[1]-p2[1])])
+
+def chk(pre,p):
+    sn=0
+    for i in range(len(pre)):
+        if dist(pre[i][0],p)==pre[i][1]:
+            sn+=1
+    return sn==len(pre)
+
+def find_signal(grid):
+    _grid=grid.copy()
+    pre=[]
+    for i in range(len(_grid)):
+        for j in range(len(_grid[0])):
+            if _grid[i][j]!=0:
+                pre.append([[i,j],_grid[i][j]])
+    for i in range(len(_grid)):
+        for j in range(len(_grid[0])):
+            if chk(pre,[i,j]):
+                return [i,j]
+                
 """ 26-07-2026: Letter Distance
 Given two strings of equal length, return the sum of the shortest distances between each pair of characters.
 • The input will only contain lowercase letters
