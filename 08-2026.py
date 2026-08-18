@@ -163,6 +163,27 @@ Given a 2D grid of single-letter color strings and a target color, return the mi
 • Each click changes the clicked cell's color and the entire region of connected cells of the same color with the target color.
 • Cells are connected horizontally and vertically (not diagonally). """
 
+def bucket_fill(grid, target_color):
+    _grid=grid.copy()
+    def change_region(x,y,color):
+        if x<0 or x>=len(_grid) or y<0 or y>=len(_grid[x]):
+            return
+        if _grid[x][y]==color:
+            _grid[x][y]=target_color
+            change_region(x-1,y,color)
+            change_region(x+1,y,color)
+            change_region(x,y-1,color)
+            change_region(x,y+1,color)
+    clicks=0
+    for i in range(len(_grid)):
+        for j in range(len(_grid[i])):
+            cell_color=_grid[i][j]
+            if cell_color==target_color:
+                continue
+            clicks+=1
+            change_region(i,j,cell_color)
+    return clicks
+    
 """ 09-08-2026: Between Two Buckets
 Given two buckets of paint, each with an RGB color and a fullness level, return the mixed RGB color as an array of three integers.
 • Each bucket is an object (JavaScript) or dictionary (Python) with a color property (an array of three integers [r, g, b]) and a fullness property (0–100).
