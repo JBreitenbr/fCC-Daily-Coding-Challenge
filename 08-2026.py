@@ -304,4 +304,13 @@ def find_target(arr, target):
         return "Target not found"
     return c[0] 
 
-   
+""" 18-08-2026: Factorializer
+Given an integer from zero to 20, return the factorial of that number. The factorial of a number is the product of all the numbers between 1 and the given number.
+• The factorial of zero is 1. """
+
+""" 19-08-2026: Sum of Squares
+Given a positive integer up to 1,000, return the sum of all the integers squared from 1 up to the number. """
+
+""" 20-08-2026: 3 Strikes
+Given an integer between 1 and 10,000, return a count of how many numbers from 1 up to that integer whose square contains at least one digit 3. """
+
