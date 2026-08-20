@@ -316,6 +316,9 @@ def factorial(n):
 """ 19-08-2026: Sum of Squares
 Given a positive integer up to 1,000, return the sum of all the integers squared from 1 up to the number. """
 
+def sum_of_squares(n):
+    return sum([i*i for i in range(1,n+1)])
+    
 """ 20-08-2026: 3 Strikes
 Given an integer between 1 and 10,000, return a count of how many numbers from 1 up to that integer whose square contains at least one digit 3. """
 
