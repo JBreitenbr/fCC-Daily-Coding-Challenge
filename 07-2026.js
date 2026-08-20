@@ -592,3 +592,278 @@ function playGame(p1, p2) {
   }
   return [s1,s2];
 }
+
+/* 24-07-2026: Loan Calculator
+Given a loan amount, annual interest rate percentage, and fixed monthly payment, return an array of remaining balances after each monthly payment until the loan is paid off.
+• Each month, interest is calculated on the remaining balance using the monthly interest rate: (annual rate / 100) / 12, then the monthly payment is subtracted.
+• Return each remaining balance rounded to the nearest dollar.
+• Include the loan amount in the returned array. The first element in the array will always be the loan amount, and the last element of the array will always be 0. */
+
+function myRound(amount){
+  if(!amount.toString().includes(".")) return amount;
+  let sp=amount.toString().split(".");
+  let s=parseInt(sp[1][0]);
+  return s>=5?parseInt(sp[0])+1:parseInt(sp[0]);
+}
+
+function getLoanSchedule(loanAmount, annualRate, monthlyPayment) {
+  let ir=loanAmount*(annualRate / 100) / 12;
+  let res=[loanAmount];
+  let pre=[];
+  let s=loanAmount;
+  while(s>0){
+     s=Math.round(100*(s-monthlyPayment+ir))/100;
+     ir=s*(annualRate/100)/12;
+     pre.push(s<0?0:s);
+  }
+  for(let i=0;i<pre.length-1;i++){
+     res.push(myRound(pre[i]));
+  }
+  res.push(0);
+  return res;
+}
+
+/* 25-07-2026: Cell Signal
+Given a grid containing three cell tower readings, determine the location of the phone.
+• Each cell in the grid is either 0 (no tower) or a positive integer representing the number of cells to the phone, measured in a straight line: horizontal, vertical, or diagonal.
+• Return the [row, col] of the cell that is the correct number of cells from all three towers.
+• There is always exactly one solution. */
+
+function getDist(cell,arr){
+  let signs=arr.map((item)=>item.split("").map((item)=>Math.max(parseInt(item),0))).map((item)=>[item[0]-cell[0],item[1]-cell[1]]).map((item)=>Math.max(Math.abs(item[0]),Math.abs(item[1])));
+  return signs;
+}
+
+function findSignal(grid) {
+  let rows=grid.length;
+  let cols=grid[0].length;
+  let sigs={};
+  for(let i=0;i<rows;i++){
+    for(let j=0;j<cols;j++){
+      if(grid[i][j]!=0){
+      sigs[i.toString()+j.toString()]=grid[i][j];
+      }
+    }
+   }
+  for(let m=0;m<rows;m++){
+    for(let n=0;n<cols;n++){
+     let ch=[];
+     let k=Object.keys(sigs);
+     let t=getDist([m,n],k);
+    for(let i=0;i<k.length;i++){
+     let s=t[i]==sigs[k[i]];
+     if(s) ch.push(s);
+    }
+    if(ch.length==k.length) return [m,n];
+    }
+   }
+   return grid;
+}
+
+/* 26-07-2026: Letter Distance
+Given two strings of equal length, return the sum of the shortest distances between each pair of characters.
+• The input will only contain lowercase letters
+• The alphabet is treated as a circle, so the distance between a and z is 1. */
+
+function letterDistance(str1, str2) {
+  let arr1=str1.split("").map((item)=>item.charCodeAt(item));
+  let arr2=str2.split("").map((item)=>item.charCodeAt(item));
+  let m=[];
+  for(let i=0;i<arr1.length;i++){
+   m.push(Math.min(Math.abs(arr1[i]-arr2[i]),26-Math.abs(arr1[i]-arr2[i])));
+  }
+   return m.reduce((a,b)=>a+b,0);
+}
+
+
+/* 27-07-2026: Pronic Number
+Given a number, determine whether it is a pronic number.
+A pronic number is the product of two consecutive integers. For example, 6 is pronic because 2 * 3 = 6. */
+
+function isPronic(n) {
+  if(n==0) return true;
+  let arr=Array.from(Array(n).keys()).map((item)=>item+1).slice(1).filter((item)=>n%item==0&&item!=n);
+  for(let i=1;i<arr.length;i++){
+    if(arr[i]==arr[i-1]+1 && arr[i-1]*arr[i]==n) return true;
+  }
+  return false;
+}
+
+/* 28-07-2026: Contrast Rating 1
+Given a contrast ratio and a boolean indicating whether the text is large, return the WCAG rating using the following table:
+
+Rating
+Normal Text
+Large Text
+
+"AAA"
+7.0+
+4.5+
+
+"AA"
+4.5+
+3.0+
+
+"Fail"
+below 4.5
+below 3.0
+
+
+
+*/
+
+function getContrastRating(ratio, isLargeText) {
+  return ratio>=7.5 && !isLargeText || ratio>=4.5 && isLargeText?"AAA":ratio>=4.5 && !isLargeText || ratio>=3 && isLargeText?"AA":"Fail";
+}
+
+/* 29-07-2026: Contrast Rating 2
+Given two relative luminance values and a boolean indicating whether the text is large, return the WCAG contrast rating using the following method:
+Calculate the contrast ratio by adding 0.05 to each luminance value, then dividing the lighter one by the darker one. The lighter one will always be the first argument.
+Return the rating based on the contrast ratio using the following table:
+
+Rating
+Normal Text
+Large Text
+
+"AAA"
+7.0+
+4.5+
+
+"AA"
+4.5+
+3.0+
+
+"Fail"
+below 4.5
+below 3.0
+
+
+
+*/
+
+function getContrastRating(l1, l2, isLargeText) {
+  let ratio=(l1+0.05)/(l2+0.05);
+  return ratio>=7.5 && !isLargeText || ratio>=4.5 && isLargeText?"AAA":ratio>=4.5 && !isLargeText || ratio>=3 && isLargeText?"AA":"Fail";
+}
+
+/* 30-07-2026: Contrast Rating 3
+Given two arrays representing RGB values and a boolean indicating whether the text is large, return the WCAG contrast rating using the following method:
+First, convert each RGB value to relative luminance:
+• Divide each channel [R, G, B] by 255 to get a value between 0 and 1
+• Apply the gamma correction formula to each channel:
+◦ If the channel value is less than or equal to 0.04045: channel / 12.92
+◦ Otherwise: ((channel + 0.055) / 1.055) ^ 2.4
+• Calculate luminance: 0.2126 * R + 0.7152 * G + 0.0722 * B
+Then, calculate the contrast ratio by adding 0.05 to each luminance value, then dividing the lighter one by the darker one. The lighter one will always be the first argument.
+Return the rating based on the contrast ratio using the following table:
+
+Rating
+Normal Text
+Large Text
+
+"AAA"
+7.0+
+4.5+
+
+"AA"
+4.5+
+3.0+
+
+"Fail"
+below 4.5
+below 3.0
+
+
+*/
+
+function getContrastRating(rgb1, rgb2, isLargeText) {
+  let m1=rgb1.map((item)=>item/255).map((item)=>item<=0.04045?item / 12.92:Math.pow((item + 0.055) / 1.055,2.4));
+  let l1=0.2126 * m1[0] + 0.7152 * m1[1] + 0.0722 * m1[2];
+  let m2=rgb2.map((item)=>item/255).map((item)=>item<=0.04045?item/12.92:Math.pow((item+0.055)/1.055,2.4));
+  let l2=0.2126*m2[0]+0.7151*m2[1]+0.0722*m2[2];
+  let ratio=(l1+0.05)/(l2+0.05);
+  return isLargeText==false && ratio>=7.0?"AAA":isLargeText==false && ratio>=4.5?"AA":isLargeText==false && ratio<4.5?"Fail":isLargeText==true && ratio>=4.5?"AAA":isLargeText==true && ratio>=3.0?"AA":"Fail";
+}
+
+/* 31-07-2026: Morse Code
+Given a Morse code string, return the decoded message using the following table:
+
+Code
+Letter
+Code
+Letter
+
+.-
+A
+-.
+N
+
+-...
+B
+---
+O
+
+-.-.
+C
+.--.
+P
+
+-..
+D
+--.-
+Q
+
+.
+E
+.-.
+R
+
+..-.
+F
+...
+S
+
+--.
+G
+-
+T
+
+....
+H
+..-
+U
+
+..
+I
+...-
+V
+
+.---
+J
+.--
+W
+
+-.-
+K
+-..-
+X
+
+.-..
+L
+-.--
+Y
+
+--
+M
+--..
+Z
+
+
+• Letters are separated by a single space
+• Words are separated by three spaces */
+
+function decodeMorse(code) {
+  let morse=[".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."];
+  let alph="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  return code.split(" ").map((item)=>item.split(" ").map((sub)=>morse.indexOf(sub)).filter((sub)=>sub>=0)).map((item)=>item.map((sub)=>alph[sub])).map((item)=>item.join("")).join(" ");
+}
