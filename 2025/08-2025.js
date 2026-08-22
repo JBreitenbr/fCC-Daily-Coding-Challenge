@@ -255,6 +255,12 @@ stri+=String.fromCharCode(ch+26-shi); }
     }
     return stri;
 }
+/* oder (einfacher): */
+function decode(message, shift) {
+let a1="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+let a2=a1.toLowerCase();
+return message.split(" ").map((item)=>item.split("").map((ch)=>a1.includes(ch)?a1[(a1.indexOf(ch)-shift+26)%26]:a2.includes(ch)?a2[(a2.indexOf(ch)-shift+26)%26]:ch)).map((item)=>item.join("")).join(" ");
+}
 
 /* 23-08-2025: Unnatural Prime
 Given an integer, determine if that number is a prime number or a negative prime number.
