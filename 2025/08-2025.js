@@ -287,6 +287,11 @@ function isUnnaturalPrime(n) {
    return true;
 }
 
+/* oder (einfacher): */
+function isUnnaturalPrime(n) {
+  return Array.from(Array(Math.abs(n)+1).keys()).slice(1).filter((item)=>n%item==0&&item!=1&&item!=n&&item!=-n).length==0&&Math.abs(n)>1;
+}
+
 /* 24-08-2025: Character Battle
 Given two strings representing your army and an opposing army, each character from your army battles the character at the same position from the opposing army using the following rules:
 
