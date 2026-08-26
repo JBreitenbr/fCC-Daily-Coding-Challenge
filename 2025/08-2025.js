@@ -421,6 +421,39 @@ if (s.includes('(')){
   } else {return s;}
 } 
 
+/* oder (etwas einfacher): */
+function getDeepestBrackets(s) {
+  let p=[];
+  let z=[];
+  let s1=0;
+  let s2=0;  
+  for(let i=0;i<s.length;i++){
+    if(s[i]=="("){
+      p.push(i);
+      z.push(s1-s2);
+      s1+=1;
+    }
+    if(s[i]==")"){
+      p.push(i);
+      z.push(s1-s2);
+      s2+=1;
+    }
+  }
+  let maxi=Math.max(...z);
+  let ind=z.indexOf(maxi);
+  return s.slice(p[ind-1],p[ind]+1);
+}
+
+function decode(s) {
+  let cnt=s.split("(").length-1;
+  for(let i=0;i<cnt;i++){
+  let stri=getDeepestBrackets(s);
+  s=s.replace(stri,stri.slice(1,stri.length-1).split("").reverse().join(""));
+  if(!s.includes("("))
+  return s;
+  }
+}
+
 /* 27-08-2025: Unorder of Operations
 Given an array of integers and an array of string operators, apply the operations to the numbers sequentially from left-to-right. Repeat the operations as needed until all numbers are used. Return the final result.
 
