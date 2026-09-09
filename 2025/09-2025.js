@@ -245,6 +245,10 @@ let s=Array.from(new Set(str.split("")));
 
   return str.length==s.length;
 }
+/* oder (alternativ) */
+function allUnique(str) {
+  return str.split("").every((item,index)=>str.indexOf(item)==index);
+}
 
 /* 10-09-2025: Array Diff
 Given two arrays with strings values, return a new array containing all the values that appear in only one of the arrays.
