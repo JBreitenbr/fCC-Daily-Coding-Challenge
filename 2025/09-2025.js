@@ -303,6 +303,14 @@ function tooMuchScreenTime(hours) {
   return false;
 }
 
+ /* oder (alternativ): */
+function tooMuchScreenTime(hours) {
+  let m1=hours.some((item)=>item>=10);
+  let m2=hours.map((item,index)=>index<hours.length-2?hours[index]>=8&&hours[index+1]>=8&&hours[index+2]>=8:0).slice(0,hours.length-2).some((item)=>item);
+  let m3=hours.reduce((a,b)=>a+b,0)/7>=6;
+  return !(!m1&&!m2&&!m3);
+}
+
 /* 13-09-2025: Missing Numbers
 Given an array of integers from 1 to n, inclusive, return an array of all the missing integers between 1 and n (where n is the largest number in the given array).
 
